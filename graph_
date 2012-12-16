@@ -1,0 +1,8 @@
+digraph G { 
+    Start    [shape=doublecircle];
+    Finish    [shape=doublecircle,style=filled];
+    node    [shape=circle];
+    "Start" -> "Persetujuan" [ label="Lanjutkan ke Persetujuan",shape=doublecircle,style=filled ];
+    "Persetujuan" -> "Finish" [ label="Setuju",shape=doublecircle,style=filled ];
+    "Persetujuan" -> "Finish" [ label="Tidak Setuju",shape=doublecircle,style=filled ];
+}
