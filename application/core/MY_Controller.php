@@ -8,18 +8,25 @@ class MY_Controller extends MX_Controller {
     public function __construct() {
         parent::__construct();
         // check login session
-        $user_id = $this->session->userdata('kode_user');
-        if(!$user_id)
-            redirect('adm/app');
+        $user_id = $this->session->userdata('user_id');
+        if (!$user_id)
+            redirect('account/login');
 
         //$this->output->enable_profiler(TRUE);
         // cek kelengkapan data & status registrasi vendor
-        //$query = $this->db->query("select KODE_STATUS_REG from EP_VENDOR where KODE_VENDOR = $user_id");
-        //$row = $query->row_array();
+        $query = $this->db->query("select KODE_STATUS_REG from EP_VENDOR where KODE_VENDOR = $user_id");
+        $row = $query->row_array();
         // exclude crud controller from restricted access
-//        $allow = $this->uri->segment(1) == 'vendor' ? true : false;
+//        $allow = (in_array($this->uri->segment(1), array('vendor', 'account')) ) ? true : false;
 //        if(!$row['KODE_STATUS_REG'] && !$allow)
-//            redirect('account/complete_registration');
+
+        if ($row['KODE_STATUS_REG'] == "3" && !$allow) // fill registration form
+            redirect('/account/complete_registration');
+        else if ($row['KODE_STATUS_REG'] == "10" && !$allow) // fix registration form
+            redirect('/account/fix_registration');
+        else if ($row['KODE_STATUS_REG'] == "4" && !$allow) // waiting approval
+            redirect('/account/waiting_approval');
+			
 //        list($path, $_model) = Modules::find(strtolower('ep_vendor'), 'vendor', 'models/');
 //        class_exists('CI_Model', FALSE) OR load_class('Model', 'core');
 //
