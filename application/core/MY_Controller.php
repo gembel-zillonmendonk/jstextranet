@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class MY_Controller extends MX_Controller {
+class MY_Controller extends MX_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         // check login session
         $user_id = $this->session->userdata('user_id');
@@ -20,13 +22,16 @@ class MY_Controller extends MX_Controller {
 //        $allow = (in_array($this->uri->segment(1), array('vendor', 'account')) ) ? true : false;
 //        if(!$row['KODE_STATUS_REG'] && !$allow)
 
-        if ($row['KODE_STATUS_REG'] == "3" && !$allow) // fill registration form
-            redirect('/account/complete_registration');
-        else if ($row['KODE_STATUS_REG'] == "10" && !$allow) // fix registration form
-            redirect('/account/fix_registration');
-        else if ($row['KODE_STATUS_REG'] == "4" && !$allow) // waiting approval
-            redirect('/account/waiting_approval');
-			
+        if (!$this->_is_ajax_request())
+        {
+            if ($row['KODE_STATUS_REG'] == "3" && !$allow) // fill registration form
+                redirect('/account/complete_registration');
+            else if ($row['KODE_STATUS_REG'] == "10" && !$allow) // fix registration form
+                redirect('/account/fix_registration');
+            else if ($row['KODE_STATUS_REG'] == "4" && !$allow) // waiting approval
+                redirect('/account/waiting_approval');
+        }
+        
 //        list($path, $_model) = Modules::find(strtolower('ep_vendor'), 'vendor', 'models/');
 //        class_exists('CI_Model', FALSE) OR load_class('Model', 'core');
 //
@@ -38,18 +43,18 @@ class MY_Controller extends MX_Controller {
 //        print_r($model);
     }
 
-	public function gridr($model = null)
+    public function gridr($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -75,13 +80,13 @@ class MY_Controller extends MX_Controller {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -107,13 +112,13 @@ class MY_Controller extends MX_Controller {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -139,13 +144,13 @@ class MY_Controller extends MX_Controller {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -166,18 +171,18 @@ class MY_Controller extends MX_Controller {
         }
     }
 
-	public function gridpopup_evaluasi($model = null)
+    public function gridpopup_evaluasi($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -197,21 +202,19 @@ class MY_Controller extends MX_Controller {
             ));
         }
     }
-	
-    
-    
-public function gridpopup_barang($model = null)
+
+    public function gridpopup_barang($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -231,20 +234,19 @@ public function gridpopup_barang($model = null)
             ));
         }
     }
-	
-    
-public function gridpopup_barang_jasa($model = null)
+
+    public function gridpopup_barang_jasa($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -264,19 +266,19 @@ public function gridpopup_barang_jasa($model = null)
             ));
         }
     }
-	
-    	public function gridpopup($model = null)
+
+    public function gridpopup($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -296,20 +298,19 @@ public function gridpopup_barang_jasa($model = null)
             ));
         }
     }
-    
-    
+
     public function gridrf($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -328,25 +329,20 @@ public function gridpopup_barang_jasa($model = null)
                 'grid' => new MY_Grid($model),
             ));
         }
-
-
-
-
-
     }
-	
-	public function gridrf_vendor($model = null)
+
+    public function gridrf_vendor($model = null)
     {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
+
         if ($this->_is_ajax_request())
         {
-		
+
             if (isset($_REQUEST['oper']))
             {
-			
+
                 echo json_encode($query);
 
                 exit();
@@ -367,9 +363,9 @@ public function gridpopup_barang_jasa($model = null)
             ));
         }
     }
-	
-	
-    public function _load_model($model, $type = 'grid', $return = true) {
+
+    public function _load_model($model, $type = 'grid', $return = true)
+    {
 
         $model = str_replace(".", "/", strtolower($model));
         $this->load->model($model, 'crud_model', true);
@@ -394,13 +390,16 @@ public function gridpopup_barang_jasa($model = null)
             $this->model = $model;
     }
 
-    public function _is_ajax_request() {
+    public function _is_ajax_request()
+    {
         return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'));
     }
 
-    public function _grid_data($model) {
+    public function _grid_data($model)
+    {
         $return = null;
-        try {
+        try
+        {
             $gopts = array(
                 'page' => (isset($_REQUEST['page']) ? $_REQUEST['page'] : 1),
                 'rows' => (isset($_REQUEST['rows']) ? $_REQUEST['rows'] : 15),
@@ -409,7 +408,8 @@ public function gridpopup_barang_jasa($model = null)
             $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
             $rows = isset($_REQUEST['rows']) ? $_REQUEST['rows'] : 15;
             $filter = null;
-            if (isset($_REQUEST['filters'])) {
+            if (isset($_REQUEST['filters']))
+            {
                 //$this->load->library('jqGrid', null, 'jq');
                 $filter = $model->buildSearch($_REQUEST['filters']);
             }
@@ -422,8 +422,10 @@ public function gridpopup_barang_jasa($model = null)
                 $filter = strlen($model->_default_scope()) > 0 ? $model->_default_scope() : $filter;
             //$query = $this->db->get('USERS', 10, $page);
             // testing get filter from attributes
-            if (count($model->attributes) > 0) {
-                foreach ($model->attributes as $key => $value) {
+            if (count($model->attributes) > 0)
+            {
+                foreach ($model->attributes as $key => $value)
+                {
                     if (strlen($filter))
                         $filter .= " AND $key = '$value'";
                     else
@@ -433,8 +435,9 @@ public function gridpopup_barang_jasa($model = null)
 
             $src = $model->table;
             preg_match("/select/i", $model->sql_select, $matches);
-            if (count($matches) > 0) {
-                $src = " ( select x.* from " .$model->sql_select. " x )";
+            if (count($matches) > 0)
+            {
+                $src = " ( select x.* from " . $model->sql_select . " x )";
                 $read_only = true;
             }
 
@@ -444,28 +447,30 @@ public function gridpopup_barang_jasa($model = null)
 //                $this->db->where($filter);
 //            $this->db->stop_cache();
 
-            
+
             $query = $this->db->get_where($src, $filter);
             $count = $query->num_rows();
-            
+
             $count > 0 ? $total_pages = ceil($count / $rows) : $total_pages = 0;
             if ($page > $total_pages)
                 $page = $total_pages;
 
             // build data
-            if ($page < 2) {
-                
-                $limit = ($rows  + 1  );
+            if ($page < 2)
+            {
+
+                $limit = ($rows + 1 );
                 $offset = 0;
-            } else {
-                
-                $limit = $rows;
-                $offset = (($page-1) * $rows) + 1;
             }
-            
-            $this->db->limit(  $limit ,   $offset   );
+            else
+            {
+
+                $limit = $rows;
+                $offset = (($page - 1) * $rows) + 1;
+            }
+
+            $this->db->limit($limit, $offset);
 //            $this->db->limit($rows, $page);
-            
 //            $query = $this->db->get();
             $query = $this->db->get_where($src, $filter, $limit, $offset);
 //echo $this->db->last_query();
@@ -477,17 +482,21 @@ public function gridpopup_barang_jasa($model = null)
             );
 
             $this->db->flush_cache();
-        } catch (exception $e) {
+        }
+        catch (exception $e)
+        {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
         return $return;
     }
 
-    public function _form_data($model) {
+    public function _form_data($model)
+    {
 
         $query = null;
-        try {
+        try
+        {
             $keys = $model->primary_keys;
             // check wheater primary key was supplied or not
             $where = array();
@@ -497,7 +506,9 @@ public function gridpopup_barang_jasa($model = null)
 
             $query = $this->db->get_where($model->table, $where)->row_array(); // get single row
             //$model->attributes = $query; // set model attributes
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
@@ -506,11 +517,13 @@ public function gridpopup_barang_jasa($model = null)
 
     public $model;
 
-    public function modal_form($model = null) {
+    public function modal_form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
 
-        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table])) {
+        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table]))
+        {
             $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $_REQUEST[$model->table]) : $_REQUEST[$model->table];
             $model->save();
 //            exit();
@@ -518,7 +531,8 @@ public function gridpopup_barang_jasa($model = null)
 
         // edit request 
         $keys = $model->primary_keys;
-        if (count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) {
+        if (count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys))
+        {
             $model->attributes = $this->_form_data($model);
             $model->is_new_record = false;
         }
@@ -540,13 +554,15 @@ public function gridpopup_barang_jasa($model = null)
         ));
     }
 
-    public function view_modal_form($model = null) {
+    public function view_modal_form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
 
         // edit request 
         $keys = $model->primary_keys;
-        if (count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) {
+        if (count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys))
+        {
             $model->attributes = $this->_form_data($model);
         }
 
@@ -564,14 +580,16 @@ public function gridpopup_barang_jasa($model = null)
         ));
     }
 
-    public function form($model = null) {
+    public function form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
 
 //        $this->load->library('MY_Form', array('model' => $model), 'form');
 //        $form = $this->form;
         // form submited do insert / update
-        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table])) {
+        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table]))
+        {
             $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $_REQUEST[$model->table]) : $_REQUEST[$model->table];
             $model->save();
 //            echo json_encode($model->attributes);
@@ -584,13 +602,15 @@ public function gridpopup_barang_jasa($model = null)
                 (count($_REQUEST) > 0 && count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) // get PKey from $_REQUEST
                 ||
                 (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
-        ) { // check wheater primary key was supplied or not
+        )
+        { // check wheater primary key was supplied or not
             $where = array();
             foreach ($keys as $key)
                 $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
 
             $query = $this->db->get_where($model->table, $where)->row_array(); // get single row
-            if (count($query)) {
+            if (count($query))
+            {
                 $model->attributes = array_merge($model->attributes, $query); // set model attributes
                 $model->is_new_record = false;
             }
@@ -606,14 +626,17 @@ public function gridpopup_barang_jasa($model = null)
         $el_buttons = $this->load->view('crud/_el_buttons', array('form' => $form,), true);
         $el_fields = $this->load->view('crud/_el_fields', array('form' => $form,), true);
 
-        if ($this->_is_ajax_request()) {
+        if ($this->_is_ajax_request())
+        {
             // load view
             $this->load->view($form->view, array(
                 'form' => $form,
                 'el_buttons' => $el_buttons,
                 'el_fields' => $el_fields,
             ));
-        } else {
+        }
+        else
+        {
             // load layout view
             $this->layout->view($form->view, array(
                 'form' => $form,
@@ -623,7 +646,8 @@ public function gridpopup_barang_jasa($model = null)
         }
     }
 
-    public function view_form($model = null) {
+    public function view_form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
 
@@ -633,7 +657,8 @@ public function gridpopup_barang_jasa($model = null)
                 (count($_REQUEST) > 0 && count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) // get PKey from $_REQUEST
                 ||
                 (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
-        ) { // check wheater primary key was supplied or not
+        )
+        { // check wheater primary key was supplied or not
             $where = array();
             foreach ($keys as $key)
                 $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
@@ -648,13 +673,16 @@ public function gridpopup_barang_jasa($model = null)
         // load partial view
         $el_fields = $this->load->view('crud/_el_fields', array('form' => $form, 'read_only' => true,), true);
 
-        if ($this->_is_ajax_request()) {
+        if ($this->_is_ajax_request())
+        {
             // load view
             $this->load->view($form->view, array(
                 'form' => $form,
                 'el_fields' => $el_fields,
             ));
-        } else {
+        }
+        else
+        {
             // load layout view
             $this->layout->view($form->view, array(
                 'form' => $form,
@@ -663,45 +691,59 @@ public function gridpopup_barang_jasa($model = null)
         }
     }
 
-    public function grid($model = null) {
+    public function grid($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-        if ($this->_is_ajax_request()) {
-            if (isset($_REQUEST['oper'])) {
+        if ($this->_is_ajax_request())
+        {
+            if (isset($_REQUEST['oper']))
+            {
                 echo json_encode($query);
 
                 exit();
-            } else {
+            }
+            else
+            {
 
                 $this->load->view($model->grid_view, array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        } else {
+        }
+        else
+        {
             $this->layout->view($model->grid_view, array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-    public function view_grid($model = null) {
+    public function view_grid($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-        if ($this->_is_ajax_request()) {
-            if (isset($_REQUEST['oper'])) {
+        if ($this->_is_ajax_request())
+        {
+            if (isset($_REQUEST['oper']))
+            {
                 echo json_encode($query);
 
                 exit();
-            } else {
+            }
+            else
+            {
 
                 $this->load->view($model->grid_view, array(
                     'grid' => new MY_Grid($model),
                     'read_only' => true,
                 ));
             }
-        } else {
+        }
+        else
+        {
             $this->layout->view($model->grid_view, array(
                 'grid' => new MY_Grid($model),
                 'read_only' => true,
@@ -709,44 +751,58 @@ public function gridpopup_barang_jasa($model = null)
         }
     }
 
-    public function grid_form($model = null) {
+    public function grid_form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
         $model->grid_view = 'crud/grid_form';
         $query = $this->_grid_data($model);
-        if ($this->_is_ajax_request()) {
-            if (isset($_REQUEST['oper'])) {
+        if ($this->_is_ajax_request())
+        {
+            if (isset($_REQUEST['oper']))
+            {
                 echo json_encode($query);
                 exit();
-            } else {
+            }
+            else
+            {
                 $this->load->view($model->grid_view, array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        } else {
+        }
+        else
+        {
             $this->layout->view($model->grid_view, array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-    public function view_grid_form($model = null) {
+    public function view_grid_form($model = null)
+    {
         // check and load model
         $model = $this->_load_model($model);
         $model->grid_view = 'crud/grid_form';
         $query = $this->_grid_data($model);
-        if ($this->_is_ajax_request()) {
-            if (isset($_REQUEST['oper'])) {
+        if ($this->_is_ajax_request())
+        {
+            if (isset($_REQUEST['oper']))
+            {
                 echo json_encode($query);
 
                 exit();
-            } else {
+            }
+            else
+            {
                 $this->load->view($model->grid_view, array(
                     'grid' => new MY_Grid($model),
                     'read_only' => true,
                 ));
             }
-        } else {
+        }
+        else
+        {
             $this->layout->view($model->grid_view, array(
                 'grid' => new MY_Grid($model),
                 'read_only' => true,
@@ -755,5 +811,4 @@ public function gridpopup_barang_jasa($model = null)
     }
 
 }
-
 ?>
