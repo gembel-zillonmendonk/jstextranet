@@ -53,7 +53,10 @@ foreach ($form->model->primary_keys as $v) {
                             echo form_multiselect($v);
                             break;
                         case 'checkbox':
-                            echo form_checkbox($v);
+                            $opt = $v;
+                            unset($opt['name'], $opt['options'], $opt['value']);
+                            $opt = $form->implodeAssoc(' ', $opt);
+                            echo form_checkbox($v['name'], 1, $v['value'] ? true : false, $opt);
                             break;
                         case 'radiobutton':
                             echo form_radio($v);

@@ -187,6 +187,16 @@ class MY_Model extends CI_Model
 
         $this->db->where($where);
 
+        if(isset($_FILES))
+        {
+            $files = $_FILES;
+            foreach ($files as $k => $v){
+                $key = is_array($v['name']) ? array_keys($v['name']) : $k;
+                $key = is_array($key) ? $key[0] : $key;
+                $this->attributes[$key] = is_array($v['name']) ? $v['name'][$key] : $v['name'];
+            }
+        }
+        
         $ret = null;
         if (!$this->db->count_all_results($this->table))
             $ret = $this->_insert();

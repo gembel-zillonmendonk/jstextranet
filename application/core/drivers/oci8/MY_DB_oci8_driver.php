@@ -13,7 +13,7 @@ class MY_DB_oci8_driver extends CI_DB_oci8_driver {
     
         // change datatime format to 'YYYY-MM-DD HH24:MI:SS'
         $this->query("alter session set nls_date_format='YYYY-MM-DD HH24:MI:SS'");
-        
+
         log_message('debug', 'Extended DB driver class instantiated!');
     }
 
@@ -36,6 +36,9 @@ class MY_DB_oci8_driver extends CI_DB_oci8_driver {
             }
             return FALSE;
         }
+        
+        $owner = $this->username;
+        
         $sql = "SELECT a.column_name as \"name\", a.data_length as \"size\", a.data_precision as \"precision\", a.data_scale as \"scale\", a.data_type as \"db_type\",
     a.nullable as \"allow_null\", a.data_default as \"default_value\",
     (   SELECT D.constraint_type
@@ -49,6 +52,7 @@ FROM ALL_TAB_COLUMNS A
 inner join ALL_OBJECTS B ON b.owner = a.owner and ltrim(B.OBJECT_NAME) = ltrim(A.TABLE_NAME)
 WHERE (b.object_type = 'TABLE' or b.object_type = 'VIEW')
 	and b.object_name = '$table'
+            and b.owner = '$owner'
 ORDER by a.column_id";
 
         $query = $this->query($sql);
@@ -81,6 +85,8 @@ ORDER by a.column_id";
             return FALSE;
         }
 
+        $owner = $this->username;
+        
         $sql = <<<EOD
 		SELECT D.constraint_type as CONSTRAINT_TYPE, C.COLUMN_NAME, C.position, D.r_constraint_name,
                 E.table_name as table_ref, f.column_name as column_ref,
@@ -91,6 +97,7 @@ ORDER by a.column_id";
         left join ALL_cons_columns F on F.OWNER = E.OWNER and F.constraint_name = E.constraint_name and F.position = c.position
         WHERE  C.table_name = '$table'
            and D.constraint_type <> 'P'
+           and C.owner = '$owner'
         order by d.constraint_name, c.position
 EOD;
         $query = $this->query($sql);
