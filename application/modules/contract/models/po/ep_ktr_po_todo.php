@@ -4,28 +4,7 @@ class ep_ktr_po_todo extends MY_Model {
 
     public $table = 'EP_KTR_PO';
     
-    public $sql_select = "( select b.*, x.nama_aktifitas, x.url, x.kode_proses, '' as ACT from (
-                                    select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_PO, KODE_KONTRAK, KODE_KANTOR, KODE_VENDOR
-                                    from EP_WKF_PROSES a
-                                    inner join (
-                                        select rtrim(xmlagg(xmlelement(e, '&' || key || '=' || value )).extract('//text()').extract('//text()') ,',') url, kode_proses 
-                                        from EP_WKF_PROSES_VARS
-                                        group by KODE_PROSES
-                                    ) b on a.kode_proses = b.kode_proses
-                                    inner join EP_WKF_AKTIFITAS c on A.KODE_AKTIFITAS = C.KODE_AKTIFITAS
-                                    inner join (
-                                        select a.kode_proses,
-                                                MAX(CASE WHEN b.key = 'KODE_PO' THEN b.value ELSE NULL END) AS KODE_PO,
-                                                MAX(CASE WHEN b.key = 'KODE_KONTRAK' THEN b.value ELSE NULL END) AS KODE_KONTRAK,
-                                                MAX(CASE WHEN b.key = 'KODE_KANTOR' THEN b.value ELSE NULL END) AS KODE_KANTOR,
-                                                MAX(CASE WHEN b.key = 'KODE_VENDOR' THEN b.value ELSE NULL END) AS KODE_VENDOR
-                                        from ep_wkf_proses a
-                                        inner join ep_wkf_proses_vars b on a.kode_proses = b.kode_proses
-                                        group by a.kode_proses
-                                    ) d on a.kode_proses = d.kode_proses
-                                    where kode_wkf = 64 and tanggal_selesai is null and kode_aplikasi = 2
-                                ) x inner join EP_KTR_PO b on x.KODE_KONTRAK = b.KODE_KONTRAK and x.KODE_PO = b.KODE_PO and x.KODE_KANTOR = b.KODE_KANTOR and x.KODE_VENDOR = b.KODE_VENDOR
-                                where STATUS = 'O')";
+    public $sql_select = null;
     
     public $columns_conf = array(
         'KODE_KONTRAK',
@@ -48,6 +27,19 @@ class ep_ktr_po_todo extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
+        
+        $wkf = new Workflow();
+        $kode_wkf = 64; //work order
+        $pivot_query = $wkf->get_pivot_query("kode_wkf = $kode_wkf and tanggal_selesai is null and kode_aplikasi = 2");
+        
+        $this->sql_select = "(
+            select a.*, x.kode_proses, x.nama_aktifitas, x.url, '' as ACT 
+            from EP_KTR_PO a
+            inner join (
+                $pivot_query
+            ) x on x.KODE_PO = a.KODE_PO and x.KODE_KONTRAK = a.KODE_KONTRAK and x.kode_kantor = a.kode_kantor and x.kode_vendor = a.kode_vendor
+            where STATUS = 'A'
+        )";
         
         $this->js_grid_completed = '
                 var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
