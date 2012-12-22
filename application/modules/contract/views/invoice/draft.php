@@ -116,18 +116,18 @@ if (count($_REQUEST) > 0) {
         }
     });
     
-    $(document).ready(function(){
-        $('#selesai').live('click', function(){
-            var f = $("#id_form_ep_ktr_invoice");
-            var params = "KODE_KONTRAK="+$("#id_ep_ktr_invoice_kode_kontrak", f).val()
-                +"&KODE_KANTOR="+$("#id_ep_ktr_invoice_kode_kantor", f).val()
-                +"&KODE_INVOICE="+$("#id_ep_ktr_invoice_kode_invoice", f).val()
-                +"&KODE_VENDOR="+$("#id_ep_ktr_invoice_kode_vendor", f).val();
-            
-            if(params.length > 0)
-                window.location = '<?php echo site_url('/wkf/start?kode_wkf=62&referer_url=/contract/invoice/monitoring&') ?>' + params;
-        });
-    });
+//    $(document).ready(function(){
+//        $('#selesai').live('click', function(){
+//            var f = $("#id_form_ep_ktr_invoice");
+//            var params = "KODE_KONTRAK="+$("#id_ep_ktr_invoice_kode_kontrak", f).val()
+//                +"&KODE_KANTOR="+$("#id_ep_ktr_invoice_kode_kantor", f).val()
+//                +"&KODE_INVOICE="+$("#id_ep_ktr_invoice_kode_invoice", f).val()
+//                +"&KODE_VENDOR="+$("#id_ep_ktr_invoice_kode_vendor", f).val();
+//            
+//            if(params.length > 0)
+//                window.location = '<?php echo site_url('/wkf/start?kode_wkf=62&referer_url=/contract/invoice/monitoring&') ?>' + params;
+//        });
+//    });
     
     /**
      * http://stackoverflow.com/a/10997390/11236

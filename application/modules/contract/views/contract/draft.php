@@ -78,20 +78,39 @@ if (count($_REQUEST) > 0) {
             $(el).click(function() {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
-                        success: function(){
+                        success: function(data){
                             validator.prepareForm();
                             validator.hideErrors();
                             
                             //                            alert($("#id_ep_ktr_kontrak_kode_kontrak", f).val());
                             //                            alert(window.location);
                             
-                            var params = "KODE_KONTRAK="+$("#id_ep_ktr_kontrak_kode_kontrak", f).val()
-                                +"&KODE_KANTOR="+$("#id_ep_ktr_kontrak_kode_kantor", f).val()
-                                +"&KODE_TENDER="+$("#id_ep_ktr_kontrak_kode_tender", f).val()
-                                +"&KODE_VENDOR="+$("#id_ep_ktr_kontrak_kode_vendor", f).val();
+                            var KODE_TENDER = $("input[name='EP_KTR_KONTRAK[KODE_TENDER]']", data).val();
+                            var KODE_KONTRAK = $("input[name='EP_KTR_KONTRAK[KODE_KONTRAK]']", data).val();
+                            var KODE_KANTOR = $("input[name='EP_KTR_KONTRAK[KODE_KANTOR]']", data).val();
+                            var KODE_VENDOR = $("input[name='EP_KTR_KONTRAK[KODE_VENDOR]']", data).val();
+                            $("#id_form_ep_ktr_po").replaceWith(data);
+                            f = data;
+                            
+                            var params = "KODE_TENDER="+KODE_TENDER
+                                +"&KODE_KONTRAK="+KODE_KONTRAK
+                                +"&KODE_KANTOR="+KODE_KANTOR
+                                +"&KODE_VENDOR="+KODE_VENDOR;
+                            
+//                            var params = "KODE_KONTRAK="+$("#id_ep_ktr_kontrak_kode_kontrak", f).val()
+//                                +"&KODE_KANTOR="+$("#id_ep_ktr_kontrak_kode_kantor", f).val()
+//                                +"&KODE_TENDER="+$("#id_ep_ktr_kontrak_kode_tender", f).val()
+//                                +"&KODE_VENDOR="+$("#id_ep_ktr_kontrak_kode_vendor", f).val();
                             //reload page
                             //window.location = $site_url +"/contract/create_draft?" + params;
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=6&referer_url=/contract/todo&') ?>' + params;
+                            //window.location = '<?php echo site_url('/wkf/start?kode_wkf=6&referer_url=/contract/todo&') ?>' + params;
+                            
+                            var newURL = window.location.href
+                            newURL = updateURLParameter(newURL, 'KODE_KONTRAK', KODE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'KODE_KANTOR', KODE_KANTOR);
+                            newURL = updateURLParameter(newURL, 'KODE_VENDOR', KODE_VENDOR);
+                            newURL = updateURLParameter(newURL, 'KODE_TENDER', KODE_TENDER);
+                            window.location = newURL;  
                         },
                         error: function(){
                             alert('Data gagal disimpan')
@@ -115,4 +134,26 @@ if (count($_REQUEST) > 0) {
 //        });
 //    });
     
+    /**
+     * http://stackoverflow.com/a/10997390/11236
+     */
+    function updateURLParameter(url, param, paramVal){
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
 </script>
