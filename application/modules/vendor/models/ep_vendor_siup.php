@@ -38,7 +38,7 @@ class Ep_vendor_siup extends MY_Model
         
         // set default value here
         $CI =& get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
 }

@@ -45,13 +45,13 @@ class Ep_vendor_alamat extends MY_Model
 
         // set default value here
         $CI = & get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
     
     function _default_scope()
     {
         $CI = & get_instance();
-        return ' KODE_VENDOR = '.$CI->session->userdata('user_id');
+        return ' KODE_VENDOR = '.$CI->session->userdata('kode_vendor');
     }
 }
 ?>

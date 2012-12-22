@@ -176,7 +176,7 @@
                         $('#error-box p').append(cList).parent().show();
                     }
                     else{
-                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=51&referer_url=/vendor/monitor_update&KODE_VENDOR=') . $this->session->userdata('user_id') ?>';
+                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=51&referer_url=/vendor/monitor_update&KODE_VENDOR=') . $this->session->userdata('kode_vendor') ?>';
                     }
                 }
             });

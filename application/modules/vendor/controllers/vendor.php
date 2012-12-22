@@ -21,7 +21,7 @@ class vendor extends MY_Controller
         //$this->session->set_userdata('user_id', '512');
         //$this->session->set_userdata('user_id', '7827400');
 
-        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('user_id');
+        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
         $this->rules = array(
             '0' => array(// tabs-1
                 array('model' => 'ep_vendor_perusahaan', 'label' => 'NAMA PERUSAHAAN', 'rules' => 'required', 'where' => $this->where),
@@ -80,7 +80,7 @@ class vendor extends MY_Controller
     public function update()
     {
         $is_success = '';
-        $kode_vendor = $this->session->userdata('user_id');
+        $kode_vendor = $this->session->userdata('kode_vendor');
         $param = array(
             array('name' => ':p1', 'value' => $kode_vendor, 'length' => -1, 'type' => SQLT_INT),
 //           array('name'=>':a2', 'value'=>&$is_success),
@@ -91,7 +91,7 @@ class vendor extends MY_Controller
         $sql = "select * 
                 from ep_wkf_proses a
                 where kode_wkf = 51
-                and parameter = '{\"KODE_VENDOR\":\"". $this->session->userdata('user_id') ."\"}'
+                and parameter = '{\"KODE_VENDOR\":\"". $this->session->userdata('kode_vendor') ."\"}'
                 and tanggal_selesai is null";
         
         $row = $this->db->query($sql)->row_array();
@@ -101,7 +101,7 @@ class vendor extends MY_Controller
         
         $this->db->query("
             begin
-                PROC_EP_VENDOR_COPY_TO_TEMP(" . $this->session->userdata('user_id') . "); 
+                PROC_EP_VENDOR_COPY_TO_TEMP(" . $this->session->userdata('kode_vendor') . "); 
             end;", FALSE, FALSE);
         
         $this->layout->view('vendor/update');

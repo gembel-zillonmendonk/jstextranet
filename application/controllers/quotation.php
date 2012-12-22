@@ -20,7 +20,7 @@ class quotation extends CI_Controller {
         $this->session->set_userdata('user_id', '512');
         //$this->session->set_userdata('user_id', '7827400');
 
-        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('user_id');
+        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
         $this->rules = array(
             '0' => array(// tabs-1
                 array('model' => 'ep_vendor_perusahaan', 'label' => 'NAMA PERUSAHAAN', 'rules' => 'required', 'where' => $this->where),
@@ -72,7 +72,7 @@ class quotation extends CI_Controller {
     }
 
     public function grid() {
-        $query = $this->db->query('SELECT * FROM vw_ext_todo WHERE KODE_VENDOR = ' . $this->session->userdata('user_id'));
+        $query = $this->db->query('SELECT * FROM vw_ext_todo WHERE KODE_VENDOR = ' . $this->session->userdata('kode_vendor'));
 
         $gopts = array(
             'page' => (isset($_REQUEST['page']) ? $_REQUEST['page'] : 1),
@@ -145,7 +145,7 @@ class quotation extends CI_Controller {
 
     public function update() {
         $is_success = '';
-        $kode_vendor = $this->session->userdata('user_id');
+        $kode_vendor = $this->session->userdata('kode_vendor');
         $param = array(
             array('name' => ':p1', 'value' => $kode_vendor, 'length' => -1, 'type' => SQLT_INT),
 //           array('name'=>':a2', 'value'=>&$is_success),
@@ -154,7 +154,7 @@ class quotation extends CI_Controller {
 
         $this->db->query("
             begin 
-            EPROC.PROC_EP_VENDOR_COPY_TO_TEMP( " . $this->session->userdata('user_id') . "); 
+            EPROC.PROC_EP_VENDOR_COPY_TO_TEMP( " . $this->session->userdata('kode_vendor') . "); 
             end;", FALSE, FALSE);
         $this->layout->view('vendor/update');
     }

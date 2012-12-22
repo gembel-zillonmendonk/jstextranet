@@ -29,7 +29,7 @@ class ep_ktr_perubahan extends MY_Model {
         parent::__construct();
         $this->init();
 
-        $rows = $this->db->query("select kode_kontrak, no_kontrak from EP_KTR_KONTRAK where status = 'O' and kode_vendor = " . $this->session->userdata('user_id'))->result_array();
+        $rows = $this->db->query("select kode_kontrak, no_kontrak from EP_KTR_KONTRAK where status = 'O' and kode_vendor = " . $this->session->userdata('kode_vendor'))->result_array();
         $options = array('' => '');
         foreach ($rows as $k => $v) {
             $options[$v['KODE_KONTRAK']] = $v['NO_KONTRAK'];

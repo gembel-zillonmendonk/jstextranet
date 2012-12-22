@@ -13,7 +13,7 @@ class Account extends MX_Controller {
         //$this->session->set_userdata('user_id', '512');
         //$this->session->set_userdata('user_id', '7827400');
 
-        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('user_id');
+        $this->where = 'KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
         $this->rules = array(
             '0' => array(// tabs-1
                 array('model' => 'vendor/ep_vendor_perusahaan', 'label' => 'NAMA PERUSAHAAN', 'rules' => 'required', 'where' => $this->where),
@@ -74,7 +74,7 @@ class Account extends MX_Controller {
             $row = $query->row();
 
             if (count($row) > 0 && $row->PASSWRD == md5($password)) {
-                $this->session->set_userdata('user_id', $row->KODE_VENDOR);
+                $this->session->set_userdata('kode_vendor', $row->KODE_VENDOR);
                 $this->session->set_userdata('username', $row->KODE_LOGIN);
                 $this->session->set_userdata('nama_vendor', $row->NAMA_VENDOR);
 
@@ -107,7 +107,7 @@ class Account extends MX_Controller {
     }
 
     public function complete_registration() {
-        $query = $this->db->query('SELECT coalesce(HALAMAN_SELANJUTNYA, \'0\') as HALAMAN_SELANJUTNYA FROM EP_VENDOR WHERE KODE_VENDOR = ' . $this->session->userdata('user_id'));
+        $query = $this->db->query('SELECT coalesce(HALAMAN_SELANJUTNYA, \'0\') as HALAMAN_SELANJUTNYA FROM EP_VENDOR WHERE KODE_VENDOR = ' . $this->session->userdata('kode_vendor'));
         $data = $query->row_array();
         $ap = $data['HALAMAN_SELANJUTNYA'];
 
@@ -129,7 +129,7 @@ class Account extends MX_Controller {
                 exit();
             } else {
                 if ($np < $cnt)
-                    $this->db->query('UPDATE EP_VENDOR set HALAMAN_SELANJUTNYA = coalesce(HALAMAN_SELANJUTNYA, \'0\') + 1 WHERE KODE_VENDOR = ' . $this->session->userdata('user_id'));
+                    $this->db->query('UPDATE EP_VENDOR set HALAMAN_SELANJUTNYA = coalesce(HALAMAN_SELANJUTNYA, \'0\') + 1 WHERE KODE_VENDOR = ' . $this->session->userdata('kode_vendor'));
 
                 echo json_encode(array(
                     'active_tabs' => $np + 1,
@@ -150,7 +150,7 @@ class Account extends MX_Controller {
     public function fix_registration() {
         $this->load->library('workflow');
         $proses = $this->workflow->is_process_exists('5', array(
-            'KODE_VENDOR' => $this->session->userdata('user_id'),
+            'KODE_VENDOR' => $this->session->userdata('kode_vendor'),
                 ));
 
         //print_r($proses);
@@ -190,7 +190,7 @@ class Account extends MX_Controller {
             try {
                 $_POST['EP_VENDOR']['PASSWRD'] = md5($_POST['EP_VENDOR']['PASSWRD']);
 
-                $this->db->update('EP_VENDOR', $_POST['EP_VENDOR'], array('KODE_VENDOR' => $this->session->userdata('user_id')));
+                $this->db->update('EP_VENDOR', $_POST['EP_VENDOR'], array('KODE_VENDOR' => $this->session->userdata('kode_vendor')));
 //                $this->db->query("update ep_nomorurut set NOMORURUT = NOMORURUT + 1 where kode_nomorurut = 'VENDOR'");
             } catch (Exception $e) {
                 print($e);

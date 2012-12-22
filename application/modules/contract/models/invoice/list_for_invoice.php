@@ -39,7 +39,7 @@ class list_for_invoice extends MY_Model {
                 inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor and a.kode_vendor = b.kode_vendor
                 where a.status_bastp = 'A' and a.no_bastp not in (select no_bastp from ep_ktr_invoice_item)
             ) a inner join ep_vendor b on a.kode_vendor = b.kode_vendor
-            where b.kode_vendor = '".$this->session->userdata('user_id')."'
+            where b.kode_vendor = '".$this->session->userdata('kode_vendor')."'
             group by a.kode_kontrak, a.no_kontrak, a.kode_vendor, a.kode_kantor, b.nama_vendor
         )";
         

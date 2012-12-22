@@ -285,7 +285,7 @@ class MY_Model extends CI_Model
     {
         //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("Y-m-d")."','YYYY-MM-DD')", FALSE);
         $this->attributes['TGL_REKAM'] = date("Y-m-d");
-        $this->attributes['PETUGAS_REKAM'] = $this->session->userdata('user_id');
+        $this->attributes['PETUGAS_REKAM'] = $this->session->userdata('kode_vendor');
     }
 
     protected function _after_insert()
@@ -297,7 +297,7 @@ class MY_Model extends CI_Model
     {
         //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("Y-m-d")."','YYYY-MM-DD')", FALSE);
         $this->attributes['TGL_UBAH'] = date("Y-m-d");
-        $this->attributes['PETUGAS_UBAH'] = $this->session->userdata('user_id');
+        $this->attributes['PETUGAS_UBAH'] = $this->session->userdata('kode_vendor');
     }
 
     protected function _after_update()

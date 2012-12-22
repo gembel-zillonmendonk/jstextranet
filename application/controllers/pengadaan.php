@@ -134,7 +134,7 @@ class Pengadaan extends MY_Controller
     function pekerjaan() {
         $sql = "SELECT PTVS_STATUS ";
          $sql .= " FROM VW_PGD_PEKERJAAN_VENDOR ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
          $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
               

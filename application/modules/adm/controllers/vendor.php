@@ -28,7 +28,7 @@ class vendor extends CI_Controller
     public function activation()
     {
         // validation rules
-        $where = 'KODE_VENDOR = ' . $this->session->userdata('user_id');
+        $where = 'KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
         $rules = array(
             // tabs-1
             array('model' => 'ep_vendor_perusahaan', 'label' => 'NAMA PERUSAHAAN', 'rules' => 'required', 'where' => $where),

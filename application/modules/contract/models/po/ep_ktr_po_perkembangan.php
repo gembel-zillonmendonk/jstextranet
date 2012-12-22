@@ -35,7 +35,7 @@ class ep_ktr_po_perkembangan extends MY_Model {
             $this->attributes['KODE_PO'] = $_REQUEST['KODE_PO'];
             $this->attributes['KODE_KONTRAK'] = $_REQUEST['KODE_KONTRAK'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
-            $this->attributes['KODE_VENDOR'] = $this->session->userdata('user_id');
+            $this->attributes['KODE_VENDOR'] = $this->session->userdata('kode_vendor');
 
             // copy default value from ep_ktr_kontrak
             $sql = "select coalesce(b.kode_perkembangan, 0) as kode_perkembangan, a.nama_vendor, a.nama_pembuat, a.tgl_mulai, a.tgl_akhir, a.catatan_po, a.kode_kontrak, a.kode_kantor, a.kode_po

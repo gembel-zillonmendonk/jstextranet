@@ -72,7 +72,7 @@ class Ep_vendor_temp_perusahaan extends MY_Model
 
         // set default value here
         $CI = & get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
 
         $this->elements_conf['VENDOR_TIPE']['value'] = array('GENERAL SUPPLIER');
     }
@@ -91,7 +91,7 @@ class Ep_vendor_temp_perusahaan extends MY_Model
                     'KODE_VENDOR' => $this->attributes['KODE_VENDOR'],
                     'TIPE_VENDOR' => $v,
                     'TGL_REKAM' => date("Y-m-d"),
-                    'PETUGAS_REKAM' => $this->session->userdata('user_id'),
+                    'PETUGAS_REKAM' => $this->session->userdata('kode_vendor'),
                 );
 
                 $this->db->insert('EP_VENDOR_TEMP_TIPE', $data);

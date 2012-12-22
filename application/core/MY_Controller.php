@@ -10,7 +10,7 @@ class MY_Controller extends MX_Controller
     {
         parent::__construct();
         // check login session
-        $user_id = $this->session->userdata('user_id');
+        $user_id = $this->session->userdata('kode_vendor');
         if (!$user_id)
             redirect('account/login');
 

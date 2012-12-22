@@ -14,13 +14,13 @@ class Home extends MY_Controller
     }
     
     function index() {
-         $this->session->userdata('user_id');   
+         $this->session->userdata('kode_vendor');   
          
          // Undangan Pengadaan
          
          $sql = "SELECT KODE_TENDER, KODE_KANTOR ";
          $sql .= " FROM VW_PGD_PEKERJAAN_VENDOR ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND PTVS_STATUS = 1";   
          
           
@@ -31,7 +31,7 @@ class Home extends MY_Controller
          
          $sql = "SELECT KODE_TENDER, KODE_KANTOR ";
          $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND STATUS in  (2,20) ";   
          
          $query = $this->db->query($sql);
@@ -41,7 +41,7 @@ class Home extends MY_Controller
          
          $sql = "SELECT KODE_TENDER, KODE_KANTOR ";
          $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND STATUS in  (3,21) ";   
          
          $query = $this->db->query($sql);
@@ -51,7 +51,7 @@ class Home extends MY_Controller
          
          $sql = "SELECT KODE_TENDER, KODE_KANTOR ";
          $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND STATUS in  (11) ";   
          
          $query = $this->db->query($sql);
@@ -61,7 +61,7 @@ class Home extends MY_Controller
          
          $sql = "SELECT KODE_TENDER, KODE_KANTOR ";
          $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND STATUS in  (10) ";   
          
          $query = $this->db->query($sql);

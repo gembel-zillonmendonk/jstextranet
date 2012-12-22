@@ -66,7 +66,7 @@ class ep_ktr_perubahan_todo extends MY_Model {
     function _default_scope() {
         parent::_default_scope();
         
-        return ' KODE_VENDOR = '.$this->session->userdata('user_id');
+        return ' KODE_VENDOR = '.$this->session->userdata('kode_vendor');
         
     }
 }

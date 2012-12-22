@@ -24,13 +24,13 @@ class ep_ktr_invoice extends MY_Model {
         parent::__construct();
         $this->init();
         
-        $this->attributes['KODE_VENDOR'] = $this->session->userdata('user_id');
+        $this->attributes['KODE_VENDOR'] = $this->session->userdata('kode_vendor');
         
         // set dropdown value for KODE_KONTRAK
 //        $sql = "select distinct b.kode_kontrak as KEY, b.no_kontrak as VAL
 //                from ep_ktr_jangka_kontrak a
 //                inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
-//                where a.status_bastp = 'O' and b.kode_vendor = '".$this->session->userdata('user_id')."'
+//                where a.status_bastp = 'O' and b.kode_vendor = '".$this->session->userdata('kode_vendor')."'
 //                group by b.kode_kontrak, b.no_kontrak";
 //        
 //        $sql = "select b.kode_kontrak, b.no_kontrak, b.kode_vendor, a.no_bastp

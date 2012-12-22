@@ -206,7 +206,7 @@
                         $('#error-box p').append(cList).parent().show();
                     }
                     else{
-                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=5&referer_url=/account/waiting_approval&KODE_VENDOR=') . $this->session->userdata('user_id') ?>';
+                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=5&referer_url=/account/waiting_approval&KODE_VENDOR=') . $this->session->userdata('kode_vendor') ?>';
                     }
                 }
             });
