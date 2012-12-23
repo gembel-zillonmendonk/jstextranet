@@ -13,13 +13,16 @@ if (count($_REQUEST) > 0) {
 <div class="accordion">
     <h3 href="<?php echo site_url('/contract/po/form/po.ep_ktr_po_perkembangan' . $params) ?>">HEADER</h3>
     <div></div>
+    <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_po_item_perkembangan_editor' . $params) ?>">ITEM</h3>
+    <div></div>
+<!--    
     <?php if (!isset($_REQUEST['KODE_PERKEMBANGAN']) || $_REQUEST['KODE_PERKEMBANGAN'] == 0): ?>
         <h3 href="<?php echo site_url('/contract/po/view_grid/po.ep_ktr_po_item' . $params) ?>">ITEM</h3>
     <?php else: ?>
         <h3 href="<?php echo site_url('/contract/po/grid_form/po.ep_ktr_po_item_perkembangan' . $params) ?>">ITEM</h3>
     <?php endif; ?>
 
-    <div></div>
+    <div></div>-->
 </div>
 <script>
     $(".accordion").each(function(){
@@ -66,6 +69,37 @@ if (count($_REQUEST) > 0) {
             $(el).click(function() {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
+                        beforeSubmit: function(arr, $form, options) { 
+                            
+                            $grid = $("#grid_ep_ktr_po_item_perkembangan_editor");
+                            
+                            var ret = false;
+                            if($grid.length > 0) {   
+                                $("input[name='selected_items[]']", $grid).each(function(i){
+                                
+                                    var $input = $("input[name='selected_qty[]']", $(this).parent()).val();
+                                    if(parseInt($input) < 0){
+                                        alert("Jumlah item harus lebih besar dari nol");
+                                        return false;
+                                    }
+                                    
+                                    if(parseInt($input) > 0){
+                                        arr.push({ "name": "selected_items[]", "value": $(this).val() });
+                                        arr.push({ "name": "selected_qty[]", "value": $input });
+                                        ret = true;
+                                    }
+                                    
+                                });
+                                
+                                if(!ret)
+                                    alert("Harus ada qty perkembangan");
+                            }
+                        
+                            //                            var queryString = $.param(arr); 
+                            //                            alert(queryString);
+                            // return false to cancel submit                  
+                            return ret;
+                        },
                         success: function(data){
                             validator.prepareForm();
                             validator.hideErrors();

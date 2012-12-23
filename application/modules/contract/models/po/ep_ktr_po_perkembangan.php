@@ -77,40 +77,75 @@ class ep_ktr_po_perkembangan extends MY_Model {
         parent::_after_insert();
 
         $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_PO_PERKEMBANGAN'");
+    }
+
+    function _after_save() {
+        parent::_after_save();
         
         if (isset($this->attributes['KODE_PO']) != "" &&
                 isset($this->attributes['KODE_KANTOR']) != "" &&
                 isset($this->attributes['KODE_KONTRAK']) != "") {
 
-            $sql = "SELECT KODE_PO_ITEM, KODE_PO, KODE_KONTRAK, KODE_KANTOR
-                    FROM EP_KTR_PO_ITEM
-                    WHERE KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'"
-                    . " AND KODE_PO= '" . $this->attributes['KODE_PO'] . "'"
-                    . " AND KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "'";
-
-            $rows = $this->db->query($sql)->result_array();
-
+            $sel_items = $_REQUEST['selected_items'];
+            $sel_qty = $_REQUEST['selected_qty'];
             
-            if (count($rows) > 0) {
-                foreach ($rows as $v) {
+            foreach ($sel_items as $k => $v) {
+
+                parse_str($v, $output); // $v is querystring format
+
+                $data['KODE_PO'] = $output['KODE_PO'];
+                $data['KODE_PO_ITEM'] = $output['KODE_PO_ITEM'];
+                $data['KODE_KONTRAK'] = $output['KODE_KONTRAK'];
+                $data['KODE_KANTOR'] = $output['KODE_KANTOR'];
+                $data['KODE_ITEM_PERKEMBANGAN'] = $output['KODE_ITEM_PERKEMBANGAN'];
+                $data['KODE_PERKEMBANGAN'] = $this->attributes['KODE_PERKEMBANGAN'];
+                $data['QTY_PERKEMBANGAN'] = $sel_qty[$k];
+                
+                if ($data['KODE_ITEM_PERKEMBANGAN'] > 0)  {
+                    $this->db->update("ep_ktr_po_item_perkembangan", $data, array(
+                        'KODE_ITEM_PERKEMBANGAN' => $data['KODE_ITEM_PERKEMBANGAN']
+                    ));
+                }
+                else {
                     $row = $this->db->query("select nomorurut + 1 as NEXT_ID 
                                 from ep_nomorurut 
                                 where kode_nomorurut = 'EP_KTR_PO_ITEM_PERKEMBANGAN'")->row_array();
 
-                    $data = array();
-                    $v['KODE_ITEM_PERKEMBANGAN'] = $row['NEXT_ID'];
-                    $v['KODE_PERKEMBANGAN'] = $this->attributes['KODE_PERKEMBANGAN'];
-            
-                    $this->db->insert("ep_ktr_po_item_perkembangan", $v);
+                    $data['KODE_ITEM_PERKEMBANGAN'] = $row['NEXT_ID'];
                     
-                    $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 
-                        where kode_nomorurut = 'EP_KTR_PO_ITEM_PERKEMBANGAN'");
+
+                    $this->db->insert("ep_ktr_po_item_perkembangan", $data);
+                    $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_PO_ITEM_PERKEMBANGAN'");
                 }
             }
+            
+//            $sql = "SELECT KODE_PO_ITEM, KODE_PO, KODE_KONTRAK, KODE_KANTOR
+//                    FROM EP_KTR_PO_ITEM
+//                    WHERE KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'"
+//                    . " AND KODE_PO= '" . $this->attributes['KODE_PO'] . "'"
+//                    . " AND KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "'";
+//
+//            $rows = $this->db->query($sql)->result_array();
+//
+//            
+//            if (count($rows) > 0) {
+//                foreach ($rows as $v) {
+//                    $row = $this->db->query("select nomorurut + 1 as NEXT_ID 
+//                                from ep_nomorurut 
+//                                where kode_nomorurut = 'EP_KTR_PO_ITEM_PERKEMBANGAN'")->row_array();
+//
+//                    $data = array();
+//                    $v['KODE_ITEM_PERKEMBANGAN'] = $row['NEXT_ID'];
+//                    $v['KODE_PERKEMBANGAN'] = $this->attributes['KODE_PERKEMBANGAN'];
+//            
+//                    $this->db->insert("ep_ktr_po_item_perkembangan", $v);
+//                    
+//                    $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 
+//                        where kode_nomorurut = 'EP_KTR_PO_ITEM_PERKEMBANGAN'");
+//                }
+//            }
         }
-
     }
-
 }
 
 ?>
