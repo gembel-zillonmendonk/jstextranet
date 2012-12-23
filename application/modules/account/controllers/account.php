@@ -10,6 +10,8 @@ class Account extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
+        
+        $this->load->library('layout');
         //$this->session->set_userdata('user_id', '512');
         //$this->session->set_userdata('user_id', '7827400');
 
@@ -82,8 +84,13 @@ class Account extends MX_Controller {
             }
         }
 
-
-        $this->load->view('account/layout_login');
+        if ($this->_is_ajax_request()) {
+            //$this->load->setLayout('layout_nomenu');
+            $this->load->view('account/login');
+        }else{
+            $this->layout->setLayout('account/layout_login');
+            $this->layout->view('account/login');
+        }
     }
 
     public function registration() {
@@ -172,7 +179,7 @@ class Account extends MX_Controller {
             try {
                 $_POST['EP_VENDOR']['PASSWRD'] = md5($_POST['EP_VENDOR']['PASSWRD']);
 
-                $this->db->update('EP_VENDOR',  array('PASSWRD' => $_POST['EP_VENDOR']['PASSWRD']), array(
+                $this->db->update('EP_VENDOR', array('PASSWRD' => $_POST['EP_VENDOR']['PASSWRD']), array(
                     'ALAMAT_EMAIL' => $_POST['EP_VENDOR']['ALAMAT_EMAIL'],
                     'KODE_LOGIN' => $_POST['EP_VENDOR']['KODE_LOGIN']
                 ));
