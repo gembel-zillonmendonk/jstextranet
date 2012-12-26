@@ -10,7 +10,8 @@ if (count($_REQUEST) > 0) {
 }
 ?>
 <div class="accordion">
-    
+    <h3 href="<?php echo site_url('/contract/milestone/view_form/milestone.ep_ktr_jangka_kontrak_view' . $params) ?>">DETAIL PROGRESS YANG DIAJUKAN</h3>
+    <div></div>
     <h3 href="<?php echo site_url('/contract/milestone/view_grid/milestone.ep_ktr_jangka_perkembangan' . $params) ?>">ITEM</h3>
     <div></div>
     

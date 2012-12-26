@@ -14,7 +14,7 @@ class ep_ktr_jangka_kontrak_bastp extends MY_Model {
         'NO_BASTP',
         'TGL_BASTP',
         'JUDUL_BASTP',
-        'LAMPIRAN_BASTP',
+        'LAMPIRAN_BASTP'=>array('type'=>'file'),
 //        'TGL_BUAT_BASTP',
 //        'STATUS_BASTP',
 //        'POSISI_PERSETUJUAN',
