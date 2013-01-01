@@ -108,6 +108,7 @@ if (count($_REQUEST) > 0) {
                             var kode_po = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_PO]']", data).val();
                             var kode_kontrak = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_KONTRAK]']", data).val();
                             var kode_kantor = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_KANTOR]']", data).val();
+                            var persentasi_perkembangan = $("input[name='EP_KTR_PO_PERKEMBANGAN[PERSENTASI_PERKEMBANGAN]']", data).val();
                             
                             $("#id_form_ep_ktr_po_perkembangan").replaceWith(data);
                             f = data;
@@ -124,6 +125,8 @@ if (count($_REQUEST) > 0) {
                             //window.location = '<?php echo site_url('/wkf/start?kode_wkf=64&referer_url=/contract/po/list_todo&') ?>' + params;
                             
                             var newURL = updateURLParameter(window.location.href, 'KODE_PERKEMBANGAN', kode_perkembangan);
+                            newURL = updateURLParameter(newURL, 'PERSENTASI_PERKEMBANGAN', persentasi_perkembangan);
+                            
                             window.location = newURL;
                         },
                         error: function(){

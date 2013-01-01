@@ -29,7 +29,7 @@ class ep_ktr_po_bastp extends MY_Model {
 //        'STATUS_BASTP',
 //        'TGL_PERSETUJUAN_BASTP',
         'KETERANGAN_BASTP',
-        'LAMPIRAN_BASTP',
+        'LAMPIRAN_BASTP'=>array('type'=>'file'),
     );
     public $dir = 'po';
 

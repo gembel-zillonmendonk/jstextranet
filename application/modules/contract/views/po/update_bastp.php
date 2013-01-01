@@ -15,6 +15,8 @@ if (count($_REQUEST) > 0) {
     <div></div>
     <h3 href="<?php echo site_url('/contract/po/form/po.ep_ktr_po_bastp' . $params) ?>">INFORMASI BASTP/B</h3>
     <div></div>
+    <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_po_item_perkembangan' . $params) ?>">ITEM</h3>
+    <div></div>
 </div>
 <script>
     $(".accordion").each(function(){

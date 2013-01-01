@@ -67,7 +67,12 @@ foreach ($form->model->primary_keys as $v) {
                             echo form_input($v);
                             break;
                         case 'file':
+                            $this->load->helper('html');
                             echo form_upload($v);
+                            if (strlen($v['value']) > 0) {
+                                echo "<br/>";
+                                echo anchor($v['value'], "DOWNLOAD FILE");
+                            }
                             break;
                         case 'label':
                             echo form_label($v['value'], $v['id'], array("class" => "checkbox inline"));

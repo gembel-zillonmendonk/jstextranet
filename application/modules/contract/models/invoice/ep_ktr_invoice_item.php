@@ -93,15 +93,32 @@ class ep_ktr_invoice_item extends MY_Model {
     
     function _before_save() {
         parent::_before_save();
-
-        $row = $this->db->query("select mata_uang, persentasi, nilai_kontrak, (persentasi / 100) * nilai_kontrak as total
-                    from ep_ktr_jangka_kontrak a 
-                    inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
-                    where a.no_bastp = '" . $this->attributes['NO_BASTP'] ."'")->row_array();
+        $sql = "
+            select a.* from (
+                select b.kode_kontrak, b.no_kontrak, b.kode_vendor, b.kode_kantor, a.no_bastp, judul_bastp, keterangan_bastp, (a.persentasi / 100) * nilai_kontrak as total
+                from ep_ktr_jangka_kontrak a
+                inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
+                where a.status_bastp = 'A' and a.no_bastp not in (select no_bastp from ep_ktr_invoice_item)
+                union all
+                select b.kode_kontrak, b.no_kontrak, b.kode_vendor, b.kode_kantor, a.no_bastp, judul_bastp, keterangan_bastp, (a.persentasi / 100) * nilai_kontrak as total
+                from ep_ktr_termin_kontrak a
+                inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
+                where a.status_bastp = 'A' and a.no_bastp not in (select no_bastp from ep_ktr_invoice_item)
+                union all
+                select b.kode_kontrak, b.no_kontrak, b.kode_vendor, b.kode_kantor, a.no_bastp, a.judul_bastp, a.keterangan_bastp, sum(sub_total) as total
+                from ep_ktr_po a
+                inner join ep_ktr_po_item c on a.kode_po = c.kode_po
+                inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor and a.kode_vendor = b.kode_vendor
+                where a.status_bastp = 'A' and a.no_bastp not in (select no_bastp from ep_ktr_invoice_item)
+                group by b.kode_kontrak, b.no_kontrak, b.kode_vendor, b.kode_kantor, a.no_bastp, a.judul_bastp, a.keterangan_bastp
+            ) a
+            where a.no_bastp = '".$this->attributes['NO_BASTP']."'";
+        
+        $row = $this->db->query($sql)->row_array();
         
         $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
+        $this->attributes['KETERANGAN_BASTP'] = $row['JUDUL_BASTP'];
         $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
-        
     }
     
     function _before_insert() {
@@ -121,8 +138,7 @@ class ep_ktr_invoice_item extends MY_Model {
             $this->attributes['KODE_ITEM'] = $row['NEXT_ID'];
         }
     }
-
-    
+   
     public function _after_insert() {
         parent::_after_insert();
 
