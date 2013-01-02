@@ -80,7 +80,7 @@ class Account extends MX_Controller {
                 $this->session->set_userdata('username', $row->KODE_LOGIN);
                 $this->session->set_userdata('nama_vendor', $row->NAMA_VENDOR);
 
-                redirect('welcome/index');
+                redirect('home/index');
             }
         }
 

@@ -156,7 +156,7 @@
     </div>
     <h3 href="">ITEM KOMERSIAL</h3>
     <div>
-             <form id="frm_komersial" method="POST" action="" >
+             <form id="frm_komersial" method="POST" action="<?php echo base_url(); ?>index.php/pengadaan/penawaran_negosiasi" >
     
         <table class="ui-jqgrid-htable" style="width: 100%;" cellspacing="0" cellpadding="0" border="0" >
           <tr>
@@ -212,10 +212,12 @@
     <p align="center" id="peringkat" style="font-size: 18;font-weight: bold;color: red" >
         
      </p>
+     <!--
     <p align="center" >
         <button type="button" id="btnSimpan" >Simpan</button>
         <button type="button" id="btnKembali" >Kembali</button>
     </p>
+     -->
     
 </div>
 <div id="trace" ></div>
@@ -356,72 +358,30 @@
     
     
     $("#btnSimpan").click(function(){
-        
-                   if(validator_Penawaran.form()) {
-                    $("#frm_Penawaran").ajaxSubmit({
-                                //clearForm: false,
-                                success: function(msg){
-             
-                                                               
-                                        $("#frm_adm").ajaxSubmit({
-                                                     //clearForm: false,
-                                                     success: function(msg){
-                                                          //  alert(msg);
-                                                          //  $("#trace").html(msg);
-                                                        // alert(msg);
-                                                         //reload grid
-
-                                                                 $("#frm_teknis").ajaxSubmit({
-                                                                            //clearForm: false,
-                                                                            success: function(msg){
-                                                                                  
-                                                                                        $("#frm_komersial").ajaxSubmit({
-                                                                                                     //clearForm: false,
-                                                                                                     success: function(msg){
-                                                                                                             // alert(msg);
-                                                                                                             //$("#trace").html(msg);
-                                                                                                        // alert(msg);
-                                                                                                          //window.location.reload(1);
-                                                                                                          $("#peringkat").html(msg);
-                                                                                                            
-
-
-                                                                                                     },
-                                                                                                     error: function(){
-                                                                                                         alert('Data gagal disimpan')
-                                                                                                     }
-                                                                                         });
+                alert("Simpan");
+                /*
+                   if(validator_Penawaran.form()) { 
+                       
+                        $("#frm_komersial").ajaxSubmit({
+                                     //clearForm: false,
+                                     success: function(msg){
+                                             // alert(msg);
+                                             //$("#trace").html(msg);
+                                        // alert(msg);
+                                          //window.location.reload(1);
+                                       //   $("#peringkat").html(msg);
 
 
 
-
-                                                                            },
-                                                                            error: function(){
-                                                                                alert('Data gagal disimpan')
-                                                                            }
-                                                                });
-
+                                     },
+                                     error: function(){
+                                         alert('Data gagal disimpan')
+                                     }
+                         });
 
 
-                                                     },
-                                                     error: function(){
-                                                         alert('Data gagal disimpan')
-                                                     }
-                                         });
-
-             
-                    
-                    
-                                    
-                                     
-
-                                },
-                                error: function(){
-                                    alert('Data gagal disimpan')
-                                }
-                            });
-
-                 }    
+                 }
+                */ 
         
     })
     

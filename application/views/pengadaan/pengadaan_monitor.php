@@ -20,25 +20,11 @@
          
         <div id="list"></div>
     </div>
-    
-    <form id="frm_Pendaftaran" method="POST" action="<?php echo base_url() . "index.php/pengadaan/pendaftaran_add" ?>" >
-     
-    <input type="hidden" name="KODE_TENDER" value="<?php echo $KODE_TENDER; ?>" />
-    <input type="hidden" name="KODE_KANTOR" value="<?php echo $KODE_KANTOR; ?>" />
-    <input type="hidden" name="KODE_VENDOR" value="<?php echo $KODE_VENDOR; ?>" />
-    
-    <p align="center">
-        <label>Reason</label>
-    
-     
-    <select id="PVTS_STATUS" name="PVTS_STATUS" >
-        <option Value="0">PILIH</option>
-        <option Value="2">DAFTAR</option>
-        <option Value="-1">TIDAK IKUT</option>
-    </select> 
-   <button type="button" id="btnKirim" >KIRIM</button>
-    </p>
-    </form>
+    <p align="center" >
+        <button  type="button" id="btnKembali" >Kembali</button>    
+        
+    </p> 
+ 
       
 </div>
 <div id="trace" ></div>
@@ -48,27 +34,9 @@
     $(document).ready(function(){
         
         
-        $("#btnKirim").click(function(){ 
-            // alert("Kirim");
-            if ($("#PVTS_STATUS").val() != 0) {
-                       $("#frm_Pendaftaran").ajaxSubmit({
-                                             success: function(msg){
-                                                 
-                                            //  $("#trace").html(msg);
-                                            //  alert(msg);
-                                                  
-                                                 //reload grid
-                                                 //   window.location.reload();
-                                                  window.location = "<?php echo base_url() ."index.php/pengadaan/daftar_pekerjaan"; ?>";  
-                     
-                                             },
-                                             error: function(){
-                                                 alert('Data gagal disimpan')
-                                             }
-                                          
-                                      });
-            }
-            
+        $("#btnKembali").click(function(){ 
+            // alert("btnKembali");
+            window.location = "<?php echo base_url() . "index.php/pengadaan/monitor"; ?> "; 
     
         }); 
             

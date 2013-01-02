@@ -28,7 +28,7 @@ class Ep_pgd_penawaran_adm extends MY_Model
 
         // set default value here
         $CI = & get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
         $this->attributes['KODE_TENDER'] = 1;
 
         // get existing value 

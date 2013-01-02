@@ -10,7 +10,7 @@ class Home extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-       // $this->session->set_userdata('user_id', '512');
+       // $this->session->set_userdata('kode_vendor', '512');
     }
     
     function index() {

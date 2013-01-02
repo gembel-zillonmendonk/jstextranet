@@ -65,7 +65,7 @@ class Ep_pgd_sanggahan extends MY_Model
 
         // set default value here
         $CI = & get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
         
         // get selected value 
         $query = $this->db->query('SELECT KODE_TENDER, JUDUL_PEKERJAAN 

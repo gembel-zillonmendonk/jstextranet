@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("user_id"); ?></h3>
+    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan_monitor') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("user_id"); ?></h3>
     <div>
         <fieldset class="ui-widget-content">
         <legend>Pencarian</legend>
@@ -37,8 +37,7 @@
 
 
     $(document).ready(function(){
-        
-    
+         
 	$("#btnSrc").click(function() {
 	
 
@@ -73,15 +72,14 @@
                         myfilter.rules.push({field: myfield ,op:"eq",data:srcval},{field: myfield2 ,op:"cn",data:srcval2});
                 }
                  
-		var grid = $("#grid_ep_pgd_pekerjaan");
+		var grid = $("#grid_ep_pgd_pekerjaan_monitor");
 			
 	 
 		grid[0].p.search = myfilter.rules.length>0;
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
 	 
-		
-		alert(grid);
+		 
 		 
 		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
 		
@@ -119,12 +117,12 @@
     function fnProsesPekerjaan(str){
       
         
-        	 $('#grid_ep_pgd_pekerjaan').jqGrid('setSelection',str); 
-		 var selected = $('#grid_ep_pgd_pekerjaan').jqGrid('getGridParam', 'selrow');
+        	 $('#grid_ep_pgd_pekerjaan_monitor').jqGrid('setSelection',str); 
+		 var selected = $('#grid_ep_pgd_pekerjaan_monitor').jqGrid('getGridParam', 'selrow');
 		 
                  alert(selected);
                  if (selected) {
-                    selected = jQuery('#grid_ep_pgd_pekerjaan').jqGrid('getRowData',selected);
+                    selected = jQuery('#grid_ep_pgd_pekerjaan_monitor').jqGrid('getRowData',selected);
  
 		   
 		   var keys = <?php echo json_encode(Array ( 0  => "KODE_KOMENTAR" )); ?>;
@@ -146,7 +144,7 @@
                     */
 		}			
 		 
-		   window.location = "<?php echo base_url() . "index.php/pengadaan/pekerjaan"; ?>?" + str;
+		   window.location = "<?php echo base_url() . "index.php/pengadaan/view"; ?>?" + str;
 	
         
     }

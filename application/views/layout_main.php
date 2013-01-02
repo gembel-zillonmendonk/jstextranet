@@ -95,13 +95,13 @@
                         <div class="menu_c">
                             <div class="mn_item_container">
                                 <ul class="sf-menu">
-                                    <li><a href="#">HOME</a>
+                                    <li><a href="<?php echo site_url('/home') ?>">HOME</a>
 
                                     </li>
                                     <li><a href="#">MANAJEMEN PENGADAAN</a>
                                         <ul>
-                                            <li><a href="<?php echo site_url('/pengadaan/todo') ?>">Daftar Pekerjaan</a></li>
-                                            <li><a href="<?php echo site_url('/pengadaan/grid') ?>">Monitor Pengadaan</a></li>
+                                            <li><a href="<?php echo site_url('/pengadaan/daftar_pekerjaan') ?>">Daftar Pekerjaan</a></li>
+                                            <li><a href="<?php echo site_url('/pengadaan/monitor') ?>">Monitor Pengadaan</a></li>
                                             <li><a href="<?php echo site_url('/crud/form/ep_pgd_sanggahan') ?>">Mengajukan Sanggahan</a></li>
                                             <li><a href="<?php echo site_url('/crud/view_grid/ep_pgd_monitor_sanggahan') ?>">Monitor Sanggahan</a></li>
                                         </ul>

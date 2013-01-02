@@ -26,7 +26,7 @@ class Ep_pgd_todo extends MY_Model {
         
         // set default value here
         $CI = & get_instance();
-        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        $this->attributes['KODE_VENDOR'] = $CI->session->userdata('user_id');
     }
 
 }
