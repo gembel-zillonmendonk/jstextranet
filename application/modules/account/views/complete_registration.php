@@ -122,10 +122,10 @@
     </div>
 </div>
 <p>
-    <button type="button" id="batal">BATAL</button>
-    <button type="button" id="cetak">Cetak</button>
+<!--    <button type="button" id="batal">BATAL</button>
+    <button type="button" id="cetak">Cetak</button>-->
     <button type="button" id="selesai">Lanjutkan ke persetujuan</button>
-    <button type="button" id="lewat">Lewat & Selesai</button>
+<!--    <button type="button" id="lewat">Lewat & Selesai</button>-->
     <button type="button" id="selanjutnya">Simpan & Lanjutkan</button>
 </p>
 <script>

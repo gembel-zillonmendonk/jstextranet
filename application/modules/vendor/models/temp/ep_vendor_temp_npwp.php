@@ -24,8 +24,8 @@ class Ep_vendor_temp_npwp extends MY_Model
         'KOTA_NPWP' => array('required' => true),
         'PROPINSI_NPWP' => array('required' => true),
         'KODE_POS_NPWP' => array('required' => true),
-        'PKP_NPWP' => array('required' => true),
-        'NO_PKP_NPWP' => array('required' => true),
+        'PKP_NPWP' => array('required' => false),
+        'NO_PKP_NPWP' => array('required' => false),
     );
     public $columns_conf = array(
         'NO_NPWP',

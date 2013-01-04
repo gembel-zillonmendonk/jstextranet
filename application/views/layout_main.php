@@ -71,7 +71,14 @@
                     <table class="table_band_container" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="txt_logged">Anda Masuk Sebagai : <span class="txt_orange"><?php echo $this->session->userdata("nama_vendor"); ?></span></td>
-                            <td class="txt_date"><?php echo date("l, d F Y") ?></td>
+                            <td class="txt_date">
+                                <?php echo date("l, d F Y") ?>
+                                <?php 
+                                    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
+                                    /* Output: vrijdag 22 december 1978 */
+                                    echo strftime("%A %e %B %Y"); 
+                                ?>
+                            </td>
                             <td class="tools_container">
                                 <div class="tools_item"><a href="<?php echo site_url('/account/logout') ?>"><img src="<?php echo base_url('images/logout.png') ?>" alt="Keluar Aplikasi" name="logout" width="20" height="18" border="0" id="logout" onMouseOver="MM_swapImage('logout','','<?php echo base_url('images/logout_on.png') ?>',1)" onMouseOut="MM_swapImgRestore()"></a></div>
                                 <div class="tools_item"><a href="<?php echo site_url('/account/change_password') ?>"><img src="<?php echo base_url('images/pass.png') ?>" alt="Rubah Password" name="chg_pass" width="20" height="18" border="0" id="chg_pass" onMouseOver="MM_swapImage('chg_pass','','<?php echo base_url('images/pass_on.png') ?>',1)" onMouseOut="MM_swapImgRestore()"></a></div>

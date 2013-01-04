@@ -6,8 +6,8 @@
         <link href="<?php echo base_url('css/format.css') ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url('css/text.css') ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url('css/login.css') ?>" rel="stylesheet" type="text/css">
-        <script src="<?php echo base_url('js/SpryTabbedPanels.js') ?>" type="text/javascript"></script>
-        <link href="<?php echo base_url('css/SpryTabbedPanels.css') ?>" rel="stylesheet" type="text/css">
+<!--        <script src="<?php echo base_url('js/SpryTabbedPanels.js') ?>" type="text/javascript"></script>
+        <link href="<?php echo base_url('css/SpryTabbedPanels.css') ?>" rel="stylesheet" type="text/css">-->
         <link href="<?php echo base_url('css/data.css') ?>" rel="stylesheet" type="text/css">
     </head>
 
@@ -18,7 +18,14 @@
                     <table class="table_band_container" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="txt_logged">&nbsp;</td>
-                            <td class="txt_date">Senin, 01 September 2008</td>
+                            <td class="txt_date">
+                                <?php echo date("l, d F Y") ?>
+                                <?php 
+                                    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
+                                    /* Output: vrijdag 22 december 1978 */
+                                    echo strftime("%A %e %B %Y"); 
+                                ?>
+                            </td>
                             <td class="tools_container">&nbsp;</td>
                         </tr>
                     </table>
@@ -49,7 +56,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="table_content_container">
+                <td class="table_content_container" >
 
                     <table class="login_table_content" border="0" cellspacing="0" cellpadding="0">
                         <tr>
@@ -59,7 +66,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <td height="100%" valign="top"><div id="TabbedPanels1" class="TabbedPanels">
                                     <ul class="TabbedPanelsTabGroup">
                                         <li class="TabbedPanelsTab" tabindex="0">Pengumuman Pra-Kualifikasi</li>
@@ -312,7 +319,7 @@
                                     <img src="images/iproc_logo_big.png" width="170" height="70"><img src="images/logoverisign.gif" width="104" height="70">
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </td>
             </tr>
@@ -320,11 +327,11 @@
                 <td class="table_ornament">
                     <table width="900" align="center" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td class="table_orn_purple"><img src="images/blank.gif" width="10" height="5"></td>
-                            <td class="table_orn_green"><img src="images/blank.gif" width="10" height="5"></td>
-                            <td class="table_orn_orange"><img src="images/blank.gif" width="10" height="5"></td>
-                            <td class="table_orn_blue"><img src="images/blank.gif" width="10" height="5"></td>
-                            <td class="table_orn_yl_green"><img src="images/blank.gif" width="10" height="5"></td>
+                            <td class="table_orn_purple">&nbsp;</td>
+                            <td class="table_orn_green">&nbsp;</td>
+                            <td class="table_orn_orange">&nbsp;</td>
+                            <td class="table_orn_blue">&nbsp;</td>
+                            <td class="table_orn_yl_green">&nbsp;</td>
                         </tr>
                     </table>
                 </td>
@@ -333,12 +340,12 @@
                 <td class="table_footer">© 2008 Copyright <b>ADW Consulting</b> - All Right Reserved</td>
             </tr>
             <tr>
-                <td class="table_end"><img src="images/blank.gif" width="995" height="1"></td>
+                <td class="table_end">&nbsp;</td>
             </tr>
         </table>
         <script type="text/javascript">
             <!--
-            var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+            // var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
             //-->
         </script>
     </body>
