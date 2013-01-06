@@ -9,8 +9,8 @@ class Ep_vendor_sertifikat extends MY_Model
 {
     public $table = "EP_VENDOR_SERTIFIKAT";
     public $elements_conf = array(
-        'TIPE' => array('type' => 'dropdown', 'options' => array('MUTU' => 'MUTU', 'LAINNYA' => 'LAINNYA')),
-        'TIPE_LAIN',
+        'TIPE' => array('type' => 'dropdown', 'options' => array('MUTU' => 'MUTU', 'LINGKUNGAN HIDUP' => 'LINGKUNGAN HIDUP', 'PATEN DAN LISENSI' => 'PATEN DAN LISENSI', 'ASOSIASI PROFESI' => 'ASOSIASI PROFESI', 'LAINNYA' => 'LAINNYA')),
+//        'TIPE_LAIN',
         'NAMA',
         'NO_SERTIFIKAT',
         'PENERBIT',

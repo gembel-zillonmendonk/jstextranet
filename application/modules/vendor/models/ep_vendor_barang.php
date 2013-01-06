@@ -14,8 +14,8 @@ class Ep_vendor_barang extends MY_Model {
         'KODE_BARANG' => array('label' => 'JENIS BARANG', 'type' => 'dropdown', 'options' => null),
 //        'KETERANGAN'=> array('type'=>'text', 'readonly'=>true),
         'MEREK',
-        'SUMBER' => array('type' => 'dropdown', 'options' => array('LOKAL' => 'LOKAL', 'NASIONAL' => 'NASIONAL')),
-        'TIPE' => array('type' => 'dropdown', 'options' => array('AGENT' => 'AGENT', 'DISTRIBUTOR' => 'DISTRIBUTOR')),
+        'SUMBER' => array('type' => 'dropdown', 'options' => array('LOKAL' => 'LOKAL', 'IMPORT' => 'IMPORT')),
+        'TIPE' => array('type' => 'dropdown', 'options' => array('AGENT' => 'AGENT', 'DISTRIBUTOR' => 'DISTRIBUTOR', 'MANUFACTURE' => 'MANUFACTURE', 'NON AGENT' => 'NON AGENT', 'SOLE AGENT' => 'SOLE AGENT')),
     );
     public $validation = array(
         'NAMA_BARANG' => array('required' => true),
@@ -62,6 +62,17 @@ class Ep_vendor_barang extends MY_Model {
 
     function _before_save() {
         parent::_before_save();
+        // dropdown from table relation
+        $query = $this->db->query("select kode_barang, nama_subkelompok 
+            from MS_SUBKELOMPOK_BARANG 
+            where aktif = 'Y'
+            and kode_barang = '".$this->attributes['KODE_BARANG']."'
+            order by nama_subkelompok");
+        $row = $query->row_array();
+        
+        if(count($row) > 0)
+            $this->attributes['KETERANGAN'] = $row['NAMA_SUBKELOMPOK'];
+        
 //        $this->attributes['NAMA_BARANG'] = 'xxxx'; // fetch nama_barang depent on kode_barang
     }
 

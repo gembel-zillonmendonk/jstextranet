@@ -9,10 +9,10 @@ class Ep_vendor_tdp extends MY_Model
 {
     public $table = "EP_VENDOR";
     public $elements_conf = array(
-        'TDP_ISSUED_BY',
+        'TDP_ISSUED_BY' => array('label' => 'PENERBIT'),
         'NO_TDP' => array('type' => 'number'),
-        'DARI_TGL_TDP',
-        'SAMPAI_TGL_TDP',
+        'DARI_TGL_TDP' => array('label' => 'TGL MULAI'),
+        'SAMPAI_TGL_TDP' => array('label' => 'TGL_BERAKHIR'),
     );
     public $validation = array(
         'TDP_ISSUED_BY' => array('required' => true),

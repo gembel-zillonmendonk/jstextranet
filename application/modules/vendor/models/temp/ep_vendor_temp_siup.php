@@ -5,16 +5,16 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_siup extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_siup extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP";
     public $elements_conf = array(
         'SIUP_DITERBITKAN_OLEH',
         'NO_SIUP',
-        'TIPE_SIUP'=> array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('SIUP_BESAR' => 'SIUP BESAR', 'SIUP_KECIL' => 'SIUP KECIL')),
-        'DARI_TGL_SIUP',
-        'SAMPAI_TGL_SIUP',
+        'TIPE_SIUP' => array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('KECIL' => 'KECIL', 'MENGENGAH' => 'MENGENGAH', 'BESAR' => 'BESAR', 'TBK' => 'TBK')),
+        'DARI_TGL_SIUP' => array('label' => 'TGL MULAI'),
+        'SAMPAI_TGL_SIUP' => array('label' => 'TGL BERAKHIR'),
     );
     public $validation = array(
         'SIUP_DITERBITKAN_OLEH' => array('required' => true),
@@ -32,15 +32,20 @@ class Ep_vendor_temp_siup extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
-        
+
         // set default value here
-        $CI =& get_instance();
+        $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

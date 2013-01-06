@@ -5,15 +5,15 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_tdp extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_tdp extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP";
     public $elements_conf = array(
-        'TDP_ISSUED_BY',
+        'TDP_ISSUED_BY' => array('label' => 'PENERBIT'),
         'NO_TDP' => array('type' => 'number'),
-        'DARI_TGL_TDP',
-        'SAMPAI_TGL_TDP',
+        'DARI_TGL_TDP' => array('label' => 'TGL MULAI'),
+        'SAMPAI_TGL_TDP' => array('label' => 'TGL_BERAKHIR'),
     );
     public $validation = array(
         'TDP_ISSUED_BY' => array('required' => true),
@@ -27,31 +27,36 @@ class Ep_vendor_temp_tdp extends MY_Model
         'DARI_TGL_TDP',
         'SAMPAI_TGL_TDP',
     );
-    //public $sql_select = "(select * from EP_VENDOR_TEMP)";
-    
 
-    function __construct()
-    {
+    //public $sql_select = "(select * from EP_VENDOR_TEMP)";
+
+
+    function __construct() {
         parent::__construct();
         $this->init();
-        
+
         // set default value here
-        $CI =& get_instance();
+        $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
-    protected function _before_save()
-    {
-        parent::_before_save();        
-        
+    protected function _before_save() {
+        parent::_before_save();
+
 //        $this->db->set("\"DARI_TGL_TDP\"", "TO_DATE('".$this->attributes['DARI_TGL_TDP']."','YYYY-MM-DD')", FALSE);
 //        $this->db->set("\"SAMPAI_TGL_TDP\"", "TO_DATE('".$this->attributes['SAMPAI_TGL_TDP']."','YYYY-MM-DD')", FALSE);
 //        unset($this->attributes['DARI_TGL_TDP'], $this->attributes['SAMPAI_TGL_TDP']);
     }
-    
-    protected function _before_update()
-    {
-        parent::_before_update();        
+
+    protected function _before_update() {
+        parent::_before_update();
     }
+
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

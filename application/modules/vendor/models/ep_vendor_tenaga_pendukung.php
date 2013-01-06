@@ -5,16 +5,16 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_tenaga_pendukung extends MY_Model
-{
+class Ep_vendor_tenaga_pendukung extends MY_Model {
+
     public $table = "EP_VENDOR_TENAGA_KERJA";
     public $elements_conf = array(
         'NAMA',
         'PENDIDIKAN_TERAKHIR',
         'KEAHLIAN',
-        'TAHUN_BERAKHIR'=>array('label'=>'PENGALAMAN'),
-        'STATUS_PEGAWAI'=>array('type'=>'dropdown', 'options'=>array('PERMANEN'=>'PERMANEN', 'KONTRAK'=>'KONTRAK')),
-        'TIPE_PEGAWAI'=>array('label'=>'KEWARGANEGARAAN'),
+        'TAHUN_BERAKHIR' => array('label' => 'LAMA PENGALAMAN (TAHUN)'),
+        'STATUS_PEGAWAI' => array('type' => 'dropdown', 'options' => array('PERMANEN' => 'PERMANEN', 'KONTRAK' => 'KONTRAK')),
+        'TIPE_PEGAWAI' => array('label' => 'KEWARGANEGARAAN', 'type' => 'dropdown', 'options' => array('WNI' => 'WNI', 'WNA' => 'WNA')),
     );
     public $validation = array(
         'NAMA' => array('required' => true),
@@ -34,8 +34,7 @@ class Ep_vendor_tenaga_pendukung extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TENAGA_KERJA where TIPE = 'PENDUKUNG')";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -45,10 +44,11 @@ class Ep_vendor_tenaga_pendukung extends MY_Model
         $this->attributes['TIPE'] = 'PENDUKUNG';
     }
 
-    function _default_scope()
-    {
+    function _default_scope() {
         $CI = & get_instance();
-        return ' KODE_VENDOR = '.$CI->session->userdata('kode_vendor');
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
     }
+
 }
+
 ?>

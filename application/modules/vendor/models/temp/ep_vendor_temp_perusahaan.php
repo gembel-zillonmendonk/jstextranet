@@ -10,9 +10,9 @@
  *
  * @author farid
  */
-class Ep_vendor_temp_perusahaan extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_perusahaan extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP";
     //public $table = "EP_NOMORURUT";
 
@@ -57,6 +57,7 @@ class Ep_vendor_temp_perusahaan extends MY_Model
     public $columns_conf = array('NAMA_VENDOR', 'KODE_LOGIN');
     public $sql_select = "(select KODE_VENDOR, NAMA_VENDOR, KODE_LOGIN, (1) as \"ad\" from EPROC.EP_VENDOR_TEMP)";
     public $form_view = 'vendor/form_perusahaan';
+
     /*
       public $columns = array(
       'KODE_VENDOR'=>array('name'=>'KODE VENDOR', 'raw_name'=>'KODE_VENDOR', 'type' => 'text', 'size' => 255, 'allow_null' => false),
@@ -65,8 +66,7 @@ class Ep_vendor_temp_perusahaan extends MY_Model
       );
      */
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -77,24 +77,20 @@ class Ep_vendor_temp_perusahaan extends MY_Model
         // get selected value 
         $query = $this->db->query('SELECT * FROM EP_VENDOR_TEMP_TIPE WHERE KODE_VENDOR = ' . $this->attributes['KODE_VENDOR']);
         $rows = $query->result_array();
-        
+
         $this->elements_conf['VENDOR_TIPE']['value'] = array();
-        foreach ($rows as $v)
-        {
+        foreach ($rows as $v) {
             $this->elements_conf['VENDOR_TIPE']['value'][] = $v['TIPE_VENDOR'];
         }
     }
 
-    function _after_save()
-    {
+    function _after_save() {
         parent::_after_save();
 
-        if (isset($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR']) && count($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR']) > 0)
-        {
+        if (isset($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR']) && count($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR']) > 0) {
             $this->db->delete('EP_VENDOR_TEMP_TIPE', array('KODE_VENDOR' => $this->attributes['KODE_VENDOR']));
 
-            foreach ($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR'] as $v)
-            {
+            foreach ($_POST['EP_VENDOR_TIPE']['TIPE_VENDOR'] as $v) {
                 $data = array(
                     'KODE_VENDOR' => $this->attributes['KODE_VENDOR'],
                     'TIPE_VENDOR' => $v,
@@ -107,5 +103,11 @@ class Ep_vendor_temp_perusahaan extends MY_Model
         }
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

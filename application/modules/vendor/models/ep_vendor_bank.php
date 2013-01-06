@@ -13,7 +13,7 @@ class Ep_vendor_bank extends MY_Model
         'NAMA_REKENING',
         'NAMA_BANK',
         'CABANG',
-        'MATA_UANG',
+        'MATA_UANG'=> array('type' => 'dropdown', 'options' => array('IDR'=>'IDR','USD'=>'USD')),
         'ALAMAT',
     );
     public $validation = array(

@@ -5,16 +5,16 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_alamat extends MY_Model
-{
+class Ep_vendor_temp_alamat extends MY_Model {
+
     public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_ALAMAT";
     public $elements_conf = array(
         'ALAMAT',
         'KOTA',
-        'NEGARA',
+        'NEGARA' => array('type' => 'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
         'KODE_POS',
-        'TIPE',
+        'TIPE' => array('type' => 'dropdown', 'options' => array('PUSAT' => 'PUSAT', 'CABANG' => 'CABANG')),
         'NO_TELP1',
         'NO_TELP2',
         'FAX',
@@ -39,8 +39,7 @@ class Ep_vendor_temp_alamat extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_ALAMAT)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -48,5 +47,12 @@ class Ep_vendor_temp_alamat extends MY_Model
         $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
+
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

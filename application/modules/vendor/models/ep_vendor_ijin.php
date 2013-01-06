@@ -9,7 +9,7 @@ class Ep_vendor_ijin extends MY_Model
 {
     public $table = "EP_VENDOR_IJIN";
     public $elements_conf = array(
-        'TIPE',
+        'TIPE'=> array('type' => 'dropdown', 'options' => array('SIUJK'=>'SIUJK','IUJK'=>'IUJK','IUI' => 'IUI','LAINNYA' => 'LAINNYA')),
         'PENERBIT',
         'NO',
         'TGL_MULAI',

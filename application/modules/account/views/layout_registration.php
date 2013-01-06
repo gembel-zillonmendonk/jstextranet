@@ -57,8 +57,15 @@
                 <td class="table_band">
                     <table class="table_band_container" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td class="txt_logged">Anda Masuk Sebagai : <span class="txt_orange">Application Administrator</span></td>
-                            <td class="txt_date">Senin, 01 September 2008</td>
+                            <td class="txt_logged">&nbsp;</td>
+                            <td class="txt_date">
+                                <?php echo date("l, d F Y") ?>
+                                <?php 
+                                    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
+                                    /* Output: vrijdag 22 december 1978 */
+                                    echo strftime("%A %e %B %Y"); 
+                                ?>
+                            </td>
                             <td class="tools_container">&nbsp;</td>
                         </tr>
                     </table>
@@ -96,7 +103,8 @@
                                     <div>
                                         <?php $this->load->helper('form'); ?>
                                         <?php echo form_open(site_url('/account/registration'), 'id=form-registration class=form-horizontal'); ?>
-                                        <fieldset class="ui-widget-content" style="border:0;width:40%;float:left">
+<!--                                        <fieldset class="ui-widget-content" style="border:0;width:40%;float:left">-->
+                                        <fieldset class="ui-widget-content" style="border:0">
                                             <legend>Fields with remark (*) is required.</legend>
                                             <p>
                                                 <?php echo form_label("USERNAME *", "id_kode_login") ?>
@@ -111,16 +119,16 @@
                                                 <?php echo form_input("EP_VENDOR[ALAMAT_EMAIL]", '', 'id="id_alamat_email" class="{validate:{required:true,email:true,maxlength:255}}"'); ?>
                                             </p>
                                         </fieldset>
-                                        <fieldset class="ui-widget-content" style="border:0;width:50%;margin:0 50%;">
+<!--                                        <fieldset class="ui-widget-content" style="border:0;width:50%;margin:0 50%;">
 
                                             <p>
                                                 <?php echo form_label("AWALAN *", "id_awalan") ?>
                                                 <?php echo form_dropdown("EP_VENDOR[AWALAN]", array('PT'=>'PT', 'CV'=>'CV','LAINNYA'=>'LAINNYA'), '', 'id="id_awalan" class="{validate:{required:true,maxlength:255}}"'); ?>
                                             </p>
-<!--                                            <p>
+                                            <p>
                                                 <?php echo form_label("AWALAN LAIN *", "id_awalan_lain") ?>
                                                 <?php echo form_input("EP_VENDOR[AWALAN_LAIN]", '', 'id="id_awalan_lain" class="{validate:{required:true,maxlength:255}}"'); ?>
-                                            </p>-->
+                                            </p>
                                             <p>
                                                 <?php echo form_label("NAMA VENDOR *", "id_nama_vendor") ?>
                                                 <?php echo form_input("EP_VENDOR[NAMA_VENDOR]", '', 'id="id_nama_vendor" class="{validate:{required:true,maxlength:255}}"'); ?>
@@ -130,11 +138,11 @@
                                                 <?php echo form_dropdown("EP_VENDOR[AKHIRAN]", array('TBK'=>'TBK', 'GMBH'=>'GMBH', 'NV'=>'NV', 'BV'=>'BV', 'BHD'=>'BHD', 'PTE'=>'PTE', 'LTD'=>'LTD', 'LAINNYA'=>'LAINNYA'),'', 'id="id_akhiran" class="{validate:{required:true,maxlength:255}}"'); ?>
                                             </p>
 
-<!--                                            <p>
+                                            <p>
                                                 <?php echo form_label("AKHIRAN LAIN *", "id_akhiran_lain") ?>
                                                 <?php echo form_input("EP_VENDOR[AKHIRAN_LAIN]", '', 'id="id_akhiran_lain" class="{validate:{required:true,maxlength:255}}"'); ?>
-                                            </p>-->
-                                        </fieldset>
+                                            </p>
+                                        </fieldset>-->
                                         <p>
                                             <button type="button" id="btnSimpan">SIMPAN</button>
                                             <button type="button" id="btnBatal">BATAL</button>

@@ -5,12 +5,12 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_ijin extends MY_Model
-{
+class Ep_vendor_temp_ijin extends MY_Model {
+
     public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_IJIN";
     public $elements_conf = array(
-        'TIPE',
+        'TIPE' => array('type' => 'dropdown', 'options' => array('SIUJK' => 'SIUJK', 'IUJK' => 'IUJK', 'IUI' => 'IUI', 'LAINNYA' => 'LAINNYA')),
         'PENERBIT',
         'NO',
         'TGL_MULAI',
@@ -32,15 +32,20 @@ class Ep_vendor_temp_ijin extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_IJIN)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
-        
-         // set default value here
-        $CI =& get_instance();
+
+        // set default value here
+        $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

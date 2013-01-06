@@ -5,9 +5,9 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_npwp extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_npwp extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP";
     public $elements_conf = array(
         'NO_NPWP',
@@ -38,15 +38,20 @@ class Ep_vendor_temp_npwp extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
         // set default value here
-        $CI =& get_instance();
+        $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

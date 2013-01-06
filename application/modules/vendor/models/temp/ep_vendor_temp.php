@@ -34,6 +34,11 @@ class Ep_vendor_temp extends MY_Model
         $this->init();
     }
 
+    function _default_scope()
+    {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = '.$CI->session->userdata('kode_vendor');
+    }
 }
 
 ?>

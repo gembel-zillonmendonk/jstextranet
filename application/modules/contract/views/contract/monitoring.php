@@ -1,5 +1,44 @@
+<?php
+$params = '';
+if (count($_REQUEST) > 0) {
+    foreach ($_REQUEST as $key => $value) {
+        $params .= $key . '=' . rawurlencode($value) . '&';
+    }
+
+    if (strlen($params) > 0)
+        $params = '?' . $params;
+}
+?>
+<?php $this->load->helper('form'); ?>
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/grid/contract.monitoring') ?>">DAFTAR SELURUH KONTRAK</h3>
+    <h3 href="#">PENCARIAN</h3>
+    <div>
+        <form action="" accept-charset="utf-8" id="id_form_form_deactivation" name="form_form_deactivation" method="GET" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="control-group">
+                        <?php echo form_label("JANGKA KONTRAK EXPIRED", "EXPIRED", array("class" => "control-label")) ?> 
+                        <div class="controls">
+                            <?php
+                            echo form_dropdown("EXPIRED_CONDITION", array(
+                                'eq' => '==',
+                                'gt' => '>=',
+                                'lt' => '<=',
+                                'ne' => '<>',
+                                    ), isset($_REQUEST['EXPIRED_CONDITION']) ? $_REQUEST['EXPIRED_CONDITION'] : "", 'class="{validate:{required:true,maxlength:22}}"');
+                            ?>
+                            <?php echo form_input("EXPIRED_VALUE", isset($_REQUEST['EXPIRED_VALUE']) ? $_REQUEST['EXPIRED_VALUE'] : "", 'class="{validate:{required:true,maxlength:22}}"'); ?>
+                            BULAN
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="btnCari" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">CARI</span></button>
+            <button type="button" id="btnBatal" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">BATAL</span></button>
+
+        </form>
+    </div>
+    <h3 href="<?php echo site_url('/contract/grid/contract.monitoring' .$params) ?>">DAFTAR SELURUH KONTRAK</h3>
     <div></div>
     
 </div>

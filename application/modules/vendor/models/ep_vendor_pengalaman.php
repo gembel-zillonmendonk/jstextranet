@@ -11,14 +11,14 @@ class Ep_vendor_pengalaman extends MY_Model {
     public $elements_conf = array(
         'NAMA',
         'NAMA_PROYEK',
-        'MATA_UANG',
+        'MATA_UANG'=> array('type' => 'dropdown', 'options' => array('IDR'=>'IDR','USD'=>'USD')),
         'NILAI',
         'TGL_MULAI',
         'TGL_BERAKHIR',
         'KONTAK',
         'NO_KONTAK',
         'NO_KONTRAK',
-        'KETERANGAN',
+        'KETERANGAN' => array('type' => 'textarea'),
     );
     public $validation = array(
         'NAMA' => array('required' => true),

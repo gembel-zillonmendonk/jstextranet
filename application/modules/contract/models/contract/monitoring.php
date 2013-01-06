@@ -60,7 +60,19 @@ class monitoring extends MY_Model {
     function _default_scope()
     {
         parent::_default_scope();
-        return ' KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
+        $condition = array(
+            'eq' => '=',
+            'gt' => '>=',
+            'lt' => '<=',
+            'ne' => '<>',
+        );
+        
+        $where = ' KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
+        if (isset($_REQUEST['EXPIRED_CONDITION']) && isset($_REQUEST['EXPIRED_VALUE']) && strlen($_REQUEST['EXPIRED_VALUE']) > 0) {
+            $where .= " AND to_char(TGL_AKHIR, 'YYYYMM') " . $condition[$_REQUEST['EXPIRED_CONDITION']] . " to_char(add_months(SYSDATE, " . $_REQUEST['EXPIRED_VALUE'] . "), 'YYYYMM') ";
+        }
+
+        return $where;
     }
 }
 

@@ -16,7 +16,7 @@ class Ep_vendor_domisili extends MY_Model
         'KOTA',
         'PROPINSI',
         'KODE_POS',
-        'NEGARA',
+        'NEGARA' => array('type'=>'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
     );
     public $validation = array(
         'NO_DOMISILI' => array('required' => true),

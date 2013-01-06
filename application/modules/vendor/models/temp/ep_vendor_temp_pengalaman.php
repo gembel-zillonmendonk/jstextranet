@@ -5,21 +5,21 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_pengalaman extends MY_Model 
-{
-	public $dir = "temp";
+class Ep_vendor_temp_pengalaman extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_PENGALAMAN";
     public $elements_conf = array(
         'NAMA',
         'NAMA_PROYEK',
-        'MATA_UANG',
+        'MATA_UANG'=> array('type' => 'dropdown', 'options' => array('IDR'=>'IDR','USD'=>'USD')),
         'NILAI',
         'TGL_MULAI',
         'TGL_BERAKHIR',
         'KONTAK',
         'NO_KONTAK',
         'NO_KONTRAK',
-        'KETERANGAN',
+        'KETERANGAN' => array('type' => 'textarea'),
     );
     public $validation = array(
         'NAMA' => array('required' => true),
@@ -29,8 +29,8 @@ class Ep_vendor_temp_pengalaman extends MY_Model
         'TGL_MULAI' => array('required' => true),
         'TGL_BERAKHIR' => array('required' => true),
         'KONTAK' => array('required' => true),
-        //'NO_KONTAK' => array('required' => true),
-        //'KETERANGAN' => array('required' => true),
+            //'NO_KONTAK' => array('required' => true),
+            //'KETERANGAN' => array('required' => true),
     );
     public $columns_conf = array(
         'NAMA',
@@ -53,6 +53,11 @@ class Ep_vendor_temp_pengalaman extends MY_Model
         // set default value here
         $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+    }
+
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
     }
 
 }

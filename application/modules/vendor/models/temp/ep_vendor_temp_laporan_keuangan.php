@@ -5,14 +5,14 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_laporan_keuangan extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_laporan_keuangan extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_LAP_KEUANGAN";
     public $elements_conf = array(
         'TAHUN',
-        'TIPE'=>array('type'=>'dropdown', 'options'=>array('AUDIT'=>'AUDIT', 'NON AUDIT'=>'NON AUDIT')),
-        'MATA_UANG',
+        'TIPE' => array('type' => 'dropdown', 'options' => array('AUDIT' => 'AUDIT', 'NON AUDIT' => 'NON AUDIT')),
+        'MATA_UANG' => array('type' => 'dropdown', 'options' => array('IDR' => 'IDR', 'USD' => 'USD')),
         'NILAI_ASSET',
         'HUTANG',
         'PENDAPATAN',
@@ -41,8 +41,7 @@ class Ep_vendor_temp_laporan_keuangan extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_LAP_KEUANGAN)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -51,5 +50,11 @@ class Ep_vendor_temp_laporan_keuangan extends MY_Model
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

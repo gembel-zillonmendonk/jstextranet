@@ -5,15 +5,15 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_principal extends MY_Model
-{
-	public $dir = "temp";
+class Ep_vendor_temp_principal extends MY_Model {
+
+    public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_INFORMASI_LAIN";
     public $elements_conf = array(
         'NAMA',
         'ALAMAT',
         'KOTA',
-        'NEGARA',
+        'NEGARA' => array('type' => 'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
         'KODE_POS',
         'KUALIFIKASI',
         'HUBUNGAN',
@@ -36,8 +36,7 @@ class Ep_vendor_temp_principal extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_INFORMASI_LAIN where TIPE = 'PRINCIPAL')";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -47,5 +46,11 @@ class Ep_vendor_temp_principal extends MY_Model
         $this->attributes['TIPE'] = 'PRINCIPAL';
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>

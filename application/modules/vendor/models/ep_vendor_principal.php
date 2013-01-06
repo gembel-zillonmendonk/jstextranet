@@ -12,7 +12,7 @@ class Ep_vendor_principal extends MY_Model
         'NAMA',
         'ALAMAT',
         'KOTA',
-        'NEGARA',
+        'NEGARA' => array('type'=>'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
         'KODE_POS',
         'KUALIFIKASI',
         'HUBUNGAN',

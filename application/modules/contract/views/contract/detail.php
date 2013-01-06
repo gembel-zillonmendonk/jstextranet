@@ -20,9 +20,9 @@ if (count($_REQUEST) > 0) {
     <?php if (strlen($params) > 0 && isset($_REQUEST['KODE_KONTRAK']) && $_REQUEST['KODE_KONTRAK'] > 0): ?>
         <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_item' . $params) ?>">ITEM</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/milestone/view_grid_form/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
+        <h3 href="<?php echo site_url('/contract/milestone/view_grid/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/view_grid_form/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
+        <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
         <div></div>
     <?php else: ?>
         <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_pgd_item_penawaran' . $params) ?>">ITEM PENAWARAN</h3>

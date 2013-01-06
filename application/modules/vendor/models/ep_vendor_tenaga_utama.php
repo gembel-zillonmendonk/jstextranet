@@ -12,9 +12,9 @@ class Ep_vendor_tenaga_utama extends MY_Model
         'NAMA',
         'PENDIDIKAN_TERAKHIR',
         'KEAHLIAN',
-        'TAHUN_BERAKHIR'=>array('label'=>'PENGALAMAN'),
+        'TAHUN_BERAKHIR'=>array('label'=>'LAMA PENGALAMAN (TAHUN)'),
         'STATUS_PEGAWAI'=>array('type'=>'dropdown', 'options'=>array('PERMANEN'=>'PERMANEN', 'KONTRAK'=>'KONTRAK')),
-        'TIPE_PEGAWAI'=>array('label'=>'KEWARGANEGARAAN'),
+        'TIPE_PEGAWAI'=>array('label'=>'KEWARGANEGARAAN', 'type' => 'dropdown', 'options'=>array('WNI'=>'WNI', 'WNA'=>'WNA')),
     );
     public $validation = array(
         'NAMA' => array('required' => true),

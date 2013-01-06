@@ -11,9 +11,9 @@ class Ep_vendor_siup extends MY_Model
     public $elements_conf = array(
         'SIUP_DITERBITKAN_OLEH',
         'NO_SIUP',
-        'TIPE_SIUP'=> array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('SIUP_BESAR' => 'SIUP BESAR', 'SIUP_KECIL' => 'SIUP KECIL')),
-        'DARI_TGL_SIUP',
-        'SAMPAI_TGL_SIUP',
+        'TIPE_SIUP'=> array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('KECIL'=>'KECIL','MENGENGAH'=>'MENGENGAH','BESAR' => 'BESAR','TBK' => 'TBK')),
+        'DARI_TGL_SIUP' => array('label' => 'TGL MULAI'),
+        'SAMPAI_TGL_SIUP' => array('label' => 'TGL BERAKHIR'),
     );
     public $validation = array(
         'SIUP_DITERBITKAN_OLEH' => array('required' => true),

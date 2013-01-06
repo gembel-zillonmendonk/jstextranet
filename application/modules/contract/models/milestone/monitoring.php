@@ -65,6 +65,7 @@ class monitoring extends MY_Model {
                     
                     var param = "referer_url=/contract/milestone/monitoring&KODE_KONTRAK=" + data[\'KODE_KONTRAK\'] + 
                                 "&KODE_JANGKA=" + data[\'KODE_JANGKA\'] + 
+                                "&KODE_PROSES=" + data[\'KODE_PROSES\'] + 
                                 "&KODE_KANTOR=" + data[\'KODE_KANTOR\'];
                                 
                     var href = $site_url + "/contract/milestone/detail?" + param;

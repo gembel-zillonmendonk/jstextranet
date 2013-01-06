@@ -9,7 +9,7 @@ class Ep_vendor_akta extends MY_Model
 {
     public $table = "EP_VENDOR_AKTA";
     public $elements_conf = array(
-        'TIPE_AKTA',
+        'TIPE_AKTA'=>array('type'=>'dropdown', 'options' => array('PENDIRIAN' => 'PENDIRIAN', 'PERUBAHAN' => 'PERUBAHAN')),
         'NO_AKTA',
         'TGL_PEMBUATAN',
         'NAMA_NOTARIS',

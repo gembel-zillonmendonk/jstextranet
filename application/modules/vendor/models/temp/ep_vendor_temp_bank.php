@@ -5,16 +5,16 @@
  * and open the template in the editor.
  */
 
-class Ep_vendor_temp_bank extends MY_Model
-{
+class Ep_vendor_temp_bank extends MY_Model {
+
     public $dir = "temp";
     public $table = "EP_VENDOR_TEMP_BANK";
     public $elements_conf = array(
-        'NO_REKENING'=>array('label'=>'NOMOR REKENING'),
+        'NO_REKENING' => array('label' => 'NOMOR REKENING'),
         'NAMA_REKENING',
         'NAMA_BANK',
         'CABANG',
-        'MATA_UANG',
+        'MATA_UANG' => array('type' => 'dropdown', 'options' => array('IDR' => 'IDR', 'USD' => 'USD')),
         'ALAMAT',
     );
     public $validation = array(
@@ -34,8 +34,7 @@ class Ep_vendor_temp_bank extends MY_Model
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_BANK)";
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
         $this->init();
 
@@ -44,5 +43,11 @@ class Ep_vendor_temp_bank extends MY_Model
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
     }
 
+    function _default_scope() {
+        $CI = & get_instance();
+        return ' KODE_VENDOR = ' . $CI->session->userdata('kode_vendor');
+    }
+
 }
+
 ?>
