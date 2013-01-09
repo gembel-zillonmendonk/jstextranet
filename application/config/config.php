@@ -361,6 +361,16 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+$config['ftp']['enable']   = FALSE;
+$config['ftp']['hostname'] = '172.26.0.50';
+$config['ftp']['username'] = 'root';
+$config['ftp']['password'] = 'root';
+$config['ftp']['port']     = 21;
+$config['ftp']['passive']  = FALSE;
+$config['ftp']['debug']    = TRUE;
+$config['ftp']['target_dir'] = "/opt/xampp/htdocs/jstintranet/Attachments/";
+$config['ftp']['max_filesize'] = 1024;
+$config['ftp']['allow_filetype'] = "*";
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

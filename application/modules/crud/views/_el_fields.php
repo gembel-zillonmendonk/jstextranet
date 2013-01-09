@@ -71,7 +71,7 @@ foreach ($form->model->primary_keys as $v) {
                             echo form_upload($v);
                             if (strlen($v['value']) > 0) {
                                 echo "<br/>";
-                                echo anchor($v['value'], "DOWNLOAD FILE");
+                                echo anchor(site_url('file/download/' . $v['value']), "DOWNLOAD FILE");
                             }
                             break;
                         case 'label':
