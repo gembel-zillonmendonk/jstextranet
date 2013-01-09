@@ -34,7 +34,6 @@ class Workflow {
 //        $row = $query->row_array();
 //        $this->triggerCheckNodeType($tipe, $row['kode_proses']);
 //        return $row['kode_proses'];
-
         // load transition object
         $transition = $this->getTransitionById($kode_transisi);
 
@@ -55,12 +54,20 @@ class Workflow {
         $process['KODE_POSISI'] = $node['KODE_POSISI'];
         $process['KODE_USER'] = $node['KODE_USER'];
         $process['KODE_APLIKASI'] = $node['KODE_APLIKASI'];
+        
+        if (!isset($process['KODE_PROSES_HIS'])) {
+            $query = $this->db->query("select max(NOMORURUT) + 1 as idx from ep_nomorurut where kode_nomorurut = 'EP_WKF_PROSES'");
+            $row = $query->row();
+            $process['KODE_PROSES'] = $row->IDX;
+        }
+
         $this->db->insert("EP_WKF_PROSES", $process);
+        $this->db->query("update ep_nomorurut set NOMORURUT = NOMORURUT + 1 where kode_nomorurut = 'EP_WKF_PROSES'");
         
         $query = $this->db->query("select max(KODE_PROSES) as \"kode_proses\" from EP_WKF_PROSES");
         $row = $query->row_array();
         $kode_proses = $row['kode_proses'];
-        
+
         // append history
         $history = array();
         $history['kode_proses'] = $kode_proses;
@@ -71,7 +78,7 @@ class Workflow {
 
         $this->insertHistory($history);
         $this->triggerCheckNodeType($tipe, $kode_proses);
-        
+
         return $kode_proses;
     }
 
@@ -97,7 +104,7 @@ class Workflow {
         $instance['kode_posisi'] = $node['KODE_POSISI'];
         $instance['kode_user'] = $node['KODE_USER'];
         $instance['kode_aplikasi'] = $node['KODE_APLIKASI'];
-        
+
         $params = $this->getParamfromRequest($node['PARAMETER']);
         $instance['parameter'] = json_encode($params);
 
@@ -143,11 +150,11 @@ class Workflow {
         $instance['kode_posisi'] = $node['KODE_POSISI'];
         $instance['kode_user'] = $node['KODE_USER'];
         $instance['kode_aplikasi'] = $node['KODE_APLIKASI'];
-        
+
         // build params and write to db
         $row['PARAMETER'] = $this->getParamfromRequest($node['PARAMETER']);
         $instance['parameter'] = json_encode($row['PARAMETER']);
-        
+
         $this->updateInstance($instance, array('kode_proses' => $kode_proses));
         $this->insertOrUpdateParams($row['PARAMETER'], $kode_proses, '');
         $this->runNodeConstraint($row['KODE_AKTIFITAS'], $row['PARAMETER']);
@@ -160,7 +167,7 @@ class Workflow {
 
         // get available constraints & replace @@parameter for execution
         $constraints = $this->getNodeConstraints($kode_aktifitas, array('kegiatan' => 'onexecute'));
-        
+
         $json_constraints = json_encode($constraints);
         foreach ($variables as $k => $v) {
             $json_constraints = str_replace('@@' . $k . '@@', $v, $json_constraints);
@@ -186,7 +193,7 @@ class Workflow {
 
         // get available constraints & replace @@parameter for execution
         $constraints = $this->getTransitionConstraints($kode_transisi);
-        
+
         $json_constraints = json_encode($constraints);
         foreach ($variables as $k => $v) {
             $json_constraints = str_replace('@@' . $k . '@@', $v, $json_constraints);
@@ -204,7 +211,7 @@ class Workflow {
             }
         }
     }
-    
+
     // execute by node system
     function runAutoTransition($kode_proses, $kode_aktifitas, $parameter = array()) {
 
@@ -280,7 +287,7 @@ class Workflow {
         $query = $this->db->get_where("EP_WKF_TRANSISI_CONST", $where);
         return $query->result_array();
     }
-    
+
     function getInstance($kode_proses = 'null') {
         $query = $this->db->query("select * from EP_WKF_PROSES where kode_proses = coalesce($kode_proses, kode_proses)");
         return $query->row_array();
@@ -310,7 +317,7 @@ class Workflow {
     function buildGraph($kode_proses) {
         
     }
-    
+
     function getParamfromRequest($params) {
 
         if (!is_array($params))
@@ -322,7 +329,7 @@ class Workflow {
                 if (isset($_REQUEST[$k]))
                     $data[$k] = $_REQUEST[$k];
                 else
-                    show_error ("required parameter not found : " . $k);
+                    show_error("required parameter not found : " . $k);
             }
 
             return (count($data) > 0 ? $data : false);
@@ -354,7 +361,14 @@ class Workflow {
     }
 
     function insertHistory($data) {
+        if (!isset($data['KODE_PROSES_HIS'])) {
+            $query = $this->db->query("select max(NOMORURUT) + 1 as idx from ep_nomorurut where kode_nomorurut = 'EP_WKF_PROSES_HIS'");
+            $row = $query->row();
+            $data['KODE_PROSES_HIS'] = $row->IDX;
+        }
+
         $this->db->insert("EP_WKF_PROSES_HIS", $data);
+        $this->db->query("update ep_nomorurut set NOMORURUT = NOMORURUT + 1 where kode_nomorurut = 'EP_WKF_PROSES_HIS'");
     }
 
     function insertOrUpdateParams($params = null, $kode_proses, $kode_proses_his = '') {
@@ -387,17 +401,17 @@ class Workflow {
 
     function is_process_exists($kode_wkf, $keys = array()) {
         $where = array();
-        foreach ($keys as $k => $v){
+        foreach ($keys as $k => $v) {
             $where[] = "$k = '$v'";
         }
-        
+
         $where = implode(" AND ", $where);
-        
+
         $sql = "
             select * from (
                 select x.*, ROW_NUMBER() OVER(PARTITION BY KODE_VENDOR, KODE_WKF ORDER BY kode_proses DESC) rn from
                 (
-                    select a.kode_proses, a.kode_wkf, a.kode_aktifitas, a.kode_posisi, a.kode_user, a.kode_aplikasi, c.nama_aktifitas, a.tanggal_selesai
+                    select a.kode_proses, a.kode_wkf, a.kode_aktifitas, a.kode_posisi, a.kode_user, a.kode_aplikasi, c.nama_aktifitas, a.tanggal_selesai,
                         , max(decode(key,'KODE_BARANG_JASA', value, null)) KODE_BARANG_JASA
                         , max(decode(key,'KODE_INVOICE', value, null)) KODE_INVOICE
                         , max(decode(key,'KODE_JANGKA', value, null)) KODE_JANGKA
@@ -417,12 +431,12 @@ class Workflow {
                 ) x where kode_wkf = $kode_wkf and tanggal_selesai is null and ($where)
             ) where rn = 1    
         ";
-        
+
         $row = $this->db->query($sql)->row_array();
         return count($row) ? $row : false;
     }
-    
-    function get_pivot_query($where = ""){
+
+    function get_pivot_query($where = "") {
         return "select b.url, a.* from (
                     select a.kode_proses, a.kode_wkf, d.nama, a.kode_aktifitas, c.nama_aktifitas, a.tanggal_mulai, a.tanggal_selesai, a.kode_posisi, a.kode_user, a.kode_aplikasi, a.parameter
                     , max( case when key = 'KODE_BARANG_JASA' then value else null end ) KODE_BARANG_JASA
@@ -450,6 +464,7 @@ class Workflow {
                 ) b on a.kode_proses = b.kode_proses
                 where $where";
     }
+
 }
 
 ?>

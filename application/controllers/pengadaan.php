@@ -18,7 +18,7 @@ class Pengadaan extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-       // $this->session->set_userdata('user_id', '512');
+       // $this->session->set_userdata('kode_vendor', '512');
     }
     
     public function createOrEdit()
@@ -108,7 +108,7 @@ class Pengadaan extends MY_Controller
                 $sql = "UPDATE EP_PGD_TENDER_VENDOR_STATUS";
                 $sql .= " SET STATUS = " . $pvts_status;
                 $sql .= ", TGL_UBAH = TO_DATE('" .  date("Y-m-d H:i:s"). "','YYYY-MM-DD HH24:MI:SS' )   ";
-                $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "' ";    
+                $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "' ";    
                 $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
                 $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
                 $sql .= " AND KODE_VENDOR =  " . $this->input->post("KODE_VENDOR")  ;
@@ -120,7 +120,7 @@ class Pengadaan extends MY_Controller
                 $sql .= " ," . $this->input->post("KODE_VENDOR")     ;
                 $sql .= " ," . $pvts_status    ;
                 $sql .= ",  TO_DATE('" .  date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
-                $sql .= ",  '" . $this->session->userdata("user_id") . "') ";   
+                $sql .= ",  '" . $this->session->userdata("kode_vendor") . "') ";   
 
                 
                 
@@ -205,11 +205,11 @@ class Pengadaan extends MY_Controller
         
         $data["KODE_TENDER"] = $this->input->get("KODE_TENDER");
         $data["KODE_KANTOR"] = $this->input->get("KODE_KANTOR");
-        $data["KODE_VENDOR"] = $this->session->userdata("user_id");
+        $data["KODE_VENDOR"] = $this->session->userdata("kode_vendor");
         
         $sql = "SELECT NO_PENAWARAN FROM EP_PGD_PENAWARAN ";
         
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
          $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
          
@@ -229,7 +229,7 @@ class Pengadaan extends MY_Controller
         
         $data["KODE_TENDER"] = $this->input->get("KODE_TENDER");
         $data["KODE_KANTOR"] = $this->input->get("KODE_KANTOR");
-        $data["KODE_VENDOR"] = $this->session->userdata("user_id");
+        $data["KODE_VENDOR"] = $this->session->userdata("kode_vendor");
          
         
         
@@ -241,8 +241,136 @@ class Pengadaan extends MY_Controller
     
     function pekerjaan() {
         $sql = "SELECT PTVS_STATUS ";
-         $sql .= " FROM VW_PGD_PEKERJAAN_VENDOR ";
-         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('user_id');   
+         $sql .= " FROM  ";
+		 $sql .= " ( SELECT
+	TV.KODE_VENDOR
+	,T.KODE_TENDER
+	,T.JUDUL_PEKERJAAN
+	,T.KODE_KANTOR
+	,P.TGL_PEMBUKAAN_REG
+	,P.TGL_PENUTUPAN_REG
+	,
+	CASE
+	WHEN P.TGL_LELANG_TEKNIS IS NULL  THEN  P.TGL_LELANG_KOMODITI
+	ELSE P.TGL_LELANG_TEKNIS
+	END AS TGL_LELANG
+	, COALESCE(S.NAMA_STATUS, 'Pendaftaran') AS  NAMA_STATUS
+	, COALESCE(PTVS.STATUS,1) AS PTVS_STATUS
+	, K.KODE_AKTIFITAS
+FROM EP_PGD_TENDER T
+INNER JOIN EP_PGD_KOMENTAR_TENDER K ON T.KODE_TENDER = K.KODE_TENDER AND T.KODE_KANTOR = K.KODE_KANTOR
+INNER JOIN EP_PGD_PERSIAPAN_TENDER P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR
+INNER JOIN EP_PGD_TENDER_VENDOR TV ON T.KODE_TENDER = TV.KODE_TENDER AND T.KODE_KANTOR = TV.KODE_KANTOR
+LEFT JOIN EP_PGD_TENDER_VENDOR_STATUS PTVS ON TV.KODE_TENDER = PTVS.KODE_TENDER AND TV.KODE_KANTOR = PTVS.KODE_KANTOR AND TV.KODE_VENDOR = PTVS.KODE_VENDOR
+LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
+WHERE     (K.TGL_BERAKHIR IS NULL)
+
+UNION ALL
+SELECT
+	TV.KODE_VENDOR
+	,T.KODE_TENDER
+	,T.JUDUL_PEKERJAAN
+	,T.KODE_KANTOR
+	,P.TGL_PEMBUKAAN_REG
+	,P.TGL_PENUTUPAN_REG
+	,
+	CASE
+	WHEN P.TGL_LELANG_TEKNIS IS NULL  THEN  P.TGL_LELANG_KOMODITI
+	ELSE P.TGL_LELANG_TEKNIS
+	END AS TGL_LELANG
+	, COALESCE(S.NAMA_STATUS, 'Pendaftaran') AS  NAMA_STATUS
+	, COALESCE(PTVS.STATUS,1) AS PTVS_STATUS
+	, K.KODE_AKTIFITAS
+FROM EP_PGD_TENDER T
+INNER JOIN EP_PGD_KOMENTAR_TENDER K ON T.KODE_TENDER = K.KODE_TENDER AND T.KODE_KANTOR = K.KODE_KANTOR
+INNER JOIN EP_PGD_PERSIAPAN_TENDER P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR
+INNER JOIN EP_PGD_TENDER_VENDOR TV ON T.KODE_TENDER = TV.KODE_TENDER AND T.KODE_KANTOR = TV.KODE_KANTOR
+LEFT JOIN EP_PGD_TENDER_VENDOR_STATUS PTVS ON TV.KODE_TENDER = PTVS.KODE_TENDER AND TV.KODE_KANTOR = PTVS.KODE_KANTOR AND TV.KODE_VENDOR = PTVS.KODE_VENDOR
+LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
+WHERE     (K.TGL_BERAKHIR IS NULL)
+		   AND (K.KODE_AKTIFITAS IN (1205, 1206, 1305, 1306, 1402, 1403, 1502, 1503, 1507, 1508, 1605, 1606, 1702, 1703))
+		   AND (P.TGL_LELANG_KOMODITI >=  SYSDATE)
+		   AND (S.KODE_STATUS IN (2, 3, 5, 20, 21))
+UNION ALL
+SELECT
+	TV.KODE_VENDOR
+	,T.KODE_TENDER
+	,T.JUDUL_PEKERJAAN
+	,T.KODE_KANTOR
+	,P.TGL_PEMBUKAAN_REG
+	,P.TGL_PENUTUPAN_REG
+	,
+	CASE
+	WHEN P.TGL_LELANG_TEKNIS IS NULL  THEN  P.TGL_LELANG_KOMODITI
+	ELSE P.TGL_LELANG_TEKNIS
+	END AS TGL_LELANG
+	, COALESCE(S.NAMA_STATUS, 'Pendaftaran') AS  NAMA_STATUS
+	, COALESCE(PTVS.STATUS,1) AS PTVS_STATUS
+	, K.KODE_AKTIFITAS
+FROM EP_PGD_TENDER T
+INNER JOIN EP_PGD_KOMENTAR_TENDER K ON T.KODE_TENDER = K.KODE_TENDER AND T.KODE_KANTOR = K.KODE_KANTOR
+INNER JOIN EP_PGD_PERSIAPAN_TENDER P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR
+INNER JOIN EP_PGD_TENDER_VENDOR TV ON T.KODE_TENDER = TV.KODE_TENDER AND T.KODE_KANTOR = TV.KODE_KANTOR
+LEFT JOIN EP_PGD_TENDER_VENDOR_STATUS PTVS ON TV.KODE_TENDER = PTVS.KODE_TENDER AND TV.KODE_KANTOR = PTVS.KODE_KANTOR AND TV.KODE_VENDOR = PTVS.KODE_VENDOR
+LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
+WHERE     (K.TGL_BERAKHIR IS NULL)
+		   AND (K.KODE_AKTIFITAS IN (1205, 1206, 1305, 1306, 1402, 1403, 1502, 1503, 1507, 1508, 1605, 1606, 1702, 1703))
+		   AND (P.TGL_PEMBUKAAN_LELANG >=  SYSDATE)
+		   AND (S.KODE_STATUS IN (2, 3, 5, 20, 21))
+UNION ALL
+SELECT
+	TV.KODE_VENDOR
+	,T.KODE_TENDER
+	,T.JUDUL_PEKERJAAN
+	,T.KODE_KANTOR
+	,P.TGL_PEMBUKAAN_REG
+	,P.TGL_PENUTUPAN_REG
+	,
+	CASE
+	WHEN P.TGL_LELANG_TEKNIS IS NULL  THEN  P.TGL_LELANG_KOMODITI
+	ELSE P.TGL_LELANG_TEKNIS
+	END AS TGL_LELANG
+	, COALESCE(S.NAMA_STATUS, 'Pendaftaran') AS  NAMA_STATUS
+	, COALESCE(PTVS.STATUS,1) AS PTVS_STATUS
+	, K.KODE_AKTIFITAS
+FROM EP_PGD_TENDER T
+INNER JOIN EP_PGD_KOMENTAR_TENDER K ON T.KODE_TENDER = K.KODE_TENDER AND T.KODE_KANTOR = K.KODE_KANTOR
+INNER JOIN EP_PGD_PERSIAPAN_TENDER P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR
+INNER JOIN EP_PGD_TENDER_VENDOR TV ON T.KODE_TENDER = TV.KODE_TENDER AND T.KODE_KANTOR = TV.KODE_KANTOR
+LEFT JOIN EP_PGD_TENDER_VENDOR_STATUS PTVS ON TV.KODE_TENDER = PTVS.KODE_TENDER AND TV.KODE_KANTOR = PTVS.KODE_KANTOR AND TV.KODE_VENDOR = PTVS.KODE_VENDOR
+LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
+WHERE     (K.TGL_BERAKHIR IS NULL)
+		   AND (K.KODE_AKTIFITAS IN (1205, 1206, 1305, 1306, 1402, 1403, 1502, 1503, 1507, 1508, 1605, 1606, 1702, 1703))
+		   AND (P.TGL_LELANG_TEKNIS >=  SYSDATE)
+		   AND (S.KODE_STATUS IN (2, 3, 5, 20, 21))
+ 
+UNION ALL
+SELECT
+	TV.KODE_VENDOR
+	,T.KODE_TENDER
+	,T.JUDUL_PEKERJAAN
+	,T.KODE_KANTOR
+	,P.TGL_PEMBUKAAN_REG
+	,P.TGL_PENUTUPAN_REG
+	,
+	CASE
+	WHEN P.TGL_LELANG_TEKNIS IS NULL  THEN  P.TGL_LELANG_KOMODITI
+	ELSE P.TGL_LELANG_TEKNIS
+	END AS TGL_LELANG
+	, COALESCE(S.NAMA_STATUS, 'Pendaftaran') AS  NAMA_STATUS
+	, COALESCE(PTVS.STATUS,1) AS PTVS_STATUS
+	, K.KODE_AKTIFITAS
+FROM EP_PGD_TENDER T
+INNER JOIN EP_PGD_KOMENTAR_TENDER K ON T.KODE_TENDER = K.KODE_TENDER AND T.KODE_KANTOR = K.KODE_KANTOR
+INNER JOIN EP_PGD_PERSIAPAN_TENDER P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR
+INNER JOIN EP_PGD_TENDER_VENDOR TV ON T.KODE_TENDER = TV.KODE_TENDER AND T.KODE_KANTOR = TV.KODE_KANTOR
+LEFT JOIN EP_PGD_TENDER_VENDOR_STATUS PTVS ON TV.KODE_TENDER = PTVS.KODE_TENDER AND TV.KODE_KANTOR = PTVS.KODE_KANTOR AND TV.KODE_VENDOR = PTVS.KODE_VENDOR
+LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
+WHERE     (K.TGL_BERAKHIR IS NULL)
+		   AND (K.KODE_AKTIFITAS IN (1209,1309, 1407, 1511, 1610, 1706))
+		   AND (P.TGL_LELANG_TEKNIS >=  SYSDATE)
+		   AND (S.KODE_STATUS = 10 )) VW_PGD_PEKERJAAN_VENDOR  ";
+         $sql .= " WHERE KODE_VENDOR =  " . $this->session->userdata('kode_vendor');   
          $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
          $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
               
@@ -351,7 +479,7 @@ class Pengadaan extends MY_Controller
              $sql .= " , JUMLAH = " .  str_replace(",","", $_POST["JUMLAH_PENAWARAN"][$i]);
              $sql .= " , KETERANGAN = '" . $_POST["KETERANGAN_PENAWARAN"][$i] . "'" ;
              $sql .= " , TGL_UBAH = TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "'" ;
+             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "'" ;
              $sql .= " WHERE KODE_TENDER =  '" . $this->input->post("KODE_TENDER") . "'" ;
              $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'" ;
              $sql .= " AND KODE_VENDOR = " . $this->input->post("KODE_VENDOR") . "" ;
@@ -396,7 +524,7 @@ class Pengadaan extends MY_Controller
              $sql .= " , JUMLAH = " .  str_replace(",","", $_POST["JUMLAH_PENAWARAN"][$i]);
              $sql .= " , KETERANGAN = '" . $_POST["KETERANGAN_PENAWARAN"][$i] . "'" ;
              $sql .= " , TGL_UBAH = TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "'" ;
+             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "'" ;
              $sql .= " WHERE KODE_TENDER =  '" . $this->input->post("KODE_TENDER") . "'" ;
              $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'" ;
              $sql .= " AND KODE_VENDOR = " . $this->input->post("KODE_VENDOR") . "" ;
@@ -430,7 +558,7 @@ class Pengadaan extends MY_Controller
              $sql .= " , " . str_replace(",","", $_POST["JUMLAH_PENAWARAN"][$i]) . "" ;
              $sql .= " , " . str_replace(",","", $_POST["HARGA_PENAWARAN"][$i]) . "" ;
              $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-             $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+             $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
              }
              
@@ -450,7 +578,7 @@ class Pengadaan extends MY_Controller
         $sql = "UPDATE EP_PGD_TENDER_VENDOR_STATUS";
         $sql .= " SET STATUS = 21 ";
         $sql .= ", TGL_UBAH = TO_DATE('" .  date("Y-m-d H:i:s"). "','YYYY-MM-DD HH24:MI:SS' )   ";
-        $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "' ";    
+        $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "' ";    
         $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
         $sql .= " AND KODE_VENDOR =  " . $this->input->post("KODE_VENDOR")  ;
@@ -474,7 +602,7 @@ class Pengadaan extends MY_Controller
         $i = 1;
         $peringkat = 1;
         foreach($result as $row) {
-            if ($row->KODE_VENDOR == $this->session->userdata("user_id")  ) {
+            if ($row->KODE_VENDOR == $this->session->userdata("kode_vendor")  ) {
                     $peringkat = $i;
             }
             $i++;
@@ -522,7 +650,7 @@ class Pengadaan extends MY_Controller
                     $sql .= " ,". str_replace(",","",$_POST["BERAT"][$i]) . "" ;
  
                     $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-                    $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+                    $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
                      
                 }
@@ -571,7 +699,7 @@ class Pengadaan extends MY_Controller
                     $sql .= " VALUES ('" . $this->input->post("KODE_TENDER") . "','" . $this->input->post("KODE_KANTOR") . "'," . $this->input->post("KODE_VENDOR") ;
                     $sql .= " ,'" . $v . "',".$_POST["VENDOR_CEK"][$i] ;
                     $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-                    $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+                    $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
                     
                     
@@ -699,7 +827,7 @@ class Pengadaan extends MY_Controller
         
         $sql .= " WHERE KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         
         
          $query = $this->db->query($sql);
@@ -709,7 +837,7 @@ class Pengadaan extends MY_Controller
         
         $data["KODE_TENDER"] = $this->input->get("KODE_TENDER");
         $data["KODE_KANTOR"] = $this->input->get("KODE_KANTOR");
-        $data["KODE_VENDOR"] = $this->session->userdata("user_id");
+        $data["KODE_VENDOR"] = $this->session->userdata("kode_vendor");
          
         
         $data["NO_PENAWARAN"] = "";
@@ -749,7 +877,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(BERAT, 0) = 0 ";
         $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         */
         
         $sql = "SELECT P.KODE_TENDER, P.KODE_KANTOR  , TV.KODE_VENDOR, COALESCE( T.KETERANGAN , D.ITEM) AS KETERANGAN 
@@ -762,7 +890,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(D.BOBOT, 0) = 0 ";
         $sql .= " AND P.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         
         
        // echo $sql;
@@ -785,7 +913,7 @@ class Pengadaan extends MY_Controller
                 $sql .= " WHERE   COALESCE(BERAT, 0) != 0 ";
                 $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-                $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+                $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
           */      
 
         
@@ -800,7 +928,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(D.BOBOT, 0) != 0 ";
         $sql .= " AND P.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
        
                 $query = $this->db->query($sql);
                 $data["rsteknis"] = $query->result();
@@ -834,7 +962,7 @@ class Pengadaan extends MY_Controller
                            FROM EP_PGD_ITEM_PENAWARAN ";
                 $sql .= " WHERE  KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND  KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-                $sql .= " AND  KODE_VENDOR =  " . $this->session->userdata("user_id") . "  ";
+                $sql .= " AND  KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . "  ";
                 $sql .= " ) P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR AND T.KODE_BARANG_JASA = P.KODE_BARANG_JASA  AND T.KODE_SUB_BARANG_JASA = P.KODE_SUB_BARANG_JASA ";
                 $sql .= " WHERE T.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND T.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
@@ -875,7 +1003,7 @@ class Pengadaan extends MY_Controller
              $sql .= " , JUMLAH = " .  str_replace(",","", $_POST["JUMLAH_PENAWARAN"][$i]);
              $sql .= " , KETERANGAN = '" . $_POST["KETERANGAN_PENAWARAN"][$i] . "'" ;
              $sql .= " , TGL_UBAH = TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "'" ;
+             $sql .= " , PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "'" ;
              $sql .= " WHERE KODE_TENDER =  '" . $this->input->post("KODE_TENDER") . "'" ;
              $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'" ;
              $sql .= " AND KODE_VENDOR = " . $this->input->post("KODE_VENDOR") . "" ;
@@ -909,7 +1037,7 @@ class Pengadaan extends MY_Controller
              $sql .= " , " . str_replace(",","", $_POST["JUMLAH_PENAWARAN"][$i]) . "" ;
              $sql .= " , " . str_replace(",","", $_POST["HARGA_PENAWARAN"][$i]) . "" ;
              $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-             $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+             $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
              }
              
@@ -929,7 +1057,7 @@ class Pengadaan extends MY_Controller
         $sql = "UPDATE EP_PGD_TENDER_VENDOR_STATUS";
         $sql .= " SET STATUS = 21 ";
         $sql .= ", TGL_UBAH = TO_DATE('" .  date("Y-m-d H:i:s"). "','YYYY-MM-DD HH24:MI:SS' )   ";
-        $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("user_id") . "' ";    
+        $sql .= ", PETUGAS_UBAH = '" . $this->session->userdata("kode_vendor") . "' ";    
         $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
         $sql .= " AND KODE_VENDOR =  " . $this->input->post("KODE_VENDOR")  ;
@@ -953,7 +1081,7 @@ class Pengadaan extends MY_Controller
         $i = 1;
         $peringkat = 1;
         foreach($result as $row) {
-            if ($row->KODE_VENDOR == $this->session->userdata("user_id")  ) {
+            if ($row->KODE_VENDOR == $this->session->userdata("kode_vendor")  ) {
                     $peringkat = $i;
             }
             $i++;
@@ -1001,7 +1129,7 @@ class Pengadaan extends MY_Controller
                     $sql .= " ,". str_replace(",","",$_POST["BERAT"][$i]) . "" ;
  
                     $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-                    $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+                    $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
                      
                 }
@@ -1050,7 +1178,7 @@ class Pengadaan extends MY_Controller
                     $sql .= " VALUES ('" . $this->input->post("KODE_TENDER") . "','" . $this->input->post("KODE_KANTOR") . "'," . $this->input->post("KODE_VENDOR") ;
                     $sql .= " ,'" . $v . "', ".$_POST["VENDOR_CEK"][$i] ;
                     $sql .= " ,TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')" ;
-                    $sql .= " ,'" . $this->session->userdata("user_id") . "')" ;
+                    $sql .= " ,'" . $this->session->userdata("kode_vendor") . "')" ;
              
                     
                     
@@ -1175,7 +1303,7 @@ class Pengadaan extends MY_Controller
         
         $sql .= " WHERE KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         
         
          $query = $this->db->query($sql);
@@ -1185,7 +1313,7 @@ class Pengadaan extends MY_Controller
         
         $data["KODE_TENDER"] = $this->input->get("KODE_TENDER");
         $data["KODE_KANTOR"] = $this->input->get("KODE_KANTOR");
-        $data["KODE_VENDOR"] = $this->session->userdata("user_id");
+        $data["KODE_VENDOR"] = $this->session->userdata("kode_vendor");
          
         
         $data["NO_PENAWARAN"] = "";
@@ -1225,7 +1353,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(BERAT, 0) = 0 ";
         $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         */
         
         $sql = "SELECT P.KODE_TENDER, P.KODE_KANTOR  , TV.KODE_VENDOR, COALESCE( T.KETERANGAN , D.ITEM) AS KETERANGAN 
@@ -1238,7 +1366,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(D.BOBOT, 0) = 0 ";
         $sql .= " AND P.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
         
         
        // echo $sql;
@@ -1261,7 +1389,7 @@ class Pengadaan extends MY_Controller
                 $sql .= " WHERE   COALESCE(BERAT, 0) != 0 ";
                 $sql .= " AND KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-                $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+                $sql .= " AND KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
           */      
 
         
@@ -1276,7 +1404,7 @@ class Pengadaan extends MY_Controller
         $sql .= " WHERE   COALESCE(D.BOBOT, 0) != 0 ";
         $sql .= " AND P.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
         $sql .= " AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("user_id") . " ";
+        $sql .= " AND TV.KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . " ";
        
                 $query = $this->db->query($sql);
                 $data["rsteknis"] = $query->result();
@@ -1310,7 +1438,7 @@ class Pengadaan extends MY_Controller
                            FROM EP_PGD_ITEM_PENAWARAN ";
                 $sql .= " WHERE  KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND  KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
-                $sql .= " AND  KODE_VENDOR =  " . $this->session->userdata("user_id") . "  ";
+                $sql .= " AND  KODE_VENDOR =  " . $this->session->userdata("kode_vendor") . "  ";
                 $sql .= " ) P ON T.KODE_TENDER = P.KODE_TENDER AND T.KODE_KANTOR = P.KODE_KANTOR AND T.KODE_BARANG_JASA = P.KODE_BARANG_JASA  AND T.KODE_SUB_BARANG_JASA = P.KODE_SUB_BARANG_JASA ";
                 $sql .= " WHERE T.KODE_TENDER  = '" . $this->input->get("KODE_TENDER") . "'";
                 $sql .= " AND T.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";

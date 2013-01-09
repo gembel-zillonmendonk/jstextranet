@@ -201,7 +201,44 @@ $form_id = 'modal_form_' . $grid->id;
                         title: 'Hapus Data',
                         position:'first',
                         onClickButton : function (){
-                            jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
+                            var selected = $('#<?php echo $grid->id ?>').jqGrid('getGridParam', 'selrow');
+                    
+                            if (selected) {
+                                selected = jQuery('#<?php echo $grid->id ?>').jqGrid('getRowData',selected);
+                                var keys = <?php echo json_encode($grid->primary_keys); ?>;
+                                var count = 0;
+                    
+                                var data = {};
+                                var str ="";
+                                $.each(keys, function(k, v) { 
+                                    data = {v:selected[v]};
+                                    str += v + "=" + selected[v] + "&";
+                                    count++; 
+                                });
+                        
+                                console.debug(str);
+                                
+                                // new : for load form from server with default attributes 
+                                var url = window.location.href;
+                                var tempArray = url.split("?");
+                                var additionalURL = tempArray[1];
+                                var action = $("#<?php echo $form_id ?> form").attr("action");
+                                var newAction = action.split("?");
+                                var newAction = newAction[0] + "?" + additionalURL;
+                                $("#<?php echo $form_id ?> form").parent().load(newAction);
+
+                                $.post($site_url + '/<?php echo $grid->module ?>/grid_delete/<?php echo $grid->model ?>?' + str);
+                                
+                                alert('Data berhasil dihapus');
+
+                                
+                                //reload grid
+                                $('#<?php echo $grid->id ?>').trigger("reloadGrid");
+                        
+                            } else {
+                                alert('Harap pilih data yang akan dihapus');
+                                return;
+                            }
                         }
                     });
                     /// edit button

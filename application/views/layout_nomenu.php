@@ -154,7 +154,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="table_footer">© 2008 Copyright <b>ADW Consulting</b> - All Right Reserved</td>
+                <td class="table_footer">© 2012 Copyright <b>ADW Consulting</b> - All Right Reserved</td>
             </tr>
             <tr>
                 <td class="table_end">&nbsp;</td>

@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan_monitor') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("user_id"); ?></h3>
+    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan_monitor') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("kode_vendor"); ?></h3>
     <div>
         <fieldset class="ui-widget-content">
         <legend>Pencarian</legend>

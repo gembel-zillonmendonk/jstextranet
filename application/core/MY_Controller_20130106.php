@@ -10,13 +10,13 @@ class MY_Controller extends MX_Controller
     {
         parent::__construct();
         // check login session
-        $kode_vendor = $this->session->userdata('kode_vendor');
-        if (!$kode_vendor)
+        $user_id = $this->session->userdata('kode_vendor');
+        if (!$user_id)
             redirect('account/login');
 
         //$this->output->enable_profiler(TRUE);
         // cek kelengkapan data & status registrasi vendor
-        $query = $this->db->query("select KODE_STATUS_REG from EP_VENDOR where KODE_VENDOR = $kode_vendor");
+        $query = $this->db->query("select KODE_STATUS_REG from EP_VENDOR where KODE_VENDOR = $user_id");
         $row = $query->row_array();
         // exclude crud controller from restricted access
 //        $allow = (in_array($this->uri->segment(1), array('vendor', 'account')) ) ? true : false;
@@ -407,7 +407,6 @@ class MY_Controller extends MX_Controller
 
             $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
             $rows = isset($_REQUEST['rows']) ? $_REQUEST['rows'] : 15;
-            
             $filter = null;
             if (isset($_REQUEST['filters']))
             {
@@ -471,10 +470,6 @@ class MY_Controller extends MX_Controller
             }
 
             $this->db->limit($limit, $offset);
-            
-            if(isset($_REQUEST['sidx']) && strlen($_REQUEST['sidx']) > 0)
-                $this->db->order_by($_REQUEST['sidx'], $_REQUEST['sord']);
-            
 //            $this->db->limit($rows, $page);
 //            $query = $this->db->get();
             $query = $this->db->get_where($src, $filter, $limit, $offset);
@@ -696,29 +691,6 @@ class MY_Controller extends MX_Controller
         }
     }
 
-    public function grid_delete($model = null)
-    {
-        // check and load model
-        $model = $this->_load_model($model);
-
-        // edit request 
-        $keys = $model->primary_keys;
-        if (
-                (count($_REQUEST) > 0 && count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) // get PKey from $_REQUEST
-                ||
-                (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
-        )
-        { // check wheater primary key was supplied or not
-            $where = array();
-            foreach ($keys as $key)
-                $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
-
-            $query = $this->db->delete($model->table, $where); // get single row
-            // $model->attributes = $query; // set model attributes
-//            $model->attributes = array_merge($model->attributes, $query); // set model attributes
-        }
-    }
-    
     public function grid($model = null)
     {
         // check and load model

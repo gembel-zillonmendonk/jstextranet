@@ -61,9 +61,9 @@
                             <td class="txt_date">
                                 <?php echo date("l, d F Y") ?>
                                 <?php 
-                                    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
-                                    /* Output: vrijdag 22 december 1978 */
-                                    echo strftime("%A %e %B %Y"); 
+//                                    setlocale(LC_ALL, 'id_ID.UTF8', 'id_ID.UTF-8', 'id_ID.8859-1', 'id_ID', 'IND.UTF8', 'IND.UTF-8', 'IND.8859-1', 'IND', 'Indonesian.UTF8', 'Indonesian.UTF-8', 'Indonesian.8859-1', 'Indonesian', 'Indonesia', 'id', 'ID', 'en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US', 'American', 'ENG', 'English');
+//                                    /* Output: vrijdag 22 december 1978 */
+//                                    echo strftime("%A %e %B %Y"); 
                                 ?>
                             </td>
                             <td class="tools_container">&nbsp;</td>
@@ -243,7 +243,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="table_footer">© 2008 Copyright <b>ADW Consulting</b> - All Right Reserved</td>
+                <td class="table_footer">© 2012 Copyright <b>ADW Consulting</b> - All Right Reserved</td>
             </tr>
             <tr>
                 <td class="table_end"><img src="<?php echo base_url('/images/blank.gif') ?>" width="995" height="1"></td>

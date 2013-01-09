@@ -49,7 +49,7 @@ class Ep_pgd_pekerjaan_monitor extends MY_Model {
 		FROM VW_PGD_VENDOR_MONITOR  ";
      
         function setParam() { 
-            $this->sql_select  = $this->sql_select . " WHERE  KODE_VENDOR = " .  $this->session->userdata("user_id"). "  ";
+            $this->sql_select  = $this->sql_select . " WHERE  KODE_VENDOR = " .  $this->session->userdata("kode_vendor"). "  ";
             
              
             if($this->input->get("PTVS_STATUS")) {

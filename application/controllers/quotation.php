@@ -17,8 +17,8 @@ class quotation extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->session->set_userdata('user_id', '512');
-        //$this->session->set_userdata('user_id', '7827400');
+        $this->session->set_userdata('kode_vendor', '512');
+        //$this->session->set_userdata('kode_vendor', '7827400');
 
         $this->where = 'KODE_VENDOR = ' . $this->session->userdata('kode_vendor');
         $this->rules = array(

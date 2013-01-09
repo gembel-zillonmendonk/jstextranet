@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("user_id"); ?></h3>
+    <h3 href="<?php echo site_url('/crud/grid/ep_pgd_pekerjaan') ?>?PTVS_STATUS=<?php echo $PTVS_STATUS; ?>">DAFTAR PEKERJAAN <?php echo $this->session->userdata("kode_vendor"); ?></h3>
     <div>
         <fieldset class="ui-widget-content">
         <legend>Pencarian</legend>
@@ -14,6 +14,7 @@
                                                                 <option <?php echo ($this->input->get("PTVS_STATUS") == "2,20" ? " SELECTED " : "" ) ;?> Value="2,20">Menunggu Penawaran</option>
                                                                 <option <?php echo ($this->input->get("PTVS_STATUS") == "3,21" ? " SELECTED " : "" ) ;?> Value="3,21">Edit / Resubmit Penawaran</option>
                                                                 <option <?php echo ($this->input->get("PTVS_STATUS") == "10" ? " SELECTED " : "" ) ;?>  Value="10">Penawaran Negosiasi</option>
+                                                                <option <?php echo ($this->input->get("PTVS_STATUS") == "11" ? " SELECTED " : "" ) ;?>  Value="11">Award Announcement</option>
                                          </select>
                               
 		

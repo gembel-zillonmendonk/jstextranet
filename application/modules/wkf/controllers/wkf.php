@@ -93,7 +93,18 @@ class Wkf extends MX_Controller {
         // load workflow instance
         $instance = $this->workflow->getInstance($kode_proses);
         // load workflow instance
-        $history = $this->workflow->getHistory($kode_proses);
+        //        $history = $this->workflow->getHistory($kode_proses);
+        
+        $sql = "select C.NAMA_TRANSISI, D.NAMA_AKTIFITAS, a.catatan, a.tgl_rekam, a.petugas_rekam
+                from ep_wkf_proses_his a
+                inner join ep_wkf_proses b on a.kode_proses = b.kode_proses
+                inner join ep_wkf_transisi c on a.kode_transisi = c.kode_transisi
+                inner join ep_wkf_aktifitas d on d.kode_aktifitas = c.aktifitas_asal
+                where a.kode_proses = $kode_proses
+                order by tgl_rekam";
+        
+        $history = $this->db->query($sql)->result_array();
+        
         // load workflow variable
         $variables = $this->workflow->getParamfromDB($kode_proses);
 
@@ -140,7 +151,16 @@ class Wkf extends MX_Controller {
 
         $kode_proses = isset($_REQUEST['kode_proses']) ? $_REQUEST['kode_proses'] : null;
         $kode_proses = isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : $kode_proses;
-        $history = $this->workflow->getHistory($kode_proses);
+        //        $history = $this->workflow->getHistory($kode_proses);
+        
+        $sql = "select C.NAMA_TRANSISI, D.NAMA_AKTIFITAS, a.catatan, a.tgl_rekam, a.petugas_rekam
+                from ep_wkf_proses_his a
+                inner join ep_wkf_proses b on a.kode_proses = b.kode_proses
+                inner join ep_wkf_transisi c on a.kode_transisi = c.kode_transisi
+                inner join ep_wkf_aktifitas d on b.kode_aktifitas = d.kode_aktifitas
+                where a.kode_proses = $kode_proses";
+        
+        $history = $this->db->query()->result_array();
         
         if ($this->_is_ajax_request())
             $this->load->view('list_history', array(
