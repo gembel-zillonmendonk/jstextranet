@@ -411,7 +411,7 @@ class Workflow {
             select * from (
                 select x.*, ROW_NUMBER() OVER(PARTITION BY KODE_VENDOR, KODE_WKF ORDER BY kode_proses DESC) rn from
                 (
-                    select a.kode_proses, a.kode_wkf, a.kode_aktifitas, a.kode_posisi, a.kode_user, a.kode_aplikasi, c.nama_aktifitas, a.tanggal_selesai,
+                    select a.kode_proses, a.kode_wkf, a.kode_aktifitas, a.kode_posisi, a.kode_user, a.kode_aplikasi, c.nama_aktifitas, a.tanggal_selesai
                         , max(decode(key,'KODE_BARANG_JASA', value, null)) KODE_BARANG_JASA
                         , max(decode(key,'KODE_INVOICE', value, null)) KODE_INVOICE
                         , max(decode(key,'KODE_JANGKA', value, null)) KODE_JANGKA
