@@ -38,7 +38,7 @@ class ep_ktr_jangka_todo extends MY_Model
                                 ) x ON a.kode_kontrak = x.KODE_KONTRAK and a.KODE_JANGKA = x.KODE_JANGKA and a.KODE_KANTOR = x.KODE_KANTOR 
                                 where (x.KODE_KONTRAK is null or x.kode_aplikasi = 2) 
                                 and b.status = 'O' 
-                                and b.tipe_kontrak = 'LUMPSUM'
+                                and b.tipe_kontrak = 'RENTAL SERVICE'
                                 and ( status_bastp <> 'O' or status_bastp is null )
                           )";
     public $columns_conf = array(
@@ -58,7 +58,7 @@ class ep_ktr_jangka_todo extends MY_Model
         'URL',
         'ACT',
     );
-    public $dir = 'milestone';
+    public $dir = 'top';
 
     function __construct()
     {
@@ -74,12 +74,12 @@ class ep_ktr_jangka_todo extends MY_Model
                     
                     //alert(data[\'KODE_PROSES\']);
                     
-                    var param = "referer_url=/contract/milestone/list_todo&KODE_JANGKA=" + data[\'KODE_JANGKA\']
+                    var param = "referer_url=/contract/top/list_todo&KODE_JANGKA=" + data[\'KODE_JANGKA\']
                     + "&KODE_KANTOR=" + data[\'KODE_KANTOR\']
                     + "&KODE_KONTRAK=" + data[\'KODE_KONTRAK\']
                     + "&KODE_VENDOR=" + data[\'KODE_VENDOR\'];
                     
-                    var href = $site_url + "/contract/milestone/create_draft?" + param;
+                    var href = $site_url + "/contract/top/create_draft?" + param;
                     
                     if(data[\'URL\'].length > 0)
                         var href = $site_url + "/wkf/run?kode_wkf=61&kode_proses=" +data[\'KODE_PROSES\'] +"&"+ param;

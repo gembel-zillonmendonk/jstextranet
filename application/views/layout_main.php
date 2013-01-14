@@ -29,7 +29,7 @@
                 buttonImageOnly: true,
                 buttonImage: '<?php echo base_url('images/Calendar_scheduleHS.png') ?>',
                 buttonText: 'Calendar',
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd-mm-yy",
                 readOnly: true,
                 defaultDate: $('.datepicker').val()
             });

@@ -102,6 +102,7 @@ $form_id = 'modal_form_' . $grid->id;
                     selected = jQuery('#<?php echo $grid->id ?>').jqGrid('getRowData',selected);
                     var keys = <?php echo json_encode($grid->primary_keys); ?>;
                     var count = 0;
+                    //console.log(selected);
                 
                     var data = {};
                     var str ="";
@@ -113,7 +114,7 @@ $form_id = 'modal_form_' . $grid->id;
                     
                     //console.debug(data);
                     jQuery('#<?php echo $form_id ?> #form')
-                    .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>?' + str)
+                    .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>',str)
                     
                 }
             }
@@ -227,7 +228,7 @@ $form_id = 'modal_form_' . $grid->id;
                                 var newAction = newAction[0] + "?" + additionalURL;
                                 $("#<?php echo $form_id ?> form").parent().load(newAction);
 
-                                $.post($site_url + '/<?php echo $grid->module ?>/grid_delete/<?php echo $grid->model ?>?' + str);
+                                $.post($site_url + '/<?php echo $grid->module ?>/grid_delete/<?php echo $grid->model ?>', str);
                                 
                                 alert('Data berhasil dihapus');
 

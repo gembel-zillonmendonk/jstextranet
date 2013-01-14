@@ -47,7 +47,7 @@ class Workflow {
 
         // create new instance process
         $process = array();
-        $process['TANGGAL_MULAI'] = date("Y-m-d H:i:s");
+        $process['TANGGAL_MULAI'] = date("d-m-Y H:i:s");
         $process['PARAMETER'] = json_encode($parameters);
         $process['KODE_WKF'] = $kode_wkf;
         $process['KODE_AKTIFITAS'] = $node['KODE_AKTIFITAS'];
@@ -73,7 +73,7 @@ class Workflow {
         $history['kode_proses'] = $kode_proses;
         $history['catatan'] = ($notes ? $notes : (isset($_REQUEST['catatan']) ? $_REQUEST['catatan'] : $transition['NAMA_TRANSISI']));
         $history['kode_transisi'] = $transition['KODE_TRANSISI'];
-        $history['tgl_rekam'] = date("Y-m-d H:i:s");
+        $history['tgl_rekam'] = date("d-m-Y H:i:s");
         $history['petugas_rekam'] = ($user ? $user : 'system user session');
 
         $this->insertHistory($history);
@@ -95,7 +95,7 @@ class Workflow {
         $history['kode_proses'] = $kode_proses;
         $history['catatan'] = ($notes ? $notes : (isset($_REQUEST['catatan']) ? $_REQUEST['catatan'] : $transition['NAMA_TRANSISI']));
         $history['kode_transisi'] = $transition['KODE_TRANSISI'];
-        $history['tgl_rekam'] = date("Y-m-d H:i:s");
+        $history['tgl_rekam'] = date("d-m-Y H:i:s");
         $history['petugas_rekam'] = ($user ? $user : 'system user session');
 
         // update instance
@@ -109,7 +109,7 @@ class Workflow {
         $instance['parameter'] = json_encode($params);
 
         if ($node['IS_AKHIR'])
-            $instance['tanggal_selesai'] = date("Y-m-d H:i:s");
+            $instance['tanggal_selesai'] = date("d-m-Y H:i:s");
 
         $this->runTransitionConstraint($kode_transisi, $params);
         $this->insertHistory($history);

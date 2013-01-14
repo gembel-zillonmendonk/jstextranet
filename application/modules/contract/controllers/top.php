@@ -12,6 +12,13 @@
  */
 class top extends MY_Controller
 {
+    public function list_todo(){
+        if($this->_is_ajax_request())
+            $this->load->view('top/list_todo');
+        else
+            $this->layout->view('top/list_todo');
+    }
+    
     public function create_draft(){
         
         if($this->_is_ajax_request())

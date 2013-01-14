@@ -52,10 +52,10 @@ class MY_Controller extends MX_Controller {
             $tempHandle = fopen('php://temp', 'r+');
 
             //Get file from FTP: 
-			$size = ftp_size($this->ftp->conn_id, $config['target_dir'] . $filename);
-			
-            if (ftp_fget ($this->ftp->conn_id, $tempHandle, $config['target_dir'] . $filename, FTP_BINARY)) {
-				rewind($tempHandle);
+            $size = ftp_size($this->ftp->conn_id, $config['target_dir'] . $filename);
+
+            if (ftp_fget($this->ftp->conn_id, $tempHandle, $config['target_dir'] . $filename, FTP_BINARY)) {
+                rewind($tempHandle);
 
                 header("Content-Length: " . $size . "\n\n");
                 header("Content-Disposition: attachment; filename=$filename");
@@ -447,10 +447,14 @@ class MY_Controller extends MX_Controller {
             // check wheater primary key was supplied or not
             $where = array();
             foreach ($keys as $key)
-                $where[$key] = $_REQUEST[$key];
+                $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : urldecode($_REQUEST[$key]);
 
 
-            $query = $this->db->get_where($model->table, $where)->row_array(); // get single row
+            $query = $this->db->get_where(" ( select cast(rowid as varchar2(50)) as row_id, a.* from " . $model->table . " a ) ", $where)->row_array(); // get single row
+            if (count($query)) {
+                $query = array_merge($model->attributes, $query);
+                $model->row_id = $query['ROW_ID'];
+            }
             //$model->attributes = $query; // set model attributes
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -540,15 +544,8 @@ class MY_Controller extends MX_Controller {
                 ||
                 (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
         ) { // check wheater primary key was supplied or not
-            $where = array();
-            foreach ($keys as $key)
-                $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
-
-            $query = $this->db->get_where($model->table, $where)->row_array(); // get single row
-            if (count($query)) {
-                $model->attributes = array_merge($model->attributes, $query); // set model attributes
-                $model->is_new_record = false;
-            }
+            $model->attributes = $this->_form_data($model);
+            $model->is_new_record = false;
         }
 
 //echo count($query);
@@ -589,13 +586,7 @@ class MY_Controller extends MX_Controller {
                 ||
                 (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
         ) { // check wheater primary key was supplied or not
-            $where = array();
-            foreach ($keys as $key)
-                $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
-
-            $query = $this->db->get_where($model->table, $where)->row_array(); // get single row
-            // $model->attributes = $query; // set model attributes
-            $model->attributes = array_merge($model->attributes, $query); // set model attributes
+            $model->attributes = $this->_form_data($model);
         }
 
         $form = new MY_Form($model);

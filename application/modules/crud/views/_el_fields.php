@@ -2,6 +2,8 @@
 <?php
 $i = 1;
 
+echo form_hidden($form->model->table . '[ROW_ID]', isset($form->model->row_id) ? $form->model->row_id : 0);
+
 //print_r($form->model->attributes);
 //print_r(array_keys($form->elements));
 $el_keys = array_keys($form->elements);
