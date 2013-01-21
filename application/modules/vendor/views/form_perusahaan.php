@@ -3,6 +3,7 @@
 <!--<h3 class="ui-widget ui-widget-header ui-corner-all"><span>Form Detail</span></h3>-->
 <fieldset class="ui-widget-content">
     <legend>Fields with remark (*) is required.</legend>
+    <?php echo form_hidden($form->model->table . '[ROW_ID]', isset($form->model->row_id) ? $form->model->row_id : 0); ?>
     <?php foreach ($form->elements as $k => $v): ?>
         <?php if($k == 'VENDOR_TIPE') continue; ?>
         <p>

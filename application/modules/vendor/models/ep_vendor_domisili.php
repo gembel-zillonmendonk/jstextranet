@@ -30,7 +30,7 @@ class Ep_vendor_domisili extends MY_Model
     );
     public $columns_conf = array(
         'NO_DOMISILI',
-        'TGL_DOMISILI',
+        'TGL_DOMISILI' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
         'KADALUARSA_DOMISILI',
         'ALAMAT',
         'KOTA',

@@ -24,8 +24,8 @@ class Ep_vendor_temp_importir extends MY_Model {
     public $columns_conf = array(
         'NO',
         'PENERBIT',
-        'TGL_BUAT',
-        'TGL_BERAKHIR',
+        'TGL_BUAT' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'TGL_BERAKHIR' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_AGEN where TIPE = 'IMPORTIR')";
 

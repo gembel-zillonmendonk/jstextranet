@@ -35,7 +35,7 @@ class Ep_vendor_jasa extends MY_Model
             from EP_KOM_KELOMPOK_JASA
             order by nama_kel_jasa");
         $rows = $query->result_array();
-        $options = array();
+        $options = array('' => '');
         foreach ($rows as $value) {
             $options[$value['KODE_KEL_JASA']] = $value['NAMA_KEL_JASA'];
         }

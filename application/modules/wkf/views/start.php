@@ -68,4 +68,18 @@
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
     //.css("width", "auto");
+    
+    $(document).ready(function(){
+        var f = $(".accordion-wkf form");
+        var el = $("button", f);
+        
+        if(el.length > 0) {
+            console.log(el);
+            $(el).live('click', function(){
+                $(f).validate({
+                    meta: "validate"
+                }); 
+            });
+        }
+    });
 </script>

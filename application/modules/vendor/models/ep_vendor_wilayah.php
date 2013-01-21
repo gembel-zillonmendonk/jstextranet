@@ -31,7 +31,7 @@ class Ep_vendor_wilayah extends MY_Model
         $this->init();
 
         // dropdown from table relation
-        $sql = "select kode_kantor, nama_kantor from ms_kantor where aktif = 'Y' order by nama_kantor";
+        $sql = "select kode_kantor, nama_kantor from ms_kantor where aktif = 'Y' and kode_tipe = '3' order by nama_kantor";
         $rows = $this->db->query($sql)->result_array();
         $options = array();
         foreach ($rows as $value) {
@@ -43,6 +43,15 @@ class Ep_vendor_wilayah extends MY_Model
         // set default value here
         $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        
+        $row = $this->db->query("select cast(ROWID as varchar2(50)) as ROW_ID, a.* 
+            from ep_vendor_wilayah a
+            where kode_vendor = '".$this->attributes['KODE_VENDOR']."'")->row_array();
+        
+        if(count($row)){
+            $this->attributes['KODE_WILAYAH'] = $row['KODE_WILAYAH'];
+            $this->attributes['ROWID'] = $row['ROW_ID'];
+        }
     }
 
     function _default_scope()

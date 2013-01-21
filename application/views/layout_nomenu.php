@@ -20,21 +20,40 @@
         <script type="text/javascript" src="<?php echo base_url('js/i18n/grid.locale-en.js') ?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('js/jquery.jqGrid.min.js') ?>"></script>
         <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-1.8.23.custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('js/jquery.livequery.min.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/jquery.form.js') ?>"></script>         
+        <script type="text/javascript" src="<?php echo base_url('js/autoNumeric-1.8.1.js') ?>"></script>         
 
         <script type="text/javascript" src="<?php echo base_url('js/jquery.validate.js') ?>"></script>         
-        <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>         
+        <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>       
+        <script type="text/javascript" src="<?php echo base_url('js/additional-methods.min.js') ?>"></script> 
+        <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-timepicker-addon.js') ?>"></script>         
         <script type="text/javascript">
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
-            $.datepicker.setDefaults({
+            var dateoptions = {
                 showOn: 'both',
                 buttonImageOnly: true,
                 buttonImage: '<?php echo base_url('images/Calendar_scheduleHS.png') ?>',
                 buttonText: 'Calendar',
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd-mm-yy",
                 readOnly: true,
-                defaultDate: $('.datepicker').val()
+                defaultDate: $('.datepicker').val(),
+                changeMonth: true,
+                changeYear: true
+            };
+            
+            $.datepicker.setDefaults(dateoptions);
+            $.timepicker.setDefaults({
+                showOn: 'both',
+                buttonImageOnly: true,
+                buttonImage: '<?php echo base_url('images/Calendar_scheduleHS.png') ?>',
+                buttonText: 'Calendar',
+                dateFormat: "dd-mm-yy",
+                readOnly: true,
+                defaultDate: $('.datepicker').val(),
+                showButtonPanel: true,
+                showTimepicker: true
             });
             $.validator.messages.required = "Field tidak boleh kosong!";
             $.validator.setDefaults({
@@ -74,6 +93,7 @@
             var $js_url = $base_url + '/js/';
             var $css_url = $base_url + '/css/';
         </script>
+        <script type="text/javascript" src="<?php echo base_url('js/form_event.js') ?>"></script>   
         <script type="text/javascript" src="<?php echo base_url('js/stmenu.js') ?>"></script>
         <script type="text/javascript" src="<?php echo base_url('js/swap.js') ?>"></script>
     </head>
@@ -84,8 +104,8 @@
                 <td class="table_band">
                     <table class="table_band_container" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td class="txt_logged">Anda Masuk Sebagai : <span class="txt_orange">Application Administrator</span></td>
-                            <td class="txt_date">Senin, 01 September 2008</td>
+                            <td class="txt_logged">Anda Masuk Sebagai : <span class="txt_orange"><?php echo $this->session->userdata("nama_vendor"); ?></span></td>
+                            <td class="txt_date"><?php echo date("l, d F Y") ?></td>
                             <td class="tools_container">
                                 <div class="tools_item"><a href="<?php echo site_url('/account/logout') ?>"><img src="<?php echo base_url('images/logout.png') ?>" alt="Keluar Aplikasi" name="logout" width="20" height="18" border="0" id="logout" onMouseOver="MM_swapImage('logout','','<?php echo base_url('images/logout_on.png') ?>',1)" onMouseOut="MM_swapImgRestore()"></a></div>
                                 <div class="tools_item"><a href="<?php echo site_url('/account/changepassword') ?>"><img src="<?php echo base_url('images/pass.png') ?>" alt="Rubah Password" name="chg_pass" width="20" height="18" border="0" id="chg_pass" onMouseOver="MM_swapImage('chg_pass','','<?php echo base_url('images/pass_on.png') ?>',1)" onMouseOut="MM_swapImgRestore()"></a></div>
@@ -164,7 +184,7 @@
 </html>
 <script>
     $(function() {
-        $( "input:submit, input:button").button();
+        $( "input:submit, input:button, button").button();
         $( ".datepicker" ).datepicker();
     });
 </script>

@@ -26,6 +26,7 @@ class Ep_vendor_perusahaan extends MY_Model
         'NAMA_VENDOR',
         'AKHIRAN' => array(
             'type' => 'dropdown', 'options' => array(
+                '' => '',
                 'TBK' => 'TBK',
                 'GMBH' => 'GMBH',
                 'NV' => 'NV',
@@ -49,7 +50,7 @@ class Ep_vendor_perusahaan extends MY_Model
     public $validation = array(
         'AWALAN' => array('required' => true),
         'NAMA_VENDOR' => array('required' => true),
-        'AKHIRAN' => array('required' => true),
+        //'AKHIRAN' => array('required' => true),
         //'VENDOR_TIPE' => array('required' => true),
         'ALAMAT_EMAIL' => array('required' => true),
     );
@@ -103,7 +104,7 @@ class Ep_vendor_perusahaan extends MY_Model
                 $data = array(
                     'KODE_VENDOR' => $this->attributes['KODE_VENDOR'],
                     'TIPE_VENDOR' => $v,
-                    'TGL_REKAM' => date("Y-m-d"),
+                    'TGL_REKAM' => date("d-m-Y"),
                     'PETUGAS_REKAM' => $this->session->userdata('kode_vendor'),
                 );
 

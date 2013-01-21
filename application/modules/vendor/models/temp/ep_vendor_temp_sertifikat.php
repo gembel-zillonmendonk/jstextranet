@@ -31,8 +31,8 @@ class Ep_vendor_temp_sertifikat extends MY_Model {
         'NAMA',
         'NO_SERTIFIKAT',
         'PENERBIT',
-        'BERLAKU_DARI',
-        'BERLAKU_HINGGA',
+        'BERLAKU_DARI' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'BERLAKU_HINGGA' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_SERTIFIKAT)";
 

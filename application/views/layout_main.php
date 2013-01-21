@@ -17,13 +17,28 @@
         <script type="text/javascript" src="<?php echo base_url('js/i18n/grid.locale-en.js') ?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('js/jquery.jqGrid.min.js') ?>"></script>
         <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-1.8.23.custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('js/jquery.livequery.min.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/jquery.form.js') ?>"></script>         
-
+        <script type="text/javascript" src="<?php echo base_url('js/autoNumeric-1.8.1.js') ?>"></script>         
+        
         <script type="text/javascript" src="<?php echo base_url('js/jquery.validate.js') ?>"></script>         
-        <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>         
+        <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>   
+        <script type="text/javascript" src="<?php echo base_url('js/additional-methods.min.js') ?>"></script> 
+        <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-timepicker-addon.js') ?>"></script> 
         <script type="text/javascript">
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
+            $.validator.messages.required = "Field tidak boleh kosong!";
+            $.validator.setDefaults({
+                highlight: function(el, error, valid){ 
+                    $(el).closest('.control-group').addClass('error'); 
+                },
+                success: function(label) {
+                    label
+                    .text('OK!').addClass('valid')
+                    .closest('.control-group').addClass('success');
+                }
+            });
             $.datepicker.setDefaults({
                 showOn: 'both',
                 buttonImageOnly: true,
@@ -31,10 +46,24 @@
                 buttonText: 'Calendar',
                 dateFormat: "dd-mm-yy",
                 readOnly: true,
-                defaultDate: $('.datepicker').val()
+                defaultDate: $('.datepicker').val(),
+                changeMonth: true,
+                changeYear: true
+            });
+            
+            $.timepicker.setDefaults({
+                showOn: 'both',
+                buttonImageOnly: true,
+                buttonImage: '<?php echo base_url('images/Calendar_scheduleHS.png') ?>',
+                buttonText: 'Calendar',
+                dateFormat: "dd-mm-yy",
+                readOnly: true,
+                defaultDate: $('.datepicker').val(),
+                showButtonPanel: true,
+                showTimepicker: true
             });
         </script>
-
+         
         <script type="text/javascript" src="<?php echo base_url('js/hoverIntent.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/superfish.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/supersubs.js') ?>"></script> 
@@ -60,6 +89,7 @@
             var $js_url = $base_url + '/js/';
             var $css_url = $base_url + '/css/';
         </script>
+        <script type="text/javascript" src="<?php echo base_url('js/form_event.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/stmenu.js') ?>"></script>
         <script type="text/javascript" src="<?php echo base_url('js/swap.js') ?>"></script>
     </head>
@@ -250,7 +280,7 @@
 </html>
 <script>
     $(function() {
-        $( "input:submit, input:button").button();
+        $( "input:submit, input:button, button").button();
         $( ".datepicker" ).datepicker();
     });
 </script>

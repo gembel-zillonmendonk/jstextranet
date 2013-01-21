@@ -12,7 +12,7 @@ class Ep_vendor_temp_direksi extends MY_Model {
     public $elements_conf = array(
         'NAMA',
         'JABATAN',
-        'NO_TELP',
+        'NO_TELP' => array('help' => '+6221-9999999'),
         'EMAIL',
         'NO_KTP',
         'NO_NPWP',

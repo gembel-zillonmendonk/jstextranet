@@ -21,11 +21,11 @@ class Ep_vendor_temp_akta extends MY_Model {
     public $columns_conf = array(
         'TIPE_AKTA',
         'NO_AKTA',
-        'TGL_PEMBUATAN',
+        'TGL_PEMBUATAN' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
         'NAMA_NOTARIS',
         'ALAMAT_NOTARIS',
-        'PENGESAHAN_HAKIM',
-        'BERITA_ACARA_NGR',
+        'PENGESAHAN_HAKIM' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'BERITA_ACARA_NGR' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_AKTA)";
 

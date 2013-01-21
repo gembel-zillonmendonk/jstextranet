@@ -27,8 +27,8 @@ class Ep_vendor_temp_ijin extends MY_Model {
         'TIPE',
         'PENERBIT',
         'NO',
-        'TGL_MULAI',
-        'TGL_BERAKHIR',
+        'TGL_MULAI' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'TGL_BERAKHIR' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP_IJIN)";
 

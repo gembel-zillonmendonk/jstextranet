@@ -18,7 +18,7 @@ $config['modules_locations'] = array(
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8888/jstextranet/';
+$config['base_url']	= 'http://192.168.0.103:8888/jstextranet/';
 
 /*
 |--------------------------------------------------------------------------

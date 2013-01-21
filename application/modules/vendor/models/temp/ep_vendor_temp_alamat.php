@@ -15,9 +15,9 @@ class Ep_vendor_temp_alamat extends MY_Model {
         'NEGARA' => array('type' => 'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
         'KODE_POS',
         'TIPE' => array('type' => 'dropdown', 'options' => array('PUSAT' => 'PUSAT', 'CABANG' => 'CABANG')),
-        'NO_TELP1',
-        'NO_TELP2',
-        'FAX',
+        'NO_TELP1' => array('help' => '+6221-9999999'),
+        'NO_TELP2' => array('help' => '+6221-9999999'),
+        'FAX' => array('help' => '+6221-9999999'),
         'WEBSITE',
     );
     public $validation = array(

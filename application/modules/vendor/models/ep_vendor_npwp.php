@@ -13,16 +13,16 @@ class Ep_vendor_npwp extends MY_Model
         'ALAMAT_NPWP' => array('type' => 'textarea', 'rows' => 4),
         'KOTA_NPWP',
         'PROPINSI_NPWP',
-        'KODE_POS_NPWP',
-        'PKP_NPWP' => array('type' => 'dropdown', 'allow_null' => false, 'options' => array('YA' => 'YA', 'Tidak' => 'Tidak')),
-        'NO_PKP_NPWP',
+//        'KODE_POS_NPWP',
+        'PKP_NPWP' => array('label' => 'PKP', 'type' => 'dropdown', 'allow_null' => false, 'options' => array('YA' => 'YA', 'Tidak' => 'Tidak')),
+        'NO_PKP_NPWP' => array('label' => 'NO PKP / NO SK'),
     );
     public $validation = array(
-        'NO_NPWP' => array('required' => true),
+//        'NO_NPWP' => array('required' => true),
         'ALAMAT_NPWP' => array('required' => true),
         'KOTA_NPWP' => array('required' => true),
         'PROPINSI_NPWP' => array('required' => true),
-        'KODE_POS_NPWP' => array('required' => true),
+//        'KODE_POS_NPWP' => array('required' => true),
         'PKP_NPWP' => array('required' => false),
         'NO_PKP_NPWP' => array('required' => false),
     );
@@ -31,9 +31,9 @@ class Ep_vendor_npwp extends MY_Model
         'ALAMAT_NPWP',
         'KOTA_NPWP',
         'PROPINSI_NPWP',
-        'KODE_POS_NPWP',
+//        'KODE_POS_NPWP',
         'PKP_NPWP',
-        'NO_PKP_NPWP',
+        'NO_PKP_NPWP' => array('label' => 'NO PKP / NO SK'),
     );
     public $sql_select = "(select * from EP_VENDOR)";
 

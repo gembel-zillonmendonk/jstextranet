@@ -27,6 +27,12 @@ $form_id = 'modal_form_' . $grid->id;
         .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model . $grid->params; ?>');
         
         jQuery('#<?php echo $grid->id ?>').jqGrid({
+            "formatter" : {
+                "date" : {
+                  "srcformat": 'd-m-Y H:i:s',
+                  "newformat": 'd-m-Y'
+                }
+            },
             "shrinkToFit": true,
             "forceFit": true,
             "autoWidth": true,

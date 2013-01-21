@@ -21,6 +21,9 @@
             <div></div>
             <h3 href="<?php echo site_url('/vendor/form/ep_vendor_jamsostek') ?>">KEPESERTAAN JAMSOSTEK</h3>
             <div></div>
+<!--            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>-->
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>
+            <div></div>
         </div>
     </div>
 
@@ -62,7 +65,7 @@
             <div></div>
             <h3 href="<?php echo site_url('/vendor/form/ep_vendor_modal') ?>">MODAL SESUAI DENGAN AKTA TERAKHIR</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_laporan_keuangan') ?>">INFORMASI LAPORAN KEUANGAN</h3>
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_laporan_keuangan') ?>">INFORMASI LAPORAN KEUANGAN (OPSIONAL)</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/form/ep_vendor_klasifikasi') ?>">KLASIFIKASI PERUSAHAAN</h3>
             <div></div>
@@ -71,11 +74,9 @@
 
     <div id="tabs-5">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_barang') ?>">BARANG YANG BISA DIPASOK</h3>
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_barang') ?>">BARANG YANG BISA DIPASOK (OPSIONAL)</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_jasa') ?>">JASA YANG BISA DIPASOK</h3>
-            <div></div>
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_jasa') ?>">JASA YANG BISA DIPASOK (OPSIONAL)</h3>
             <div></div>
         </div>
     </div>
@@ -91,7 +92,7 @@
 
     <div id="tabs-7">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_sertifikat') ?>">KETERANGAN SERTIFIKAT</h3>
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_sertifikat') ?>">KETERANGAN SERTIFIKAT PERUSAHAAN (OPSIONAL)</h3>
             <div></div>
         </div>
     </div>
@@ -124,9 +125,10 @@
 <p>
 <!--    <button type="button" id="batal">BATAL</button>
     <button type="button" id="cetak">Cetak</button>-->
-    <button type="button" id="selesai">Lanjutkan ke persetujuan</button>
+    
 <!--    <button type="button" id="lewat">Lewat & Selesai</button>-->
     <button type="button" id="selanjutnya">Simpan & Lanjutkan</button>
+    <button type="button" id="selesai">Lanjutkan ke persetujuan</button>
 </p>
 <script>
     // Tabs
@@ -135,6 +137,15 @@
         selected: <?php echo $active_tabs; ?>,
         disabled: <?php echo $disable_tabs; ?>,
         show: function(event, ui) {
+            
+            if(ui.index == 9){
+                $("#selesai").show();
+                $("#selanjutnya").hide();
+            } else {
+                $("#selesai").hide();
+                $("#selanjutnya").show();
+            }
+            
             $(".accordion", ui.panel).each(function(){
                 //alert("test");
                 
@@ -206,7 +217,7 @@
                         $('#error-box p').append(cList).parent().show();
                     }
                     else{
-                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=5&referer_url=/account/waiting_approval&KODE_VENDOR=') . $this->session->userdata('kode_vendor') ?>';
+                        window.location = '<?php echo site_url('/wkf/start?kode_wkf=5&referer_url=/account/success_message&KODE_VENDOR=') . $this->session->userdata('kode_vendor') ?>';
                     }
                 }
             });

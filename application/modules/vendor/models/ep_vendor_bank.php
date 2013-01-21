@@ -41,6 +41,9 @@ class Ep_vendor_bank extends MY_Model
         // set default value here
         $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        
+        
+        $query = $this->db->query("select * from EP_MS_MATA_UANG_KURS")->result_array();
     }
 
     function _default_scope()

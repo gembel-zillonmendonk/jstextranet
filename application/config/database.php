@@ -61,7 +61,7 @@ $db['default']['hostname'] = '(DESCRIPTION =
     )
   )';
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'EP';
+$db['default']['username'] = 'EP_DEV';
 $db['default']['password'] = '123456';
 $db['default']['database'] = 'XE';
 $db['default']['dbdriver'] = 'oci8';

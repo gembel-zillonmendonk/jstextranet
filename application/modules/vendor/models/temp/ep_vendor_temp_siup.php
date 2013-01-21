@@ -12,7 +12,7 @@ class Ep_vendor_temp_siup extends MY_Model {
     public $elements_conf = array(
         'SIUP_DITERBITKAN_OLEH',
         'NO_SIUP',
-        'TIPE_SIUP' => array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('KECIL' => 'KECIL', 'MENGENGAH' => 'MENGENGAH', 'BESAR' => 'BESAR', 'TBK' => 'TBK')),
+        'TIPE_SIUP'=> array('label' => 'JENIS SIUP', 'type' => 'dropdown', 'options' => array('KECIL'=>'KECIL','MENENGAH'=>'MENENGAH','BESAR' => 'BESAR','TBK' => 'TBK')),
         'DARI_TGL_SIUP' => array('label' => 'TGL MULAI'),
         'SAMPAI_TGL_SIUP' => array('label' => 'TGL BERAKHIR'),
     );
@@ -27,8 +27,8 @@ class Ep_vendor_temp_siup extends MY_Model {
         'SIUP_DITERBITKAN_OLEH',
         'NO_SIUP',
         'TIPE_SIUP',
-        'DARI_TGL_SIUP',
-        'SAMPAI_TGL_SIUP',
+        'DARI_TGL_SIUP' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'SAMPAI_TGL_SIUP' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_TEMP)";
 

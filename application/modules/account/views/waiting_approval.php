@@ -1,3 +1,8 @@
-<p>Terima kasih atas partisipasinya.</p>
+<p>Mitra Kerja Yang Terhormat,</p>
+<p>
 
-<p>Harap tunggu konfirmasi untuk kelengkapan dokumen..</p>
+    Anda telah menyelesaikan proses pendaftaran Mitra Kerja secara online !<br/>
+Saat ini, Pendaftaran anda sdang diproses.<br/>
+Status pendaftaran Anda akan diinformasikan melalui email!<br/>
+
+</p>

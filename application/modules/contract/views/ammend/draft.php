@@ -17,19 +17,19 @@ if (count($_REQUEST) > 0) {
     <div></div>
 
     <?php if (strlen($params) > 0 && ! isset($_REQUEST['KODE_PERUBAHAN']) && isset($_REQUEST['KODE_KONTRAK']) && $_REQUEST['KODE_KONTRAK'] > 0): ?>
-        <h3 href="<?php echo site_url('/contract/grid/contract.ep_ktr_kontrak_item' . $params) ?>">ITEM</h3>
+        <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_item' . $params) ?>">ITEM</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/grid_form/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
+        <h3 href="<?php echo site_url('/contract/view_grid/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/grid_form/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
+        <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
         <div></div>    
 
 
     <?php elseif (isset($_REQUEST['KODE_PERUBAHAN']) && $_REQUEST['KODE_PERUBAHAN'] > 0): ?>
 
-        <h3 href="<?php echo site_url('/contract/ammend/grid_form/ammend.ep_ktr_perubahan_item' . $params) ?>">ITEM</h3>
+        <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.ep_ktr_perubahan_item' . $params) ?>">ITEM</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/ammend/grid_form/ammend.ep_ktr_perubahan_jangka' . $params) ?>">MILESTONE</h3>
+        <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.ep_ktr_perubahan_jangka' . $params) ?>">MILESTONE</h3>
         <div></div>
 
     <?php endif; ?>

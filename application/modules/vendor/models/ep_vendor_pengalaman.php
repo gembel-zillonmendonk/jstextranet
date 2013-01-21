@@ -9,14 +9,14 @@ class Ep_vendor_pengalaman extends MY_Model {
 
     public $table = "EP_VENDOR_PENGALAMAN";
     public $elements_conf = array(
-        'NAMA',
+        'NAMA'=>array('label' => 'NAMA KLIEN / PERUSAHAAN'),
         'NAMA_PROYEK',
         'MATA_UANG'=> array('type' => 'dropdown', 'options' => array('IDR'=>'IDR','USD'=>'USD')),
-        'NILAI',
+        'NILAI'=>array('type' => 'money', 'label' => 'NILAI PROYEK'),
         'TGL_MULAI',
         'TGL_BERAKHIR',
-        'KONTAK',
-        'NO_KONTAK',
+        'KONTAK'=>array('label' => 'NAMA KONTAK'),
+        'NO_KONTAK'=>array('label' => 'NO TELPON'),
         'NO_KONTRAK',
         'KETERANGAN' => array('type' => 'textarea'),
     );
@@ -35,9 +35,9 @@ class Ep_vendor_pengalaman extends MY_Model {
         'NAMA',
         'NAMA_PROYEK',
         'MATA_UANG',
-        'NILAI',
-        'TGL_MULAI',
-        'TGL_BERAKHIR',
+        'NILAI' => array('formatter' => 'currency'),
+        'TGL_MULAI' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'TGL_BERAKHIR' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
         'KONTAK',
         'NO_KONTAK',
         'NO_KONTRAK',

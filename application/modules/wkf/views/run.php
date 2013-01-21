@@ -140,4 +140,41 @@
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
     //.css("width", "auto");
+    
+     $(document).ready(function(){
+        var f = $("#tabs-komentar form");
+        var el = $("button", f);
+        
+        if(el.length > 0) {
+            console.log(el);
+            $(el).live('click', function(){
+                $(f).validate({
+                    meta: "validate"
+                }); 
+            });
+        }
+    });
+    
+//    $(document).ajaxComplete(function() {
+//        
+//        var f = $("#id_form_wkf_run");
+//        var el = $("button", f);
+//        console.log(f);
+//        if(el.length > 0) {
+//            console.log(el);
+//            $(el).off('click');
+//        
+//            // attach event to button
+//            $(el).click(function() {
+//                
+//                $(f).validate({
+//                    meta: "validate",
+//                    submitHandler: function(form) {
+//                        alert("xxxx");
+//                        form.submit();
+//                    }
+//                }); 
+//            });
+//        }
+//    });
 </script>

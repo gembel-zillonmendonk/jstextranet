@@ -9,7 +9,15 @@ class Ep_vendor_peralatan extends MY_Model
 {
     public $table = "EP_VENDOR_PERALATAN";
     public $elements_conf = array(
-        'KATEGORI' => array('type' => 'dropdown', 'options' => array('PERMESINAN' => 'PERMESINAN', 'LAINNYA' => 'LAINNYA')),
+        'KATEGORI' => array('type' => 'dropdown', 'options' => array(
+            'PERMESINAN' => 'PERMESINAN', 
+            'PERGUDANGAN' => 'PERGUDANGAN', 
+            'TEKNOLOGI INFORMASI' => 'TEKNOLOGI INFORMASI', 
+            'LABORATORIUM' => 'LABORATORIUM', 
+            'KESEHATAN LINGKUNGAN HIDUP' => 'KESEHATAN LINGKUNGAN HIDUP', 
+            'PELAYANAN PELANGGAN' => 'PELAYANAN PELANGGAN', 
+            'TRANSPORTASI' => 'TRANSPORTASI', 
+            )),
         'NAMA_PERALATAN',
         'SPESIFIKASI',
         'JUMLAH',

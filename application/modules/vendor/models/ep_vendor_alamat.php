@@ -14,8 +14,9 @@ class Ep_vendor_alamat extends MY_Model {
         'NEGARA' => array('type' => 'dropdown', 'options' => array('INDONESIA' => 'INDONESIA', 'LAINNYA' => 'LAINNYA')),
         'KODE_POS',
         'TIPE' => array('type' => 'dropdown', 'options' => array('PUSAT' => 'PUSAT', 'CABANG' => 'CABANG')),
-        'NO_TELP1',
-        'NO_TELP2',
+        'NO_TELP1' => array('help' => '+6221-9999999'),
+//        'MASK_NO_TELP1' => array('type' => 'label', 'value' => '', 'default_value' => '+62-21-9999999'),
+        'NO_TELP2' => array('help' => '+6221-9999999'),
         'FAX',
         'WEBSITE',
     );
@@ -45,6 +46,8 @@ class Ep_vendor_alamat extends MY_Model {
         // set default value here
         $CI = & get_instance();
         $this->attributes['KODE_VENDOR'] = $CI->session->userdata('kode_vendor');
+        
+//        $this->attributes['MASK_NO_TELP1'] = '123123';
     }
 
     function _default_scope() {

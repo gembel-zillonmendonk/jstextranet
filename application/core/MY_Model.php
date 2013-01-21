@@ -195,6 +195,16 @@ class MY_Model extends CI_Model {
             }
         }
 
+        if(isset($this->elements_conf)){
+            foreach($this->elements_conf as $k => $v){
+                if(! is_array($v))
+                    continue;
+                
+                if(isset($this->elements_conf[$k]['type']) && $this->elements_conf[$k]['type'] == 'money')
+                    $this->attributes[$k] = str_replace (",", "", $this->attributes[$k]);
+            }
+        }
+        
         $ret = null;
         if (!$this->db->count_all_results($this->table))
             $ret = $this->_insert();
@@ -558,7 +568,13 @@ class MY_Form {
                 if ($columns['type'] == 'date') {
                     unset($r[$raw_name]['validate']['maxlength']);
                     unset($el[$raw_name]['maxlength']);
-                    $r[$raw_name]['validate']['date'] = true;
+                    $r[$raw_name]['validate']['dateID'] = true;
+                    
+                    $el[$raw_name]['value'] = (isset($attributes[$raw_name]) ? substr($attributes[$raw_name], 0, 10) : $columns['default_value']);
+                } else if($columns['type'] == 'datetime') {
+                    unset($r[$raw_name]['validate']['maxlength']);
+                    unset($el[$raw_name]['maxlength']);
+                    $r[$raw_name]['validate']['datetimeID'] = true;
                 }
 
                 // override configuration defined in $model 

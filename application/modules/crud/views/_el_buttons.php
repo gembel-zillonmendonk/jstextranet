@@ -1,7 +1,7 @@
 <?php if (!isset($read_only) || $read_only != true): ?>
     <button type="button" id="btnSimpan"><?php echo (!$form->model->row_id ? "TAMBAH DATA" : "UPDATE"); ?></button>
     <button type="button" id="btnBatal">BATAL</button>
-    <script>
+<!--    <script>
         $(document).ready(function(){
             // stylish button and input date
             $(function() {
@@ -86,5 +86,5 @@
                                     });
                                 });
         
-    </script>
+    </script>-->
 <?php endif; ?>

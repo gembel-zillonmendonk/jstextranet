@@ -45,6 +45,11 @@ foreach ($form->model->primary_keys as $v) {
                         case 'number':
                             echo form_input($v);
                             break;
+                        case 'money':
+                            $v['type'] = 'text';
+                            $v['class'] = 'money ' . $v['class'];
+                            echo form_input($v);
+                            break;
                         case 'dropdown':
                             $opt = $v;
                             unset($opt['name'], $opt['options'], $opt['value']);
@@ -77,11 +82,16 @@ foreach ($form->model->primary_keys as $v) {
                             }
                             break;
                         case 'label':
-                            echo form_label($v['value'], $v['id'], array("class" => "checkbox inline"));
+//                            print_r($form->model->elements_conf[$k]['default_value']);
+                            $value = strlen($v['value']) > 0 ? $v['value'] : (isset($form->model->elements_conf[$k]['default_value']) ? $form->model->elements_conf[$k]['default_value'] : "");
+                            echo form_label($value, $v['id'], array("class" => "checkbox inline"));
                             break;
                         default:
                             echo form_input($v);
                     }
+                    
+                    if(isset($form->model->elements_conf[$k]['help']))
+                        echo '<span class="help-block">' . $form->model->elements_conf[$k]['help'] . '</span>';
                     ?>
                 </div>
             </div>

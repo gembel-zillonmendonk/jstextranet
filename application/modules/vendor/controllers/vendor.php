@@ -59,7 +59,7 @@ class vendor extends MY_Controller
                 array('model' => 'ep_vendor_tenaga_pendukung', 'label' => 'TENAGA AHLI PENDUKUNG', 'rules' => 'hasOne', 'where' => $this->where),
             ),
             '6' => array(// tabs-7
-                array('model' => 'ep_vendor_sertifikat', 'label' => 'KETERANGAN SERTIFIKAT', 'rules' => 'hasOne', 'where' => $this->where),
+//                array('model' => 'ep_vendor_sertifikat', 'label' => 'KETERANGAN SERTIFIKAT', 'rules' => 'hasOne', 'where' => $this->where),
             ),
             '7' => array(// tabs-8
                 array('model' => 'ep_vendor_peralatan', 'label' => 'KETERANGAN TENTANG FASILITAS / PERALATAN', 'rules' => 'hasOne', 'where' => $this->where),
@@ -340,5 +340,9 @@ class vendor extends MY_Controller
         
     }
 
+    public function view_checklist_doc()
+    {
+        $this->load->view('vendor/view_checklist_doc');
+    }
 }
 ?>

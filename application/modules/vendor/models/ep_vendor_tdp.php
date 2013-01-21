@@ -23,8 +23,8 @@ class Ep_vendor_tdp extends MY_Model
     public $columns_conf = array(
         'TDP_ISSUED_BY',
         'NO_TDP',
-        'DARI_TGL_TDP',
-        'SAMPAI_TGL_TDP',
+        'DARI_TGL_TDP' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'SAMPAI_TGL_TDP' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     //public $sql_select = "(select * from EP_VENDOR)";
     

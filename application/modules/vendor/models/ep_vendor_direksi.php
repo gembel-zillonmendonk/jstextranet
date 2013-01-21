@@ -13,12 +13,13 @@ class Ep_vendor_direksi extends MY_Model
         'JABATAN',
         'NO_TELP',
         'EMAIL',
-        'NO_KTP',
+        'NO_KTP'=>array('label' => 'NO KTP/SIM/PASSPOR'),
         'NO_NPWP',
     );
     public $validation = array(
         'NAMA' => array('required' => true),
         'JABATAN' => array('required' => true),
+        'NO_KTP' => array('required' => true),
     );
     public $columns_conf = array(
         'NAMA',

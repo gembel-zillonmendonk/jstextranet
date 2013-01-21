@@ -25,13 +25,13 @@
                 </td>
                 <td>
                     <label class="radio">
-                        <input type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="1" <?php echo $v['STATUS'] == '1' ? 'checked' : ''; ?>/> ADA
+                        <input disabled="true" type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="1" <?php echo $v['STATUS'] == '1' ? 'checked' : ''; ?>/> ADA
                     </label><br>
                     <label class="radio">
-                        <input type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="2" <?php echo $v['STATUS'] == '2' ? 'checked' : ''; ?>/>TIDAK
+                        <input disabled="true" type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="2" <?php echo $v['STATUS'] == '2' ? 'checked' : ''; ?>/>TIDAK
                     </label><br>
                     <label class="radio">
-                        <input type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="3" <?php echo $v['STATUS'] == '3' ? 'checked' : ''; ?>/>PERLU KONFIRMASI
+                        <input disabled="true" type="radio" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][STATUS]" value="3" <?php echo $v['STATUS'] == '3' ? 'checked' : ''; ?>/>PERLU KONFIRMASI
                     </label>
                 </td>
                 <td>

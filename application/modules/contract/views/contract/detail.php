@@ -2,7 +2,7 @@
 $params = '';
 if (count($_REQUEST) > 0) {
     foreach ($_REQUEST as $key => $value) {
-        $params .= $key . '=' . $value . '&';
+        $params .= $key . '=' . urlencode($value) . '&';
     }
 
     if (strlen($params) > 0)

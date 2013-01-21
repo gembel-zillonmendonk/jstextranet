@@ -4,24 +4,25 @@ class ep_ktr_perubahan extends MY_Model {
 
     public $table = 'EP_KTR_PERUBAHAN';
     public $elements_conf = array(
-        'KODE_PERUBAHAN',
+//        'KODE_PERUBAHAN',
         'KODE_KONTRAK' => array('type' => 'dropdown', 'options' => array()),
-        'KODE_KANTOR',
-        'TGL_MULAI',
-        'TGL_AKHIR',
-        'MATA_UANG',
-        'NILAI_KONTRAK',
-        'STATUS',
-        'POSISI_PERSETUJUAN',
-        'TGL_PERUBAHAN',
-        'TIPE_KONTRAK',
-        'JENIS_KONTRAK',
-        'NO_KONTRAK',
-        'PERIODE_BAYAR_SEWA',
-        'UNIT_BAYAR_SEWA',
-        'TERMIN_BAYAR_SEWA',
-        'KET_PERUBAHAN',
-        'ALASAN_PERUBAHAN',
+        'KODE_KANTOR' => array('readonly' => true),
+        'TGL_TTD',
+        'TGL_MULAI' => array('readonly' => true),
+        'TGL_AKHIR' => array('readonly' => true),
+//        'MATA_UANG' => array('readonly' => true),
+//        'NILAI_KONTRAK' => array('readonly' => true),
+//        'STATUS' => array('readonly' => true),
+//        'POSISI_PERSETUJUAN' => array('readonly' => true),
+//        'TGL_PERUBAHAN' => array('readonly' => true),
+        'TIPE_KONTRAK' => array('readonly' => true),
+        'JENIS_KONTRAK' => array('readonly' => true),
+//        'NO_KONTRAK' => array('readonly' => true),
+//        'PERIODE_BAYAR_SEWA' => array('readonly' => true),
+//        'UNIT_BAYAR_SEWA' => array('readonly' => true),
+//        'TERMIN_BAYAR_SEWA' => array('readonly' => true),
+        'KET_PERUBAHAN' => array('type' => 'textarea'),
+        'ALASAN_PERUBAHAN' => array('type' => 'textarea'),
     );
     public $dir = 'ammend';
 
@@ -38,9 +39,9 @@ class ep_ktr_perubahan extends MY_Model {
         $this->elements_conf['KODE_KONTRAK']['options'] = $options;
 
         if (isset($_REQUEST['KODE_KONTRAK'])) {
-            
+
             $this->elements_conf['KODE_KONTRAK']['value'] = $_REQUEST['KODE_KONTRAK'];
-            
+
             $row = $this->db->query("select * from EP_KTR_PERUBAHAN where KODE_KONTRAK = " . $_REQUEST['KODE_KONTRAK'])->row_array();
 
             if (!count($row)) {
@@ -49,7 +50,7 @@ class ep_ktr_perubahan extends MY_Model {
             } else {
                 $this->attributes['KODE_PERUBAHAN'] = $row['KODE_PERUBAHAN'];
             }
-            
+
             $this->attributes['KODE_KONTRAK'] = $row['KODE_KONTRAK'];
             $this->attributes['KODE_KANTOR'] = $row['KODE_KANTOR'];
             $this->attributes['TIPE_KONTRAK'] = $row['TIPE_KONTRAK'];
@@ -59,8 +60,19 @@ class ep_ktr_perubahan extends MY_Model {
             $this->attributes['NO_KONTRAK'] = $row['NO_KONTRAK'];
             $this->attributes['MATA_UANG'] = $row['MATA_UANG'];
             $this->attributes['NILAI_KONTRAK'] = $row['NILAI_KONTRAK'];
+            $this->attributes['TGL_TTD'] = substr($row['TGL_TTD'], 0, 10);
         }
+    }
 
+    function _before_insert() {
+        parent::_before_insert();
+        // set auto increament
+        if ($this->attributes['KODE_PERUBAHAN'] == 0) {
+            $row = $this->db->query("select nomorurut + 1 as NEXT_ID 
+                from ep_nomorurut 
+                where kode_nomorurut = 'EP_KTR_PERUBAHAN'")->row_array();
+            $this->attributes['KODE_PERUBAHAN'] = $row['NEXT_ID'];
+        }
     }
 
     public function _after_insert() {
@@ -75,7 +87,7 @@ class ep_ktr_perubahan extends MY_Model {
                     FROM EP_KTR_KONTRAK_ITEM
                     WHERE 
                         KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "'
-                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'" ;
+                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'";
 
             $query = $this->db->query($sql);
 
@@ -84,9 +96,13 @@ class ep_ktr_perubahan extends MY_Model {
                     FROM EP_KTR_JANGKA_KONTRAK
                     WHERE 
                         KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "' 
-                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR']. "'" ;
+                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'";
 
             $query = $this->db->query($sql);
+
+
+            $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 
+            where kode_nomorurut = 'EP_KTR_PERUBAHAN'");
         }
     }
 

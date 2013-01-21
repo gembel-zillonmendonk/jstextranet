@@ -452,9 +452,10 @@ class MY_Controller extends MX_Controller {
 
             $query = $this->db->get_where(" ( select cast(rowid as varchar2(50)) as row_id, a.* from " . $model->table . " a ) ", $where)->row_array(); // get single row
             if (count($query)) {
-                $query = array_merge($model->attributes, $query);
                 $model->row_id = $query['ROW_ID'];
             }
+            
+            $query = array_merge($model->attributes, $query);
             //$model->attributes = $query; // set model attributes
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -469,7 +470,8 @@ class MY_Controller extends MX_Controller {
         // check and load model
         $model = $this->_load_model($model);
 
-        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table])) {
+        // if ($this->_is_ajax_request() && isset($_REQUEST[$model->table])) {
+        if (isset($_REQUEST[$model->table])) {
             $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $_REQUEST[$model->table]) : $_REQUEST[$model->table];
             $model->save();
 //            exit();
@@ -530,7 +532,7 @@ class MY_Controller extends MX_Controller {
 //        $this->load->library('MY_Form', array('model' => $model), 'form');
 //        $form = $this->form;
         // form submited do insert / update
-        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table])) {
+        if (isset($_REQUEST[$model->table])) {
             $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $_REQUEST[$model->table]) : $_REQUEST[$model->table];
             $model->save();
 //            echo json_encode($model->attributes);

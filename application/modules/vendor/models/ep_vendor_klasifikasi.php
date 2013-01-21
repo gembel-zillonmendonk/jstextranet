@@ -9,7 +9,7 @@ class Ep_vendor_klasifikasi extends MY_Model
 {
     public $table = "EP_VENDOR";
     public $elements_conf = array(
-        'GOLONGAN_KEUANGAN'=> array('type' => 'dropdown', 'options' => array('B' => 'BESAR', 'M' => 'MENENGAH', 'K' => 'KECIL')),        
+        'GOLONGAN_KEUANGAN'=> array('type' => 'dropdown', 'options' => array('B' => 'BESAR', 'M' => 'MENENGAH', 'K' => 'KECIL'), 'disabled' => true),        
     );
     public $validation = array(
         'GOLONGAN_KEUANGAN' => array('required' => true),

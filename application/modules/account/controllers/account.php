@@ -40,20 +40,20 @@ class Account extends MX_Controller {
             ),
             '3' => array(// tabs-4
                 array('model' => 'vendor/ep_vendor_bank', 'label' => 'REKENING BANK', 'rules' => 'hasOne', 'where' => $this->where),
-                array('model' => 'vendor/ep_vendor_modal', 'label' => 'MODAL SESUAI DENGAN AKTA TERAKHIR', 'rules' => 'required', 'where' => $this->where),
-                array('model' => 'vendor/ep_vendor_laporan_keuangan', 'label' => 'INFORMASI LAPORAN KEUANGAN', 'rules' => 'hasOne', 'where' => $this->where),
+//                array('model' => 'vendor/ep_vendor_modal', 'label' => 'MODAL SESUAI DENGAN AKTA TERAKHIR', 'rules' => 'required', 'where' => $this->where),
+//                array('model' => 'vendor/ep_vendor_laporan_keuangan', 'label' => 'INFORMASI LAPORAN KEUANGAN', 'rules' => 'hasOne', 'where' => $this->where),
                 array('model' => 'vendor/ep_vendor_klasifikasi', 'label' => 'KLASIFIKASI PERUSAHAAN', 'rules' => 'required', 'where' => $this->where),
             ),
             '4' => array(// tabs-5
-                array('model' => 'vendor/ep_vendor_barang', 'label' => 'BARANG YANG BISA DIPASOK', 'rules' => 'hasOne', 'where' => $this->where),
-                array('model' => 'vendor/ep_vendor_jasa', 'label' => 'JASA YANG BISA DIPASOK', 'rules' => 'hasOne', 'where' => $this->where),
+//                array('model' => 'vendor/ep_vendor_barang', 'label' => 'BARANG YANG BISA DIPASOK', 'rules' => 'hasOne', 'where' => $this->where),
+//                array('model' => 'vendor/ep_vendor_jasa', 'label' => 'JASA YANG BISA DIPASOK', 'rules' => 'hasOne', 'where' => $this->where),
             ),
             '5' => array(// tabs-6
                 array('model' => 'vendor/ep_vendor_tenaga_utama', 'label' => 'TENAGA AHLI UTAMA', 'rules' => 'hasOne', 'where' => $this->where),
                 array('model' => 'vendor/ep_vendor_tenaga_pendukung', 'label' => 'TENAGA AHLI PENDUKUNG', 'rules' => 'hasOne', 'where' => $this->where),
             ),
             '6' => array(// tabs-7
-                array('model' => 'vendor/ep_vendor_sertifikat', 'label' => 'KETERANGAN SERTIFIKAT', 'rules' => 'hasOne', 'where' => $this->where),
+//                array('model' => 'vendor/ep_vendor_sertifikat', 'label' => 'KETERANGAN SERTIFIKAT', 'rules' => 'hasOne', 'where' => $this->where),
             ),
             '7' => array(// tabs-8
                 array('model' => 'vendor/ep_vendor_peralatan', 'label' => 'KETERANGAN TENTANG FASILITAS / PERALATAN', 'rules' => 'hasOne', 'where' => $this->where),
@@ -174,6 +174,11 @@ class Account extends MX_Controller {
         $this->layout->view('waiting_approval');
     }
 
+    public function success_message() {
+        $this->layout->setLayout('layout_nomenu');
+        $this->layout->view('success_message');
+    }
+    
     public function reset_password() {
         if (count($_POST) > 0) {
             try {

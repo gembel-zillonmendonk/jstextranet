@@ -94,7 +94,7 @@ class Ep_vendor_temp_perusahaan extends MY_Model {
                 $data = array(
                     'KODE_VENDOR' => $this->attributes['KODE_VENDOR'],
                     'TIPE_VENDOR' => $v,
-                    'TGL_REKAM' => date("Y-m-d"),
+                    'TGL_REKAM' => date("d-m-Y"),
                     'PETUGAS_REKAM' => $this->session->userdata('kode_vendor'),
                 );
 

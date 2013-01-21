@@ -17,14 +17,24 @@ class Ep_vendor_akta extends MY_Model
         'PENGESAHAN_HAKIM',
         'BERITA_ACARA_NGR' => array('label' => 'BERITA ACARA NEGARA'),
     );
+    
+    public $validation = array(
+        'NO_AKTA' => array('required' => true),
+        'TGL_PEMBUATAN' => array('required' => true),
+        'NAMA_NOTARIS' => array('required' => true),
+        'ALAMAT_NOTARIS' => array('required' => true),
+        'PENGESAHAN_HAKIM' => array('required' => true),
+//        'BERITA_ACARA_NGR' => array('required' => true),
+    );
+    
     public $columns_conf = array(
         'TIPE_AKTA',
         'NO_AKTA',
-        'TGL_PEMBUATAN',
+        'TGL_PEMBUATAN' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
         'NAMA_NOTARIS',
         'ALAMAT_NOTARIS',
-        'PENGESAHAN_HAKIM',
-        'BERITA_ACARA_NGR',
+        'PENGESAHAN_HAKIM' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
+        'BERITA_ACARA_NGR' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
     );
     public $sql_select = "(select * from EP_VENDOR_AKTA)";
 

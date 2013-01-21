@@ -48,7 +48,7 @@ class Ep_vendor_registrasi extends MY_Model {
         $query = $this->db->query("select max(NOMORURUT) + 1 as idx from ep_nomorurut where kode_nomorurut = 'VENDOR'");
         $row = $query->row();
         $this->attributes['KODE_VENDOR'] = $row->IDX;
-        $this->attributes['TGL_REKAM'] = date("Y-m-d");
+        $this->attributes['TGL_REKAM'] = date("d-m-Y");
     }
     
     protected function _after_insert()

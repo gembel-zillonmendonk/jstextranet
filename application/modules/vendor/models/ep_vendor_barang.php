@@ -43,7 +43,7 @@ class Ep_vendor_barang extends MY_Model {
             from MS_SUBKELOMPOK_BARANG where aktif = 'Y'
             order by nama_subkelompok");
         $rows = $query->result_array();
-        $options = array();
+        $options = array('' => '');
         foreach ($rows as $value) {
             $options[$value['KODE_BARANG']] = $value['NAMA_SUBKELOMPOK'];
         }
