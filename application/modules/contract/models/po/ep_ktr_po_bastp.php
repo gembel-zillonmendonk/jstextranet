@@ -22,7 +22,7 @@ class ep_ktr_po_bastp extends MY_Model {
 //        'POSISI_PERSETUJUAN',
 //        'PERSENTASI_PERKEMBANGAN',
 //        'STATUS_PERKEMBANGAN',
-        'NO_BASTP',
+//        'NO_BASTP',
         'TGL_BASTP',
         'JUDUL_BASTP',
 //        'TGL_BUAT_BASTP',
@@ -36,6 +36,20 @@ class ep_ktr_po_bastp extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
+    }
+    
+    function _before_update() {
+        parent::_before_update();
+        
+        // set sequence number NO_BASTP
+        $no_urut = 1;
+        try {
+            $sql = "select max(to_number(substr(NO_BASTP, -7, 10))) + 1 as next_id from EP_KTR_PO";
+            $row = $this->db->query($sql)->row_array();
+        } catch( Exception $e) { }
+
+        $this->attributes['NO_BASTP'] = sprintf('%1$s/%2$s/%3$07d', 'BASTP', 'WO', count($row) > 0 ? $row['NEXT_ID'] : $no_urut);
+        
     }
 
 }
