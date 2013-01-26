@@ -66,9 +66,9 @@ if (count($_REQUEST) > 0) {
     $(document).ajaxComplete(function() {
         $("#id_ep_ktr_perubahan_kode_kontrak").change(function(){
             if($(this).val() != "")
-                window.location = $site_url + "/wkf/start?kode_wkf=63&KODE_KONTRAK=" + $(this).val();
+                window.location = $site_url + "/wkf/start?referer_url=/contract/ammend/monitoring&kode_wkf=63&KODE_KONTRAK=" + $(this).val();
             else
-                window.location = $site_url + "/wkf/start?kode_wkf=63&KODE_KONTRAK=-1";
+                window.location = $site_url + "/wkf/start?referer_url=/contract/ammend/monitoring&kode_wkf=63&KODE_KONTRAK=-1";
         });
         
         var f = $("#id_form_ep_ktr_perubahan");
@@ -92,11 +92,11 @@ if (count($_REQUEST) > 0) {
                             validator.hideErrors();
                             
                             var params = "KODE_KONTRAK="+$("#id_ep_ktr_perubahan_kode_kontrak", f).val()
-                                +"&KODE_PERUBAHAN="+$("#id_ep_ktr_perubahan_kode_perubahan", f).val()
+                                +"&KODE_PERUBAHAN="+$("input[name='EP_KTR_PERUBAHAN[KODE_PERUBAHAN]']", f).val()
                                 +"&KODE_KANTOR="+$("#id_ep_ktr_perubahan_kode_kantor", f).val();
                             
                             //reload page
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=63&') ?>' + params;
+                            window.location = '<?php echo site_url('/wkf/start?referer_url=/contract/ammend/monitoring&kode_wkf=63&') ?>' + params;
                         },
                         error: function(){
                             alert('Data gagal disimpan')

@@ -60,7 +60,7 @@ class ep_ktr_perubahan extends MY_Model {
             $this->attributes['NO_KONTRAK'] = $row['NO_KONTRAK'];
             $this->attributes['MATA_UANG'] = $row['MATA_UANG'];
             $this->attributes['NILAI_KONTRAK'] = $row['NILAI_KONTRAK'];
-            $this->attributes['TGL_TTD'] = substr($row['TGL_TTD'], 0, 10);
+            $this->attributes['TGL_TTD'] = substr(isset($row['TGL_TTD']) ? $row['TGL_TTD'] : '', 0, 10);
         }
     }
 
