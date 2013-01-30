@@ -12,7 +12,7 @@ class ep_ktr_invoice extends MY_Model {
         'NO_KONTRAK',
         'NAMA_VENDOR'=>array('type'=>'label'),
         'TGL_INVOICE',
-        'AKUN_BANK',
+        'AKUN_BANK'=>array('type'=>'dropdown', 'options'=>array()),
 //        'TGL_BUAT',
 //        'STATUS',
 //        'POSISI_PERSETUJUAN',
@@ -57,6 +57,14 @@ class ep_ktr_invoice extends MY_Model {
 //        }
 //        $this->elements_conf['KODE_KONTRAK']['options'] = $options;
         
+        $sql = "select * from ep_vendor_bank where kode_vendor = '". $this->attributes['KODE_VENDOR'] ."'";
+        $query = $this->db->query($sql);
+        $rows = $query->result_array();
+        $options = array(''=>'');
+        foreach($rows as $val){
+             $options[$val['NO_REKENING']] = $val['NO_REKENING'] . " | " . $val["NAMA_BANK"] . " | " . $val["NAMA_REKENING"] . " | " . $val["CABANG"];//array($val['KEY'] => $val['VAL']);
+        }
+        $this->elements_conf['AKUN_BANK']['options'] = $options;
         
         if(isset($_REQUEST['KODE_KONTRAK']) && $_REQUEST['KODE_KONTRAK'] > 0){
 //            $this->elements_conf['KODE_KONTRAK']['value'] = $_REQUEST['KODE_KONTRAK'];
