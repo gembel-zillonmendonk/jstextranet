@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/milestone/grid/milestone.monitoring') ?>">DAFTAR PROGRESS MILESTONE</h3>
+    <h3 href="<?php echo site_url('/contract/milestone/view_grid/milestone.monitoring') ?>">DAFTAR PROGRESS MILESTONE</h3>
     <div></div>
     
 </div>

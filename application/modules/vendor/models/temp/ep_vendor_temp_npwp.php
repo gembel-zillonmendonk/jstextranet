@@ -10,7 +10,7 @@ class Ep_vendor_temp_npwp extends MY_Model {
     public $dir = "temp";
     public $table = "EP_VENDOR_TEMP";
     public $elements_conf = array(
-        'NO_NPWP',
+        'NO_NPWP' => array('class' => 'npwp-mask'),
         'ALAMAT_NPWP' => array('type' => 'textarea', 'rows' => 4),
         'KOTA_NPWP',
         'PROPINSI_NPWP',

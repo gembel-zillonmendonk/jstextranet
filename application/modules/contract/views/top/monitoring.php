@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/top/grid/top.monitoring') ?>">DAFTAR PROGRESS TERMIN PEMBAYARAN</h3>
+    <h3 href="<?php echo site_url('/contract/top/view_grid/top.monitoring') ?>">DAFTAR PROGRESS TERMIN PEMBAYARAN</h3>
     <div></div>
     
 </div>

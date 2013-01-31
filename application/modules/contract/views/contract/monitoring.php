@@ -38,7 +38,7 @@ if (count($_REQUEST) > 0) {
 
         </form>
     </div>
-    <h3 href="<?php echo site_url('/contract/grid/contract.monitoring' .$params) ?>">DAFTAR SELURUH KONTRAK</h3>
+    <h3 href="<?php echo site_url('/contract/view_grid/contract.monitoring' .$params) ?>">DAFTAR SELURUH KONTRAK</h3>
     <div></div>
     
 </div>

@@ -23,7 +23,7 @@ class Ep_vendor_akta extends MY_Model
         'TGL_PEMBUATAN' => array('required' => true),
         'NAMA_NOTARIS' => array('required' => true),
         'ALAMAT_NOTARIS' => array('required' => true),
-        'PENGESAHAN_HAKIM' => array('required' => true),
+        'PENGESAHAN_HAKIM' => array('required' => true, 'notequalto' => '\'#id_ep_vendor_akta_tgl_pembuatan\''),
 //        'BERITA_ACARA_NGR' => array('required' => true),
     );
     

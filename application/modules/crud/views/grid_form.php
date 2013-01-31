@@ -170,16 +170,16 @@ $form_id = 'modal_form_' . $grid->id;
             "dataheight": 150
         })
         /// start button configuration ///
-        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
-            id: 'pager_columns',
-            caption: '',
-            buttonicon:'ui-icon-carat-2-e-w', 
-            title: 'Reorder Columns',
-            position:'first',
-            onClickButton : function (){
-                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
-            }
-        });
+//        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
+//            id: 'pager_columns',
+//            caption: '',
+//            buttonicon:'ui-icon-carat-2-e-w', 
+//            title: 'Reorder Columns',
+//            position:'first',
+//            onClickButton : function (){
+//                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
+//            }
+//        });
 //        .jqGrid('navButtonAdd', '#<?php echo $pager_id ?>', {
 //            id: 'pager_excel',
 //            caption: '',

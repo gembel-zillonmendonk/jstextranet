@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/po/grid/po.monitoring') ?>">DAFTAR SELURUH WORK ORDER</h3>
+    <h3 href="<?php echo site_url('/contract/po/view_grid/po.monitoring') ?>">DAFTAR SELURUH WORK ORDER</h3>
     <div></div>
     
 </div>

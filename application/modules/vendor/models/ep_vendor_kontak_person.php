@@ -11,7 +11,7 @@ class Ep_vendor_kontak_person extends MY_Model
     public $elements_conf = array(
         'NAMA_KONTAK',
         'JABATAN_KONTAK',
-        'NO_TELP_KONTAK' => array('help' => '+6221-9999999'),
+        'NO_TELP_KONTAK' => array('help' => '+62 21 9999999', 'class' => 'telp-mask'),
         'EMAIL_KONTAK',
     );
     public $validation = array(

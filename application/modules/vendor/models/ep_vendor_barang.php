@@ -18,6 +18,7 @@ class Ep_vendor_barang extends MY_Model {
         'TIPE' => array('type' => 'dropdown', 'options' => array('AGENT' => 'AGENT', 'DISTRIBUTOR' => 'DISTRIBUTOR', 'MANUFACTURE' => 'MANUFACTURE', 'NON AGENT' => 'NON AGENT', 'SOLE AGENT' => 'SOLE AGENT')),
     );
     public $validation = array(
+        'KODE_BARANG' => array('required' => true),
         'NAMA_BARANG' => array('required' => true),
 //        'KETERANGAN' => array('required' => true),
         'MEREK' => array('required' => true),

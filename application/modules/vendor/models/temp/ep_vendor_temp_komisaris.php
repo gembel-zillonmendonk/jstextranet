@@ -12,10 +12,10 @@ class Ep_vendor_temp_komisaris extends MY_Model {
     public $elements_conf = array(
         'NAMA',
         'JABATAN',
-        'NO_TELP' => array('help' => '+6221-9999999'),
+        'NO_TELP' => array('help' => '+6221-9999999', 'class' => 'telp-mask', ),
         'EMAIL',
         'NO_KTP',
-        'NO_NPWP',
+        'NO_NPWP' => array('class' => 'npwp-mask'),
     );
     public $validation = array(
         'NAMA' => array('required' => true),

@@ -25,6 +25,7 @@
         <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>   
         <script type="text/javascript" src="<?php echo base_url('js/additional-methods.min.js') ?>"></script> 
         <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-timepicker-addon.js') ?>"></script> 
+        <script type="text/javascript" src="<?php echo base_url('js/jquery.mask.min.js') ?>"></script>
         <script type="text/javascript">
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;

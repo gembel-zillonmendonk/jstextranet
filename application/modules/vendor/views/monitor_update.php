@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_update') ?>">MONITOR UPDATE PROFIL</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_update') ?>">MONITOR UPDATE PROFIL</h3>
     <div></div>
 </div>
 <script>

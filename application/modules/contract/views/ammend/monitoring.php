@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/ammend/grid/ammend.monitoring') ?>">DAFTAR ADENDUM KONTRAK</h3>
+    <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.monitoring') ?>">DAFTAR ADENDUM KONTRAK</h3>
     <div></div>
     
 </div>

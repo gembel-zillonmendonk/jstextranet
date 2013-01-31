@@ -131,33 +131,33 @@ $form_id = 'modal_form_' . $grid->id;
             "dataheight": 150
         })
         /// start button configuration ///
-        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
-            id: 'pager_columns',
-            caption: '',
-            buttonicon:'ui-icon-carat-2-e-w', 
-            title: 'Reorder Columns',
-            position:'first',
-            onClickButton : function (){
-                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
-            }
-        })
-        .jqGrid('navButtonAdd', '#<?php echo $pager_id ?>', {
-            id: 'pager_excel',
-            caption: '',
-            buttonicon: 'ui-icon-newwin',
-            title: 'Export To Excel',
-            position:'first',
-            onClickButton: function (e) {
-                try {
-                    jQuery('#<?php echo $grid->id ?>').jqGrid('excelExport', {
-                        tag: 'excel',
-                        url: $site_url + '/crud/modal_form/<?php echo $grid->model ?>'
-                    });
-                } catch (e) {
-                    window.location = 'Ep_vendor?oper=excel';
-                }
-            }
-        })    
+//        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
+//            id: 'pager_columns',
+//            caption: '',
+//            buttonicon:'ui-icon-carat-2-e-w', 
+//            title: 'Reorder Columns',
+//            position:'first',
+//            onClickButton : function (){
+//                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
+//            }
+//        })
+//        .jqGrid('navButtonAdd', '#<?php echo $pager_id ?>', {
+//            id: 'pager_excel',
+//            caption: '',
+//            buttonicon: 'ui-icon-newwin',
+//            title: 'Export To Excel',
+//            position:'first',
+//            onClickButton: function (e) {
+//                try {
+//                    jQuery('#<?php echo $grid->id ?>').jqGrid('excelExport', {
+//                        tag: 'excel',
+//                        url: $site_url + '/crud/modal_form/<?php echo $grid->model ?>'
+//                    });
+//                } catch (e) {
+//                    window.location = 'Ep_vendor?oper=excel';
+//                }
+//            }
+//        })    
         <?php if (!isset($read_only) || $read_only != true): ?>
         /// delete button
         .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{

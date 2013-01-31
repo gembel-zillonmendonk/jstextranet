@@ -16,7 +16,7 @@ class Ep_vendor_pengalaman extends MY_Model {
         'TGL_MULAI',
         'TGL_BERAKHIR',
         'KONTAK'=>array('label' => 'NAMA KONTAK'),
-        'NO_KONTAK'=>array('label' => 'NO TELPON'),
+        'NO_KONTAK'=>array('label' => 'NO TELPON', 'help' => '+62 21 9999999', 'class' => 'telp-mask'),
         'NO_KONTRAK',
         'KETERANGAN' => array('type' => 'textarea'),
     );

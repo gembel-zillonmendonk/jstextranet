@@ -9,7 +9,7 @@ class Ep_vendor_npwp extends MY_Model
 {
     public $table = "EP_VENDOR";
     public $elements_conf = array(
-        'NO_NPWP',
+        'NO_NPWP' => array('class' => 'npwp-mask'),
         'ALAMAT_NPWP' => array('type' => 'textarea', 'rows' => 4),
         'KOTA_NPWP',
         'PROPINSI_NPWP',

@@ -11,10 +11,10 @@ class Ep_vendor_direksi extends MY_Model
     public $elements_conf = array(
         'NAMA',
         'JABATAN',
-        'NO_TELP',
+        'NO_TELP' => array('help' => '+62 21 9999999', 'class' => 'telp-mask'),
         'EMAIL',
         'NO_KTP'=>array('label' => 'NO KTP/SIM/PASSPOR'),
-        'NO_NPWP',
+        'NO_NPWP' => array('class' => 'npwp-mask'),
     );
     public $validation = array(
         'NAMA' => array('required' => true),

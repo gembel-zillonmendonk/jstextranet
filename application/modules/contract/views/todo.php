@@ -1,11 +1,11 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/ammend/grid/ammend.ep_ktr_perubahan_todo') ?>"> DAFTAR PEKERJAAN ADENDUM KONTRAK</h3>
+    <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.ep_ktr_perubahan_todo') ?>"> DAFTAR PEKERJAAN ADENDUM KONTRAK</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_po_todo') ?>"> DAFTAR PEKERJAAN WORK ORDER</h3>
+    <h3 href="<?php echo site_url('/contract/po/view_grid/po.ep_ktr_po_todo') ?>"> DAFTAR PEKERJAAN WORK ORDER</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/contract/milestone/grid/milestone.ep_ktr_jangka_todo_approval') ?>"> DAFTAR PEKERJAAN PROGRESS</h3>
+    <h3 href="<?php echo site_url('/contract/milestone/view_grid/milestone.ep_ktr_jangka_todo_approval') ?>"> DAFTAR PEKERJAAN PROGRESS</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/contract/invoice/grid/invoice.ep_ktr_invoice_todo') ?>">  DAFTAR PEKERJAAN TAGIHAN</h3>
+    <h3 href="<?php echo site_url('/contract/invoice/view_grid/invoice.ep_ktr_invoice_todo') ?>">  DAFTAR PEKERJAAN TAGIHAN</h3>
     <div></div>
 </div>
 <script>

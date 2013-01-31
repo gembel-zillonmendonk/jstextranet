@@ -45,7 +45,7 @@ class Ep_vendor_perusahaan extends MY_Model
                 'KONSULTAN' => 'KONSULTAN',
                 'GENERAL KONTRAKTOR' => 'GENERAL KONTRAKTOR',
         )),
-        'ALAMAT_EMAIL',
+        'ALAMAT_EMAIL' => array('type' => 'email'),
     );
     public $validation = array(
         'AWALAN' => array('required' => true),
