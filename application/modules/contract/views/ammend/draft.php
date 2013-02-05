@@ -87,13 +87,13 @@ if (count($_REQUEST) > 0) {
             $(el).click(function() {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
-                        success: function(){
+                        success: function(data){
                             validator.prepareForm();
                             validator.hideErrors();
                             
-                            var params = "KODE_KONTRAK="+$("#id_ep_ktr_perubahan_kode_kontrak", f).val()
-                                +"&KODE_PERUBAHAN="+$("input[name='EP_KTR_PERUBAHAN[KODE_PERUBAHAN]']", f).val()
-                                +"&KODE_KANTOR="+$("#id_ep_ktr_perubahan_kode_kantor", f).val();
+                            var params = "KODE_KONTRAK="+$("#id_ep_ktr_perubahan_kode_kontrak", data).val()
+                                +"&KODE_PERUBAHAN="+$("input[name='EP_KTR_PERUBAHAN[KODE_PERUBAHAN]']", data).val()
+                                +"&KODE_KANTOR="+$("#id_ep_ktr_perubahan_kode_kantor", data).val();
                             
                             //reload page
                             window.location = '<?php echo site_url('/wkf/start?referer_url=/contract/ammend/monitoring&kode_wkf=63&') ?>' + params;

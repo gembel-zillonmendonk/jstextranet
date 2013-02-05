@@ -180,6 +180,8 @@ class Account extends MX_Controller {
     }
     
     public function reset_password() {
+        
+        print_r($this->session->userdata("nama_vendor"));
         if (count($_POST) > 0) {
             try {
                 $_POST['EP_VENDOR']['PASSWRD'] = md5($_POST['EP_VENDOR']['PASSWRD']);
@@ -216,7 +218,9 @@ class Account extends MX_Controller {
         unset($_SESSION);
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), '', time() - 42000, '/');
+            setcookie('ci_session', '', time() - 42000, '/');
         }
+        
         session_destroy();
         redirect('account/login');
     }

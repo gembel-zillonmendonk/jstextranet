@@ -40,7 +40,7 @@ $(function() {
         var e = $(this);
         $(e).each(function(){
             $(this).autoNumeric('destroy');
-            $(this).autoNumeric('init');
+            $(this).autoNumeric('init', {vMin: '-9999999999999', vMax: '9999999999999'});
         });
     });
     

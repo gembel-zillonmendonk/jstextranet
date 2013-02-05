@@ -5,9 +5,9 @@ class monitoring extends MY_Model {
     public $table = 'EP_KTR_PERUBAHAN';
     
     public $sql_select = "( 
-                select a.*, x.kode_proses, x.nama_aktifitas, x.url, '' as ACT 
+                select a.*, b.kode_vendor, x.kode_proses, x.nama_aktifitas, x.url, '' as ACT 
                 from (
-                    select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_JANGKA, KODE_KONTRAK, KODE_KANTOR, KODE_VENDOR, KODE_TENDER, KODE_PERKEMBANGAN, KODE_INVOICE, KODE_PERUBAHAN
+                    select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_JANGKA, KODE_KONTRAK, KODE_KANTOR, KODE_TENDER, KODE_PERKEMBANGAN, KODE_INVOICE, KODE_PERUBAHAN
                     from EP_WKF_PROSES a
                     inner join (
                         select rtrim(xmlagg(xmlelement(e, '&' || key || '=' || value )).extract('//text()').extract('//text()') ,',') url, kode_proses 
@@ -34,6 +34,7 @@ class monitoring extends MY_Model {
                         on a.KODE_KONTRAK = x.KODE_KONTRAK
                         and a.KODE_KANTOR = x.KODE_KANTOR
                         and a.KODE_PERUBAHAN = x.KODE_PERUBAHAN
+                inner join EP_KTR_KONTRAK b ON a.KODE_KONTRAK = b.KODE_KONTRAK
                 
             )";
     
@@ -77,6 +78,11 @@ class monitoring extends MY_Model {
 		}';
     }
 
+    function _default_scope()
+    {
+        parent::_default_scope();
+        return " KODE_VENDOR = '" . $this->session->userdata('kode_vendor') ."'";
+    }
 }
 
 ?>

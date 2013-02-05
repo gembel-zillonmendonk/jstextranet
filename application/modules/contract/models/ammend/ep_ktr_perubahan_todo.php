@@ -3,8 +3,8 @@
 class ep_ktr_perubahan_todo extends MY_Model {
 
     public $table = 'EP_KTR_PERUBAHAN';
-    public $sql_select = "( select x.*, b.judul_pekerjaan, b.no_kontrak, b.nama_vendor, '' as \"ACT\" from (
-                                    select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_PERUBAHAN, KODE_KONTRAK, KODE_KANTOR, KODE_VENDOR, KODE_TENDER, KODE_INVOICE
+    public $sql_select = "( select x.*, b.judul_pekerjaan, b.no_kontrak, b.nama_vendor, b.kode_vendor, '' as \"ACT\" from (
+                                    select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_PERUBAHAN, KODE_KONTRAK, KODE_KANTOR, KODE_TENDER, KODE_INVOICE
                                     from EP_WKF_PROSES a
                                     inner join (
                                         select rtrim(xmlagg(xmlelement(e, '&' || key || '=' || value )).extract('//text()').extract('//text()') ,',') url, kode_proses 

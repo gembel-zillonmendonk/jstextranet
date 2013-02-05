@@ -6,6 +6,7 @@
     <?php echo form_hidden($form->model->table . '[ROW_ID]', isset($form->model->row_id) ? $form->model->row_id : 0); ?>
     <?php foreach ($form->elements as $k => $v): ?>
         <?php if($k == 'VENDOR_TIPE') continue; ?>
+        <?php if($k == 'NO_VENDOR' && strlen($v['value']) == 0) continue; ?>
         <p>
             <?php echo form_label($v['label'] . " " . ($form->validation[$k]['validate']['required'] == true ? "*" : ""), $v['id']) ?>
             <?php

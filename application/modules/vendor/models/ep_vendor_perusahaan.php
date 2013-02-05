@@ -83,6 +83,9 @@ class Ep_vendor_perusahaan extends MY_Model
         {
             $this->elements_conf['VENDOR_TIPE']['value'][] = $v['TIPE_VENDOR'];
         }
+        
+        // add field no_vendor
+        $this->elements_conf = array_merge(array('NO_VENDOR' => array('type' => 'label', 'disabled' => true,)), $this->elements_conf); //$this->elements_conf['NO_VENDOR'] = array('type' => 'label', );
     }
 
     function _default_scope()

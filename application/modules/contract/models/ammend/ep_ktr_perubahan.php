@@ -8,8 +8,8 @@ class ep_ktr_perubahan extends MY_Model {
         'KODE_KONTRAK' => array('type' => 'dropdown', 'options' => array()),
         'KODE_KANTOR' => array('readonly' => true),
         'TGL_TTD',
-        'TGL_MULAI' => array('readonly' => true),
-        'TGL_AKHIR' => array('readonly' => true),
+        'TGL_MULAI' => array('readonly' => true, 'type' => 'text'),
+        'TGL_AKHIR' => array('readonly' => true, 'type' => 'text'),
 //        'MATA_UANG' => array('readonly' => true),
 //        'NILAI_KONTRAK' => array('readonly' => true),
 //        'STATUS' => array('readonly' => true),
@@ -23,6 +23,12 @@ class ep_ktr_perubahan extends MY_Model {
 //        'TERMIN_BAYAR_SEWA' => array('readonly' => true),
         'KET_PERUBAHAN' => array('type' => 'textarea'),
         'ALASAN_PERUBAHAN' => array('type' => 'textarea'),
+        'LAMPIRAN' => array('type' => 'file'),
+    );
+    public $validation = array(
+        'KET_PERUBAHAN' => array('required' => true),
+        'ALASAN_PERUBAHAN' => array('required' => true),
+        'LAMPIRAN' => array('required' => true),
     );
     public $dir = 'ammend';
 
@@ -42,13 +48,17 @@ class ep_ktr_perubahan extends MY_Model {
 
             $this->elements_conf['KODE_KONTRAK']['value'] = $_REQUEST['KODE_KONTRAK'];
 
-            $row = $this->db->query("select * from EP_KTR_PERUBAHAN where KODE_KONTRAK = " . $_REQUEST['KODE_KONTRAK'])->row_array();
+            $row = $this->db->query("select a.*, b.TGL_TTD
+                from EP_KTR_PERUBAHAN a
+                inner join EP_KTR_KONTRAK b on a.KODE_KONTRAK = b.KODE_KONTRAK
+                where a.KODE_KONTRAK = " . $_REQUEST['KODE_KONTRAK'])->row_array();
 
             if (!count($row)) {
                 // get default selected
                 $row = $this->db->query("select * from EP_KTR_KONTRAK where KODE_KONTRAK = " . $_REQUEST['KODE_KONTRAK'])->row_array();
             } else {
                 $this->attributes['KODE_PERUBAHAN'] = $row['KODE_PERUBAHAN'];
+                $this->elements_conf['KODE_KONTRAK'] = array('type' => 'text', 'readonly' => true);
             }
 
             $this->attributes['KODE_KONTRAK'] = $row['KODE_KONTRAK'];
@@ -61,6 +71,10 @@ class ep_ktr_perubahan extends MY_Model {
             $this->attributes['MATA_UANG'] = $row['MATA_UANG'];
             $this->attributes['NILAI_KONTRAK'] = $row['NILAI_KONTRAK'];
             $this->attributes['TGL_TTD'] = substr(isset($row['TGL_TTD']) ? $row['TGL_TTD'] : '', 0, 10);
+            
+            $this->attributes['NILAI_KONTRAK_SEBELUM'] = $row['NILAI_KONTRAK'];
+            $this->attributes['TGL_MULAI_SEBELUM'] = $row['TGL_MULAI'];
+            $this->attributes['TGL_AKHIR_SEBELUM'] = $row['TGL_AKHIR'];
         }
     }
 
