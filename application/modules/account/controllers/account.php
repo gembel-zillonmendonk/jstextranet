@@ -181,7 +181,7 @@ class Account extends MX_Controller {
     
     public function reset_password() {
         
-        print_r($this->session->userdata("nama_vendor"));
+        // print_r($this->session->userdata("nama_vendor"));
         if (count($_POST) > 0) {
             try {
                 $_POST['EP_VENDOR']['PASSWRD'] = md5($_POST['EP_VENDOR']['PASSWRD']);
@@ -190,12 +190,14 @@ class Account extends MX_Controller {
                     'ALAMAT_EMAIL' => $_POST['EP_VENDOR']['ALAMAT_EMAIL'],
                     'KODE_LOGIN' => $_POST['EP_VENDOR']['KODE_LOGIN']
                 ));
+				
+				redirect('account/login');
             } catch (Exception $e) {
                 print($e);
             }
         }
 
-        $this->layout->setLayout('layout_nomenu');
+        $this->layout->setLayout('layout_login');
         $this->layout->view('account/reset_password');
     }
 
@@ -206,7 +208,8 @@ class Account extends MX_Controller {
 
                 $this->db->update('EP_VENDOR', $_POST['EP_VENDOR'], array('KODE_VENDOR' => $this->session->userdata('kode_vendor')));
 //                $this->db->query("update ep_nomorurut set NOMORURUT = NOMORURUT + 1 where kode_nomorurut = 'VENDOR'");
-            } catch (Exception $e) {
+				
+			} catch (Exception $e) {
                 print($e);
             }
         }

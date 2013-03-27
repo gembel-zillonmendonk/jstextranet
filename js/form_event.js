@@ -21,8 +21,8 @@ $(function() {
     }, "Format tanggal dd-mm-yyyy.");
     
     $.validator.addMethod("datetimeID", function(value, element) {
-        return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?[\s]([0-1]\d|2[0-3]):([0-5]\d)$/.test(value);
-    }, "Format waktu dd-mm-yyyy HH:mm.");
+        return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?[\s]([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/.test(value);
+    }, "Format waktu dd-mm-yyyy HH:mm:ss");
     
     $(".datepicker").livequery(function(){
         var dateoptions = {
@@ -40,7 +40,10 @@ $(function() {
         var e = $(this);
         $(e).each(function(){
             $(this).autoNumeric('destroy');
-            $(this).autoNumeric('init', {vMin: '-9999999999999', vMax: '9999999999999'});
+            $(this).autoNumeric('init', {
+                vMin: '-9999999999999', 
+                vMax: '9999999999999'
+            });
         });
     });
     
@@ -55,81 +58,84 @@ $(function() {
     });
     
     $("#form form, form").livequery(function(){
-        var clear_form = true;
-        var form = $(this);
-        var object = form.attr("id") ? form.attr("id").replace("id_form_","").toLowerCase() : null;
-        $("input:submit, input:button, button", form).button();
+        var e = $(this);
         
-        if(! object){
-            return false;
-        }
+        $(e).each(function(){
+            var clear_form = true;
+            var form = $(this);
+            var object = form.attr("id") ? form.attr("id").replace("id_form_","").toLowerCase() : null;
+            $("input:submit, input:button, button", form).button();
         
-        var validator = $(form).validate({
-            meta: "validate",
-            submitHandler: function(f) {
-                jQuery(form).ajaxSubmit({
+            if(! object){
+                return false;
+            }
+        
+            var validator = $(form).validate({
+                meta: "validate",
+                submitHandler: function(f) {
+                    jQuery(form).ajaxSubmit({
                     
-                    //clearForm: <?php echo $form->clear_form ? "true" : "false"; ?>,
-                    success: function(data){
-                        if (clear_form) {
-                            $(form).resetForm();
-                            $(form).clearForm();
-                            validator.prepareForm();
-                            validator.hideErrors();
+                        //clearForm: <?php echo $form->clear_form ? "true" : "false"; ?>,
+                        success: function(data){
+                            if (clear_form) {
+                                $(form).resetForm();
+                                $(form).clearForm();
+                                validator.prepareForm();
+                                validator.hideErrors();
                                     
-                            // new : for load form from server with default attributes 
-                            var url = window.location.href;
-                            var tempArray = url.split("?");
-                            var additionalURL = tempArray[1];
-                            var action = $(form).attr("action");
-                            var newAction = action.split("?");
+                                // new : for load form from server with default attributes 
+                                var url = window.location.href;
+                                var tempArray = url.split("?");
+                                var additionalURL = tempArray[1];
+                                var action = $(form).attr("action");
+                                var newAction = action.split("?");
                             
-                            newAction = newAction[0] + "?" + additionalURL;
-                            $(form).parent().load(newAction);
-                        } else {
-                            // replace form
-                            $(form).replaceWith(data);
-                        }
+                                newAction = newAction[0] + "?" + additionalURL;
+                                $(form).parent().load(newAction);
+                            } else {
+                                // replace form
+                                $(form).replaceWith(data);
+                            }
     
                         
-                        alert('Data berhasil disimpan');
+                            alert('Data berhasil disimpan');
                             
                             
-                        //reload grid
-                        $('#grid_' + object).trigger("reloadGrid");
+                            //reload grid
+                            $('#grid_' + object).trigger("reloadGrid");
                         
-                    },
-                    error: function(){
-                        alert('Data gagal disimpan')
-                    }
-                });
-            }
-        });
+                        },
+                        error: function(){
+                            alert('Data gagal disimpan')
+                        }
+                    });
+                }
+            });
     
             
-        $("#btnSimpan", form).click(function(){
-            form.submit();
-        });
+            $("#btnSimpan", form).click(function(){
+                form.submit();
+            });
         
         
-        $("#btnBatal", form).click(function() {
-            $(form).resetForm();
-            validator.prepareForm();
-            validator.hideErrors();
+            $("#btnBatal", form).click(function() {
+                $(form).resetForm();
+                validator.prepareForm();
+                validator.hideErrors();
                 
-            // new : for load form from server with default attributes 
-            var url = window.location.href;
-            var tempArray = url.split("?");
-            var additionalURL = tempArray[1];
+                // new : for load form from server with default attributes 
+                var url = window.location.href;
+                var tempArray = url.split("?");
+                var additionalURL = tempArray[1];
                 
-            var action = $(form).attr("action");
-            var newAction = action.split("?");
-            newAction = newAction[0] + "?" + additionalURL;
-            $(form).parent().load(newAction);
-        });
+                var action = $(form).attr("action");
+                var newAction = action.split("?");
+                newAction = newAction[0] + "?" + additionalURL;
+                $(form).parent().load(newAction);
+            });
         
         
        
-    
+        });
     });
 });

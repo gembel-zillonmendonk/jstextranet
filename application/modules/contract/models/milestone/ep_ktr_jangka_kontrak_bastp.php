@@ -82,6 +82,13 @@ class ep_ktr_jangka_kontrak_bastp extends MY_Model {
         
         $this->attributes['NO_BASTP'] = sprintf('%1$s/%2$s/%3$07d', 'BASTP', 'ML', count($row) > 0 ? $row['NEXT_ID'] : $no_urut);
     }
+    
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['LAMPIRAN_BASTP']) && strlen($this->attributes['LAMPIRAN_BASTP']) == 0)
+            unset($this->attributes['LAMPIRAN_BASTP']);
+    }
 
 }
 

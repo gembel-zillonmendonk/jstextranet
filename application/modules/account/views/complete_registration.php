@@ -22,7 +22,7 @@
             <h3 href="<?php echo site_url('/vendor/form/ep_vendor_jamsostek') ?>">KEPESERTAAN JAMSOSTEK</h3>
             <div></div>
 <!--            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>-->
-            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>
+            <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_wilayah') ?>">KANTOR PENDAFTARAN</h3>
             <div></div>
         </div>
     </div>

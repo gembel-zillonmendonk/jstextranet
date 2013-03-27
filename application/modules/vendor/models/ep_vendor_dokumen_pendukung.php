@@ -44,6 +44,9 @@ class Ep_vendor_dokumen_pendukung extends MY_Model {
         if(isset($_REQUEST['KODE_VENDOR'])){
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
         }
+        
+        if (isset($this->attributes['NAMA_FILE']) && strlen($this->attributes['NAMA_FILE']) == 0)
+            unset($this->attributes['NAMA_FILE']);
     }
 }
 

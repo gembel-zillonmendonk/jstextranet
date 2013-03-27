@@ -187,8 +187,12 @@ class MY_Model extends CI_Model {
             foreach ($files as $k => $v) {
                 $key = is_array($v['name']) ? array_keys($v['name']) : $k;
                 $key = is_array($key) ? $key[0] : $key;
-                $this->attributes[$key] = is_array($v['name']) ? $v['name'][$key] : $v['name'];
-
+                
+                $filename = date('Ymdhis') .'_'. (is_array($v['name']) ? str_replace(" ", "_", $v['name'][$key]) : str_replace(" ", "_", $v['name']));
+                $this->attributes[$key] = $filename;
+                
+                $v['name'][$key] = $filename;
+                
                 if (!$this->upload($v, $key)) {
                     return false;
                 }

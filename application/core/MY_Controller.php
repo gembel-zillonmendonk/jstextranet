@@ -26,7 +26,7 @@ class MY_Controller extends MX_Controller {
             else if ($row['KODE_STATUS_REG'] == "10" && !$allow) // fix registration form
                 redirect('/account/fix_registration');
             else if ($row['KODE_STATUS_REG'] == "4" && !$allow) // waiting approval
-                redirect('/account/waiting_approval');
+                redirect('/account/success_message');// redirect('/account/waiting_approval');
         }
 
 //        list($path, $_model) = Modules::find(strtolower('ep_vendor'), 'vendor', 'models/');

@@ -74,7 +74,7 @@
         var el = $("button", f);
         
         if(el.length > 0) {
-            console.log(el);
+            //console.log(el);
             $(el).live('click', function(){
                 $(f).validate({
                     meta: "validate"

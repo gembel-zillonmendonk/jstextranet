@@ -21,6 +21,8 @@
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/temp.ep_vendor_temp_jamsostek') ?>">KEPESERTAAN JAMSOSTEK</h3>
             <div></div>
+            <h3 href="<?php echo site_url('/vendor/view_grid_form/temp.ep_vendor_temp_wilayah') ?>">KANTOR PENDAFTARAN</h3>
+            <div></div>
         </div>
     </div>
 
@@ -74,8 +76,6 @@
             <h3 href="<?php echo site_url('/vendor/view_grid_form/temp.ep_vendor_temp_barang') ?>">BARANG YANG BISA DIPASOK</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_grid_form/temp.ep_vendor_temp_jasa') ?>">JASA YANG BISA DIPASOK</h3>
-            <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/temp.ep_vendor_temp_wilayah') ?>">AREA KERJA</h3>
             <div></div>
         </div>
     </div>

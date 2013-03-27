@@ -9,7 +9,7 @@
             <th>Persyaratan Administrasi</th>
             <th>Status</th>
             <th>Catatan</th>
-            <th>Keterangan</th>
+<!--            <th>Keterangan</th>-->
         </tr>
     </thead>
     <tbody>
@@ -37,9 +37,9 @@
                 <td>
                     <textarea name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][NOTE]"><?php echo $v['NOTE']; ?></textarea>
                 </td>
-                <td>
+<!--                <td>
                     <textarea name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][KETERANGAN]"><?php echo $v['KETERANGAN']; ?></textarea>
-                </td>
+                </td>-->
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -52,6 +52,12 @@ class ep_ktr_po_bastp extends MY_Model {
         
     }
 
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['LAMPIRAN_BASTP']) && strlen($this->attributes['LAMPIRAN_BASTP']) == 0)
+            unset($this->attributes['LAMPIRAN_BASTP']);
+    }
 }
 
 ?>

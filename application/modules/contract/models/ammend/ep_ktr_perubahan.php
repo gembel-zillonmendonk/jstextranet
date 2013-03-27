@@ -28,7 +28,7 @@ class ep_ktr_perubahan extends MY_Model {
     public $validation = array(
         'KET_PERUBAHAN' => array('required' => true),
         'ALASAN_PERUBAHAN' => array('required' => true),
-        'LAMPIRAN' => array('required' => true),
+        'LAMPIRAN' => array('required' => false),
     );
     public $dir = 'ammend';
 
@@ -120,6 +120,12 @@ class ep_ktr_perubahan extends MY_Model {
         }
     }
 
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['LAMPIRAN']) && strlen($this->attributes['LAMPIRAN']) == 0)
+            unset($this->attributes['LAMPIRAN']);
+    }
 }
 
 ?>
