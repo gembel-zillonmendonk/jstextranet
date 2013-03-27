@@ -34,16 +34,20 @@
             <?php echo form_label("Lokasi Aanwijzing") ?>
              <input type="text" style="width: 50%" readonly="true" value="<?php echo $lokasi_pre_lelang ; ?>" />
         </p>
+           <p>	
+            <?php echo form_label("Tgl Mulai Pemasukan Penawaran") ?>
+             <input type="text" style="width: 50%" readonly="true" value="<?php echo $tgl_mulai_penawaran; ?>" />
+        </p>
         <p>	
             <?php echo form_label("Tgl Pembukaan Penawaran") ?>
              <input type="text" style="width: 50%" readonly="true" value="<?php echo $tgl_pembukaan_lelang ; ?>" />
         </p>
-        
+       <!-- 
         <p>	
             <?php echo form_label("Lokasi Pengiriman") ?>
              <input type="text" style="width: 50%" readonly="true" value="<?php echo $lokasi_kirim ; ?>" />
         </p>
-        
+        -->
         
         
       </form>

@@ -10,11 +10,13 @@
        
         <div id="list"></div>
     </div>
+    <!--
     <h3 href="<?php echo base_url(); ?>index.php/crud/gridrf/ep_pgd_dokumen?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">DOKUMEN PENDUKUNG</h3>
     <div>
         
         <div id="list"></div>
     </div>
+    -->
     <h3 href="<?php echo base_url(); ?>index.php/pengadaan_monitor/metode_jadwal?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">INFORMASI PENGADAAN</h3>
     <div>
          
@@ -26,9 +28,13 @@
     <input type="hidden" name="KODE_TENDER" value="<?php echo $KODE_TENDER; ?>" />
     <input type="hidden" name="KODE_KANTOR" value="<?php echo $KODE_KANTOR; ?>" />
     <input type="hidden" name="KODE_VENDOR" value="<?php echo $KODE_VENDOR; ?>" />
-    
     <p align="center">
-        <label>Reason</label>
+        <b>
+        <input type="checkbox" id="chk_mengerti" >&nbsp; &nbsp;Saya sudah mengunduh dan membaca isi RKS</input>
+        </b>
+    </p>
+    <p align="center">
+        <label>Respon</label>
     
      
     <select id="PVTS_STATUS" name="PVTS_STATUS" >
@@ -50,14 +56,20 @@
         
         $("#btnKirim").click(function(){ 
             // alert("Kirim");
+             
+            if ($("#chk_mengerti:checked").length == 0) {
+                alert("Pilih Checkbox bahwa anda sudah membaca RKS");
+                return;
+            }
+            
             if ($("#PVTS_STATUS").val() != 0) {
                        $("#frm_Pendaftaran").ajaxSubmit({
                                              success: function(msg){
                                                  
-                                            //  $("#trace").html(msg);
-                                            //  alert(msg);
+                                              $("#trace").html(msg);
+                                             //  alert(msg);
                                                   
-                                                 //reload grid
+                                                 // reload grid
                                                  //   window.location.reload();
                                                   window.location = "<?php echo base_url() ."index.php/pengadaan/daftar_pekerjaan"; ?>";  
                      

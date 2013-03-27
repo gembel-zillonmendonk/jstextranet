@@ -44,6 +44,19 @@ class Pengadaan extends MY_Controller
         $data["KODE_TENDER"] = $this->input->get("KODE_TENDER");
         $data["KODE_KANTOR"] = $this->input->get("KODE_KANTOR");
         
+        $sql = "SELECT METODE_TENDER ";
+        $sql .= " FROM EP_PGD_PERSIAPAN_TENDER ";
+        $sql .= " WHERE KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "'";
+        $sql .= " AND KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
+        $sql .= " AND METODE_TENDER = 2 ";
+        
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        
+        $data["is_lelang"] = 0;
+        if (count($result)) {
+            $data["is_lelang"] = 1;
+        }
         
         
         $this->load->view('pengadaan/pengadaan_monitor', $data);
@@ -65,11 +78,15 @@ class Pengadaan extends MY_Controller
         $this->layout->view('pengadaan/pengadaan_monitor_list', $data);
     }
     
+    function sanggahan_add() {
+        echo "sangahan";
+        
+    }
     
     function pendaftaran_add() {
         if($this->input->post("KODE_TENDER")) {
             
-            $sql = "SELECT METODE_SAMPUL ";
+            $sql = "SELECT METODE_SAMPUL, METODE_TENDER ";
             $sql .= " FROM EP_PGD_PERSIAPAN_TENDER ";
             $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
             $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
@@ -78,8 +95,10 @@ class Pengadaan extends MY_Controller
             $result = $query->result();
             $pvts_status = 20;
             $metode_sampul = 0;
+            $metode_tender = 0;
             if (count($result)) {
                 $metode_sampul = $result[0]->METODE_SAMPUL; 
+                $metode_tender = $result[0]->METODE_TENDER; 
             }
             
             switch($metode_sampul) {
@@ -96,14 +115,46 @@ class Pengadaan extends MY_Controller
                 
             } 
             
+            if ($metode_tender == 2) {
+                        $sql = "SELECT KODE_TENDER ";
+                        $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
+                        $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
+                        $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
+                        $sql .= " AND KODE_VENDOR =  " . $this->input->post("KODE_VENDOR")  ;
+ 
+                        $query = $this->db->query($sql);
+                        $result = $query->result();
+                        
+                        if (count($result) == 0) {
+                            $sql = "INSERT INTO EP_PGD_TENDER_VENDOR (KODE_TENDER, KODE_KANTOR, KODE_VENDOR,  TGL_REKAM, PETUGAS_REKAM)";
+                            $sql .= " VALUES ('" . $this->input->post("KODE_TENDER") . "'";
+                            $sql .= " ,'" . $this->input->post("KODE_KANTOR") . "'";
+                            $sql .= " ," . $this->input->post("KODE_VENDOR")     ;
+                            $sql .= ",  TO_DATE('" .  date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                            $sql .= ",  '" . $this->session->userdata("kode_vendor") . "') ";   
+
+                            $this->db->simple_query($sql);
+                            
+                        }
+                        
+
+                
+            }
+            
+            
+            
+            
             $sql = "SELECT KODE_TENDER ";
             $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS ";
             $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
             $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
             $sql .= " AND KODE_VENDOR =  " . $this->input->post("KODE_VENDOR")  ;
             
+             
             $query = $this->db->query($sql);
             $result = $query->result();
+              
+            
              if (count($result)) {
                 $sql = "UPDATE EP_PGD_TENDER_VENDOR_STATUS";
                 $sql .= " SET STATUS = " . $pvts_status;
@@ -126,8 +177,7 @@ class Pengadaan extends MY_Controller
                 
                 
             }
-            
-              echo $sql;
+             
             
             if ($this->db->simple_query($sql)) {
                 echo 1;
@@ -223,6 +273,9 @@ class Pengadaan extends MY_Controller
         $this->layout->view('pengadaan/negosiasi', $data);
         
     }
+    
+   
+    
     
     function pendaftaran() {
         
@@ -1143,7 +1196,7 @@ WHERE     (K.TGL_BERAKHIR IS NULL)
                 $i++;
             }
             
-            
+            echo $sql;
             exit();
         }
         
@@ -1214,6 +1267,9 @@ WHERE     (K.TGL_BERAKHIR IS NULL)
             if (count($result) == 0) {
                     
 
+                    $arrBerlaku = split("-",$this->input->post("BERLAKU_HINGGA"));
+                     
+                
                     $sql = "INSERT  INTO EP_PGD_PENAWARAN (";
                     $sql .= " KODE_TENDER";
                     $sql .= " , KODE_KANTOR";
@@ -1237,7 +1293,7 @@ WHERE     (K.TGL_BERAKHIR IS NULL)
                     $sql .= "," . str_replace(",","",$this->input->post("KANDUNGAN_LOKAL")) . "";
                     $sql .= "," . str_replace(",","",$this->input->post("WAKTU_PENGIRIMAN")) . "";
                     $sql .= ",'" . str_replace(",","",$this->input->post("UNIT")) . "'";
-                    $sql .= ",TO_DATE('" . $this->input->post("BERLAKU_HINGGA") . "','YYYY-MM-DD' ) ";
+                    $sql .= ",TO_DATE('" . $arrBerlaku[2] . "-" . $arrBerlaku[1] . "-" . $arrBerlaku[0]  . "','YYYY-MM-DD' ) ";
                     $sql .= ",''";
                     $sql .= ",'" .  $this->input->post("KETERANGAN")  . "')";
 
@@ -1259,13 +1315,14 @@ WHERE     (K.TGL_BERAKHIR IS NULL)
                     $sql .= " , KANDUNGAN_LOKAL  = " . str_replace(",","",$this->input->post("KANDUNGAN_LOKAL")) . "";
                     $sql .= " , WAKTU_PENGIRIMAN = " . str_replace(",","",$this->input->post("WAKTU_PENGIRIMAN")) . "";
                     $sql .= " , UNIT = '" . str_replace(",","",$this->input->post("UNIT")) . "'";
-                    $sql .= " , BERLAKU_HINGGA = TO_DATE('" . $this->input->post("BERLAKU_HINGGA") . "','YYYY-MM-DD' ) ";
+                    $sql .= " , BERLAKU_HINGGA = TO_DATE('" . $this->input->post("BERLAKU_HINGGA") . "','DD-MM-YYYY' ) ";
                     $sql .= " , LAMPIRAN = ''"; 
                     $sql .= " , KETERANGAN = '" .  $this->input->post("KETERANGAN")  . "' "; 
                     $sql .= " WHERE KODE_TENDER  = '" . $this->input->post("KODE_TENDER") . "'";
                     $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
                     $sql .= " AND KODE_VENDOR = '" . $this->input->post("KODE_VENDOR") . "'";
 
+                 
                      if ($this->db->simple_query($sql)) {
                         echo "1";
 
@@ -1296,7 +1353,7 @@ WHERE     (K.TGL_BERAKHIR IS NULL)
         $sql .= " , KANDUNGAN_LOKAL";
         $sql .= " , WAKTU_PENGIRIMAN";
         $sql .= " , UNIT";
-        $sql .= " , BERLAKU_HINGGA";
+        $sql .= " , TO_CHAR(BERLAKU_HINGGA , 'DD-MM-YYYY') AS BERLAKU_HINGGA";
         $sql .= " , LAMPIRAN";
         $sql .= " , KETERANGAN ";
         $sql .= " FROM EP_PGD_PENAWARAN ";

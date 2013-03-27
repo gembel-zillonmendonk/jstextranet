@@ -46,7 +46,7 @@
         </p>
         <p>	
             <?php echo form_label("Berlaku Hingga *") ?>
-	    <input type="text"  class="datepicker  {validate:{required:true,date:true}}"   id="BERLAKU_HINGGA" name="BERLAKU_HINGGA" value="<?php echo $BERLAKU_HINGGA;  ?>" />
+	    <input type="text"  class="datepicker  {validate:{required:true,dateID:true}}"   id="BERLAKU_HINGGA" name="BERLAKU_HINGGA" value="<?php echo $BERLAKU_HINGGA;  ?>" />
 	</p>
         <p>	
             <?php echo form_label("CATATAN") ?>
@@ -181,9 +181,9 @@
               <td>&nbsp;<?php echo $row->KETERANGAN; ?></td>
               <td>&nbsp;<?php echo $row->JUMLAH; ?></td>
               <td>&nbsp;<input type="text" id="KETERANGAN_PENAWARAN_<?php echo $i; ?>"  name="KETERANGAN_PENAWARAN[]" value="<?php echo $row->KETERANGAN_PENAWARAN; ?>" /></td>
-              <td>&nbsp;<input type="number" id="JUMLAH_PENAWARAN_<?php echo $i; ?>"   name="JUMLAH_PENAWARAN[]" value="<?php echo $row->JUMLAH_PENAWARAN; ?>" /></td>
-              <td>&nbsp;<input type="number" id="HARGA_PENAWARAN_<?php echo $i; ?>"   name="HARGA_PENAWARAN[]" value="<?php echo $row->HARGA_PENAWARAN; ?>" /></td>
-              <td>&nbsp;<input type="number" id="SUBTOTAL_PENAWARAN_<?php echo $i; ?>" value="<?php echo ($row->JUMLAH_PENAWARAN * $row->HARGA_PENAWARAN); ?>" name="SUBTOTAL_PENAWARAN[]" /></td>
+              <td>&nbsp;<input onchange="fnSubTotal(<?php echo $i; ?>)" type="number" style="text-align: right" id="JUMLAH_PENAWARAN_<?php echo $i; ?>"   name="JUMLAH_PENAWARAN[]" value="<?php echo $row->JUMLAH_PENAWARAN; ?>" /></td>
+              <td>&nbsp;<input onchange="fnSubTotal(<?php echo $i; ?>)" type="number" style="text-align: right" id="HARGA_PENAWARAN_<?php echo $i; ?>"   name="HARGA_PENAWARAN[]" value="<?php echo $row->HARGA_PENAWARAN; ?>" /></td>
+              <td>&nbsp;<input type="number" id="SUBTOTAL_PENAWARAN_<?php echo $i; ?>" style="text-align: right"  value="<?php echo ($row->JUMLAH_PENAWARAN * $row->HARGA_PENAWARAN); ?>" name="SUBTOTAL_PENAWARAN[]" /></td>
               
           
           </tr>
@@ -192,9 +192,12 @@
           
                    
           <?php
+          $i++;
           }
           ?>
         </table>
+                 
+                 
                    <input type="hidden" name="komersial" value="1" />
                    
                    
@@ -202,6 +205,10 @@
                     <input type="hidden" name="KODE_KANTOR" value="<?php echo $KODE_KANTOR; ?>" />   
                     <input type="hidden" name="KODE_VENDOR" value="<?php echo $KODE_VENDOR; ?>" />   
         </form>
+        
+        <div id="item_total" ref="<?php echo base_url(); ?>index.php/item_total/total?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>&KODE_VENDOR=<?php echo $KODE_VENDOR; ?>"  >
+        </div>
+        
         <!--
         <p> 
             <button id="btnKomersial" >Update</button>
@@ -222,8 +229,19 @@
 <script>
 
 
+
     $(document).ready(function(){
 
+
+    
+     $('#item_total').each(function(){
+    
+                    var uri = $(this).attr('ref');
+				//	alert(uri);
+                            $(this).load(uri);
+                    }
+      );
+     
 
     
 
@@ -264,8 +282,8 @@
                    $("#frm_adm").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
-                                       alert(msg);
-                                       $("#trace").html(msg);
+                                    //   alert(msg);
+                                    //   $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
                                     
@@ -284,8 +302,8 @@
                    $("#frm_teknis").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
-                                       alert(msg);
-                                       $("#trace").html(msg);
+                                    //   alert(msg);
+                                     //  $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
                                     
@@ -356,6 +374,10 @@
     
     
     $("#btnSimpan").click(function(){
+        if (Number($("#BID_BOND").val()) < Number($("#min_bidbond").val()) ) { 
+            alert("Nilai Bid Bond Tidak Cukup ");
+            return;
+        }
         
                    if(validator_Penawaran.form()) {
                     $("#frm_Penawaran").ajaxSubmit({
@@ -374,7 +396,8 @@
                                                                  $("#frm_teknis").ajaxSubmit({
                                                                             //clearForm: false,
                                                                             success: function(msg){
-                                                                                  
+                                                                                 // alert(msg);
+                                                                                  // $("#trace").html(msg);
                                                                                         $("#frm_komersial").ajaxSubmit({
                                                                                                      //clearForm: false,
                                                                                                      success: function(msg){
@@ -383,8 +406,8 @@
                                                                                                         // alert(msg);
                                                                                                           //window.location.reload(1);
                                                                                                           $("#peringkat").html(msg);
-                                                                                                            
-
+                                                                                                         //  alert($('#item_total').attr('ref'));   
+                                                                                                          $('#item_total').load($('#item_total').attr('ref'));
 
                                                                                                      },
                                                                                                      error: function(){
@@ -427,5 +450,23 @@
     
     
     });
+    
+    
+    
+    function fnSubTotal(ival) {
+        if ($("#HARGA_PENAWARAN_" + ival).val() == "") {
+            $("#HARGA_PENAWARAN_" + ival).val(0);
+            
+        }
+        if ($("#JUMLAH_PENAWARAN_" + ival).val() == "") {
+            $("#JUMLAH_PENAWARAN_" + ival).val(0);
+        }
+    
+    
+        $("#SUBTOTAL_PENAWARAN_"  + ival).val(  $("#HARGA_PENAWARAN_" + ival).val() *  $("#JUMLAH_PENAWARAN_" + ival).val());
+        
+    }
+
+    
  </script>
  

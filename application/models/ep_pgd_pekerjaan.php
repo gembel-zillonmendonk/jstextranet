@@ -14,8 +14,8 @@ class Ep_pgd_pekerjaan extends MY_Model {
 
     
   
-    public $table = "VW_PGD_PEKERJAAN_VENDOR";
-    //public $table = "EP_NOMORURUT";
+    //public $table = "VW_PGD_PEKERJAAN_VENDOR";
+     public $table = "EP_NOMORURUT";
     
 	public $kode_kantor = 'ALL';
 	public $kode_nomerurut = 'PERENCANAAN';
@@ -54,7 +54,17 @@ class Ep_pgd_pekerjaan extends MY_Model {
     
      */
     
-     public $sql_select = "(SELECT TMP.*,  '' as \"PROSES\"  FROM (SELECT
+     
+     public $sql_select = "(SELECT DISTINCT 
+         VW_PGD_PEKERJAAN_VENDOR.PTVS_STATUS 
+        , VW_PGD_PEKERJAAN_VENDOR.KODE_VENDOR
+        , VW_PGD_PEKERJAAN_VENDOR.KODE_TENDER
+        , VW_PGD_PEKERJAAN_VENDOR.JUDUL_PEKERJAAN
+        , VW_PGD_PEKERJAAN_VENDOR.TGL_PEMBUKAAN_REG
+        , VW_PGD_PEKERJAAN_VENDOR.TGL_PENUTUPAN_REG
+        , VW_PGD_PEKERJAAN_VENDOR.NAMA_STATUS
+        , VW_PGD_PEKERJAAN_VENDOR.KODE_KANTOR
+        ,  '' as \"PROSES\"  FROM (SELECT
 	TV.KODE_VENDOR
 	,T.KODE_TENDER
 	,T.JUDUL_PEKERJAAN
@@ -181,10 +191,12 @@ LEFT JOIN EP_PGD_STATUS S ON PTVS.STATUS = S.KODE_STATUS
 WHERE     (K.TGL_BERAKHIR IS NULL)
 		   AND (K.KODE_AKTIFITAS IN (1209,1309, 1407, 1511, 1610, 1706))
 		   AND (P.TGL_LELANG_TEKNIS >=  SYSDATE)
-		   AND (S.KODE_STATUS = 10 ))  TMP 
+		   AND (S.KODE_STATUS = 10 ))  VW_PGD_PEKERJAAN_VENDOR 
                    
 WHERE 1=1 ";
-    
+     
+     
+                      
         function setParam() { 
             $this->sql_select  = $this->sql_select . " AND  KODE_VENDOR = " .  $this->session->userdata("kode_vendor"). "  ";
             
@@ -202,9 +214,13 @@ WHERE 1=1 ";
      
     function __construct() {
         parent::__construct();
-         $this->setParam();
+            $this->setParam();
+        
+        
         $this->init();
-		$this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
+	
+      
+        $this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
 		for(var i=0;i < ids.length;i++){
                     var cl = ids[i];
                     

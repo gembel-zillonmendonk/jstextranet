@@ -123,7 +123,6 @@
         	 $('#grid_ep_pgd_pekerjaan').jqGrid('setSelection',str); 
 		 var selected = $('#grid_ep_pgd_pekerjaan').jqGrid('getGridParam', 'selrow');
 		 
-                 alert(selected);
                  if (selected) {
                     selected = jQuery('#grid_ep_pgd_pekerjaan').jqGrid('getRowData',selected);
  

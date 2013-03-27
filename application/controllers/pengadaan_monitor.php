@@ -60,7 +60,7 @@ class Pengadaan_monitor extends MY_Controller
         function metode_jadwal() {
             $sql = "SELECT P.METODE_TENDER,M.NAMA_METODE_TENDER,  P.METODE_SAMPUL, S.NAMA_METODE_SAMPUL , P.KODE_EVALUASI, P.KETERANGAN_EVALUASI ";
             $sql .= " , P.TGL_PEMBUKAAN_REG, P.TGL_PENUTUPAN_REG, P.TGL_PRE_LELANG, P.LOKASI_PRE_LELANG, P.TGL_PEMBUKAAN_LELANG, P.PTP_INQUIRY_NOTES ";
-            $sql .= " , K.NAMA_KANTOR";
+            $sql .= " , K.NAMA_KANTOR, P.TGL_MULAI_PENAWARAN";
             $sql .= " FROM EP_PGD_PERSIAPAN_TENDER P "; 
             $sql .= " LEFT JOIN EP_PGD_METODE M ON P.METODE_TENDER = M.METODE_TENDER ";
             $sql .= " LEFT JOIN EP_PGD_SAMPUL S ON P.METODE_SAMPUL = S.METODE_SAMPUL ";
@@ -82,6 +82,7 @@ class Pengadaan_monitor extends MY_Controller
             $data["tgl_pre_lelang"] = "";
             $data["lokasi_pre_lelang"] = "";
             $data["tgl_pembukaan_lelang"] = "";
+            $data["tgl_mulai_penawaran"] = "";
             $data["lokasi_kirim"] = "";
             
 
@@ -99,6 +100,7 @@ class Pengadaan_monitor extends MY_Controller
                 $data["tgl_pre_lelang"] = $result[0]->TGL_PRE_LELANG;
                 $data["lokasi_pre_lelang"] = $result[0]->LOKASI_PRE_LELANG;
                 $data["tgl_pembukaan_lelang"] = $result[0]->TGL_PEMBUKAAN_LELANG;
+                $data["tgl_mulai_penawaran"] = $result[0]->TGL_MULAI_PENAWARAN;
                 $data["lokasi_kirim"] = $result[0]->NAMA_KANTOR;
                 
             }

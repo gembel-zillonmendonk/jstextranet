@@ -29,10 +29,7 @@ class Ep_pgd_item_tender_view extends MY_Model {
                                                                  'KODE_BARANG_JASA'  =>array('hidden'=>false, 'width'=>10),
 								 'KETERANGAN'  =>array('hidden'=>false, 'width'=>40),
 								 'JUMLAH'  =>array('hidden'=>false, 'width'=>10),
-        							 'UNIT'  =>array('hidden'=>false, 'width'=>10),
-        
-								 'HARGA'  =>array('hidden'=>false, 'width'=>10),
-								 'SUBTOTAL'   =>array('hidden'=>false, 'width'=>10)
+        							  
 	  );							 
  
 	
@@ -48,7 +45,7 @@ class Ep_pgd_item_tender_view extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND T.KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND T.KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND T.KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
@@ -56,7 +53,7 @@ class Ep_pgd_item_tender_view extends MY_Model {
         
     }
 	
-    public $sql_select = "(SELECT T.KODE_BARANG_JASA , J.KODE_KEL_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,  T.UNIT, T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
+    public $sql_select = "(SELECT T.KODE_BARANG_JASA , J.KODE_KEL_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,  T.UNIT, T.JUMLAH 
                 
 		FROM EP_PGD_ITEM_TENDER T
 		LEFT JOIN (

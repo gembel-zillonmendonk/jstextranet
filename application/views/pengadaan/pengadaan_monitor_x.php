@@ -1,16 +1,18 @@
 <?php $this->load->helper('form'); ?>
 <div class="accordion">
-    <h3 href="<?php echo base_url() . "index.php/pengadaan_monitor/header?KODE_TENDER=" . $KODE_TENDER . "&KODE_KANTOR=" . $KODE_KANTOR; ?>" >INFORMASI UMUM</h3>
+    <h3 href="<?php echo base_url() . "index.php/pengadaan_monitor_x/header?KODE_TENDER=" . $KODE_TENDER . "&KODE_KANTOR=" . $KODE_KANTOR; ?>" >INFORMASI UMUM</h3>
     <div>
          
         <div id="list"></div>
     </div>
-    <h3 href="<?php echo base_url(); ?>index.php/crud/gridrf/ep_pgd_item_tender_view?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">ITEM PENGADAAN</h3>
+   
+    <h3 href="<?php echo base_url(); ?>index.php/crudx/gridrf/ep_pgd_item_tender_view?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">ITEM PENGADAAN</h3>
     <div>
        
         <div id="list"></div>
     </div>
-    <?php
+    
+ <?php
    // if (!$is_lelang) {
     ?>
     <h3 href="<?php echo base_url(); ?>index.php/crud/gridrf/ep_pgd_dokumen?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">DOKUMEN PENDUKUNG</h3>
@@ -21,7 +23,7 @@
     <?php
     //}
     ?>
-    <h3 href="<?php echo base_url(); ?>index.php/pengadaan_monitor/metode_jadwal?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">INFORMASI PENGADAAN</h3>
+    <h3 href="<?php echo base_url(); ?>index.php/pengadaan_monitor_x/metode_jadwal?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">INFORMASI PENGADAAN</h3>
     <div>
          
         <div id="list"></div>
@@ -31,7 +33,7 @@
         
     </p> 
  
-      
+   
 </div>
 <div id="trace" ></div>
 <script>
@@ -39,12 +41,15 @@
 
     $(document).ready(function(){
         
+        /*
         
         $("#btnKembali").click(function(){ 
             // alert("btnKembali");
             window.location = "<?php echo base_url() . "index.php/pengadaan/monitor"; ?> "; 
     
         }); 
+        
+        */
             
              
         
