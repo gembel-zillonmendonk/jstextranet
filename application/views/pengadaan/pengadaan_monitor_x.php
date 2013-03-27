@@ -13,25 +13,22 @@
     </div>
     
  <?php
-   // if (!$is_lelang) {
+     if (!$is_lelang) {
     ?>
-    <h3 href="<?php echo base_url(); ?>index.php/crud/gridrf/ep_pgd_dokumen?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">DOKUMEN PENDUKUNG</h3>
+    <h3 href="<?php echo base_url(); ?>index.php/crudx/gridrf/ep_pgd_dokumen?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">DOKUMEN PENDUKUNG</h3>
     <div>
         
         <div id="list"></div>
     </div>
     <?php
-    //}
+     }
     ?>
     <h3 href="<?php echo base_url(); ?>index.php/pengadaan_monitor_x/metode_jadwal?KODE_TENDER=<?php echo $KODE_TENDER; ?>&KODE_KANTOR=<?php echo $KODE_KANTOR; ?>">INFORMASI PENGADAAN</h3>
     <div>
          
         <div id="list"></div>
     </div>
-    <p align="center" >
-        <button  type="button" id="btnKembali" >Kembali</button>    
-        
-    </p> 
+   
  
    
 </div>

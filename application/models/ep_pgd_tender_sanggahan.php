@@ -10,7 +10,7 @@
  *
  * @author farid
  */
-class Ep_pgd_sanggahan extends MY_Model
+class Ep_pgd_tender_sanggahan extends MY_Model
 {
     public $table = "EP_PGD_TENDER_SANGGAHAN";
     public $elements_conf = array(

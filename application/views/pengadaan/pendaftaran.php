@@ -30,7 +30,13 @@
     <input type="hidden" name="KODE_VENDOR" value="<?php echo $KODE_VENDOR; ?>" />
     <p align="center">
         <b>
-        <input type="checkbox" id="chk_mengerti" >&nbsp; &nbsp;Saya sudah mengunduh dan membaca isi RKS</input>
+            <?php  
+            if ($is_lelang==0) {
+                ?>
+            <input type="checkbox" id="chk_mengerti" >&nbsp; &nbsp;Saya sudah mengunduh dan membaca isi RKS</input>
+            <?php 
+            }
+            ?>
         </b>
     </p>
     <p align="center">
@@ -56,11 +62,16 @@
         
         $("#btnKirim").click(function(){ 
             // alert("Kirim");
-             
+             <?php 
+            if ($is_lelang==0) {
+                ?>
             if ($("#chk_mengerti:checked").length == 0) {
                 alert("Pilih Checkbox bahwa anda sudah membaca RKS");
                 return;
             }
+            <?php
+            }
+            ?>
             
             if ($("#PVTS_STATUS").val() != 0) {
                        $("#frm_Pendaftaran").ajaxSubmit({

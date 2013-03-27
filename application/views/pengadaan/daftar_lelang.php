@@ -279,7 +279,7 @@
     });
     
     function fnPendaftaran (kode_tender, kode_kantor) {
-        alert("Pendaftaran");
+        
         str = "KODE_TENDER=" + kode_tender;
         str += "&KODE_KANTOR=" + kode_kantor;
         jQuery('#modal_form_login')
@@ -291,7 +291,7 @@
                         //position:'top',
                         buttons: { 
                             "LOGIN": function() { 
-                                alert("login");
+                                 
                                 $("#frmLoginLelang").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
